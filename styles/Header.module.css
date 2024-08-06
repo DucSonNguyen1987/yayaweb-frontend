@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Concert+One&family=Varela+Round&display=swap');
+
+
+@font-face {
+    font-family: "Varela Round";
+    src: url(/frontend/fonts/Varela_Round/VarelaRound-Regular.ttf);
+}
+
+@font-face {
+    font-family: "Concert One";
+    src: url(/frontend/fonts/Concert_One/ConcertOne-Regular.ttf);
+}
+
+.header {
+    width: 100vw;
+    height: 10vh;
+    padding-left: 10%;
+    padding-right: 10%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: space-around;
+    background-color: white;
+}
+
+.logoContainer {
+    width: 25%;
+    height: fit-content;
+    align-items: center;
+}
+.logo {
+    width: 150px;
+    height: 150px;
+    cursor: pointer
+}
+
+
+
+.linkContainer {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+}
+
+.link {
+    font-family: 'Concert One';
+    color: #707070;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.link:hover {
+    color:#F27C00;
+    cursor: pointer
+}
+
+.iconsContainer {
+    width: 25%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-content: flex-end;
+}
+
+.headerIcons{
+    margin-left: 5%;
+    margin-right: 5%;
+    color: #707070;
+}
+
+.headerIcons:hover{
+    color:#F27C00;
+    cursor: pointer;
+}
+
+.popoverUserContent {
+    display :flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 10vw;
+    padding-left: 5vw;
+    padding-right: 5vw;
+  }
+  
+  .registerContainer {
+    display: flex;
+    flex-direction: column;
+    width: 10vw;
+  }
+  
+  .registerSection{
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .popovertitle {
+    font-family: 'Concert One';
+    color: #707070;
+  }
+
+  .Input{
+    font-family: 'Varela Round';
+  }
+
+.button{
+background-color: #F27C00;
+color:white;
+border-radius: 5px;
+border: none;
+height: 3vh;
+font-family: 'Concert One';
+
+}
+
+
+.popoverCartContent{
+    display :flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: auto;
+    padding-left: 1vw;
+    padding-right: 1vw;
+}
+
+.popoverCartText{
+    font-family: 'Varela Round';
+}
