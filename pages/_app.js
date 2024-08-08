@@ -1,6 +1,6 @@
 import '../styles/globals.css';
 import Head from 'next/head';
-import Header from "../components/Header";
+import Header from "../components/Header/Header";
 import { Provider } from 'react-redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -8,7 +8,7 @@ import storage from 'redux-persist/lib/storage';
 import {combineReducers, combineReucers, configureStore, getDefaultMiddleware} from '@reduxjs/toolkit';
 
 import user from "../reducers/user";
-import LoginPopup from '../components/LoginPopup';
+
 
 // const reducers = combineReducers({user});
 
@@ -35,9 +35,6 @@ function App({ Component, pageProps }) {
       </Head>
       <Header/>
       <main>
-      <LoginPopup trigger={true}>
-             
-          </LoginPopup>
       <Component {...pageProps} />
       </main>
       

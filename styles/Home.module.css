@@ -20,26 +20,3 @@
 .title a:hover, .title a:focus, .title a:active {
   text-decoration: underline;
 }
-
-.popoverUserContent {
-  display :flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  width: 10vw;
-  padding-left: 5vw;
-  padding-right: 5vw;
-}
-
-.registerContainer {
-  display: flex;
-  flex-direction: column;
-  width: 10vw;
-}
-
-.registerSection{
-  display: flex;
-  flex-direction: column;
-}
-.Input {
-  width: 10%;
-}

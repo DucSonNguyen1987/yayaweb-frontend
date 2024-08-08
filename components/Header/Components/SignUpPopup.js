@@ -1,19 +1,21 @@
 import React from 'react';
-import styles from '../styles/LoginPopup.module.css';
+import styles from '../styles/SignUpPopup.module.css';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faXmark
+  faXmark,
+  
 } from "@fortawesome/free-solid-svg-icons";
 
 
-function LoginPopup(props) {
+function SignUpPopup(props) {
   return (props.trigger) ?(
     <div className={styles.popup}>
         <div className={styles.popupInner}>
             <button className={styles.closeBtn}>
-                <span>X</span>
+            <FontAwesomeIcon className={styles.x} icon={faXmark} />
             </button>
+            
             {props.children}
         </div>
 
@@ -21,4 +23,4 @@ function LoginPopup(props) {
   ) :"";
 }
 
-export default LoginPopup;
+export default SignUpPopup;
