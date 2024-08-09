@@ -1,65 +1,69 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login, logout } from "../../reducers/user";
+import { login, logout, signUp } from "../../reducers/user";
 
 import styles from "./styles/Header.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
   faCartShopping,
-  faEnvelope,
-  faKey,
-  faLocationCrosshairs,
-  faCakeCandles,
 } from "@fortawesome/free-solid-svg-icons";
-import SignUpPopup from "./Components/SignUpPopup";
-import SignUp from "./Components/SignUp";
+
 
 import { Input, Modal, Popover, Button } from "antd";
 import Link from "next/link";
 
 function Header() {
-  //   const dispatch = useDisaptch();
-  //   const user = useSelector((state) => state.user.value);
+    // const dispatch = useDisaptch();
+    // const user = useSelector((state) => state.user.value);
   //   const cart = useSelector ((state)=> state.cart.value);
 
+// State Modal
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  
+  // States Login
   const [signInMail, setSignInMail] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
   
-  
-  const [formData, setformData] = useState({
-    gender: "",
-    firstName: "",
-    lastName: "",
-    age: "",
-    phoneNumber: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    streetNumber: "",
-    streetName: "",
-    zipCode: "",
-    city: "",
-  });
+  // States Sign Up
+  const [gender, setGender] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [firstName, setfirstName] = useState("");
+  const [ age, setAge] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  // const [streetNumber, setStreetNumber] = useState("");
+  // const [streetName, setStreetName] = useState("");
+  // const [zipCode, setZipCode] = useState("");
+  // const [city, setCity] = useState("");
+  const [isPending, setIsPending]= useState(false)
+ 
+   // State pour lister les erreurs dans le form
+  const [errors, setErrors]= useState ([]);
+
+    
 
   const showModal = () => {
     setOpen(true);
   };
 
-const [errors, setErrors]= useState ([]);
 
+
+// Check la validité de l'email renseignée
 const isValidEmail = (email)=>{
   const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
   return emailRegex.test(email);
 }
 
+// check si le numéro de tel fait 10 chiffres
 const isValidPhoneNumber = (phoneNumber)=>{
   const phoneRegex = /^\d{10}$/;
   return phoneRegex.test (phoneNumber);
 }
 
+// Check le password (>8 caractères, au moins 1 Maj, et 1 min, 1 caractère spécial)
 const isValidPassword = (password)=> {
   const symbolRegex = /[!@#$%^&*(),.?":{}|<>]/;
     const numberRegex = /[0-9]/;
@@ -74,96 +78,104 @@ const isValidPassword = (password)=> {
     );
 };
 
+
+// user majeur ?
 const isValidAge = (age) => {
   return parseInt(age) >= 18;
 };
 
+
+// messages en cas d'erreur(s)
   const validateForm= ()=>{
     let newErrors = {};
 
-    if(!formData.gender){
+    if(!gender){
       newErrors.gender = " Votre civilité est requise "
     }
-    if(!formData.firstName){
+    if(!firstName){
       newErrors.firstName = " Votre prénom est requis "
     }
-    if(!formData.lastName){
+    if(!lastName){
       newErrors.lastName = " Votre nom est requis "
     }
-    if(!formData.age){
+    if(!age){
       newErrors.age = " Votre age est requis "
-    }else if (!isValidAge(formData.age)) {
+    }else if (!isValidAge(age)) {
       newErrors.age = "Vous devez être majeur"
     }
-    if(!formData.phoneNumber){
+    if(!phoneNumber){
       newErrors.phoneNumber = " Votre téléphone est requis "
-    }else if (!isValidPhoneNumber(formData.phoneNumber)){
+    }else if (!isValidPhoneNumber(phoneNumber)){
       newErrors.phoneNumber = "Votre numéro doit comporter 10 chiffres"
     }
 
-    if(!formData.email){
+    if(!email){
       newErrors.email = " Votre adresse mail est requise "
-    } else if (!isValidEmail(formData.email)) {
+    } else if (!isValidEmail(email)) {
       newErrors.email = " Votre adresse mail est invalide"
     }
 
-    if(!formData.password){
+    if(!password){
       newErrors.password = " Un Mot de passe est requis "
-    } else if(!isValidPassword(formData.password)){
+    } else if(!isValidPassword(password)){
       newErrors.password = "Votre mot de pass doit comporter au moins 8 caractères et au moins 1 scaractère spécial, 1 chiffre, 1 majuscule et 1 minuscule";
     }
-    if(!formData.confirmPassword){
+    if(!confirmPassword){
       newErrors.confirmPassword = " Votre civilité est requise "
-    }else if (formData.confirmPassword !== formData.password) {
+    }else if (confirmPassword !== password) {
       newErrors.confirmPassword = "les Mots de passes doivent être identiques";
     }
-    if(!formData.streetNumber){
-      newErrors.streetNumber = " Votre numéro de rue est requis "
-    }
-    if(!formData.streetName){
-      newErrors.streetName = " Votre nom de voie est requis "
-    }
-    if(!formData.zipCode){
-      newErrors.zipCode = " Votre code postal est requis "
-    }
-    if(!formData.city){
-      newErrors.city = " Votre ville est requise "
-    }
+    // if(!streetNumber){
+    //   newErrors.streetNumber = " Votre numéro de rue est requis "
+    // }
+    // if(!streetName){
+    //   newErrors.streetName = " Votre nom de voie est requis "
+    // }
+    // if(!zipCode){
+    //   newErrors.zipCode = " Votre code postal est requis "
+    // }
+    // if(!city){
+    //   newErrors.city = " Votre ville est requise "
+    // }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length ===0;
   }
 
-  console.log(errors);
+  console.log("errors",errors);
 
-  const handleOk = (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
-
     const isValid = validateForm();
+    
+    const userData ={gender, firstName, lastName,age, phoneNumber, email, password}
+    
+
 
     if(isValid){
-      fetch("http://localhost:3000/user/signup", {
+
+      setIsPending(true)
+      
+console.log("userData isValid", userData)
+
+      fetch('http://localhost:3000/users/signup', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          mail: signUpMail,
-          password: signUpPassword,
-        }),
+        body : JSON.stringify(userData)
+        
       })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.result) {
-            dispatch(login({ mail: signUpMail, token: data.token }));
-            setSignUpMail("");
-            setSignUpPassword("");
-            setIsModalVisible(false);
-          }
+        // .then((response) => response.json())
+        // .then(json => setUser(json.user))
+        .then(() => {
+          
+            console.log('new user added')
+          setIsPending(false)
         });
     } else {
        console.log("Form validation failed")
     }
 
-    setLoading(true);
+    // setLoading(true);
     
   };
 
@@ -171,20 +183,13 @@ const isValidAge = (age) => {
     setOpen(false);
   };
 
-  const handleChange =(e) =>{
-    const {name, value}= e.target;
-
-    setformData ({
-      ...formData, [name]: value,
-    })
-
-  }
+  
 
   let modalContent = (
     <Modal
       open={open}
       title="Créer un compte"
-      onOk={handleOk}
+      onOk={handleRegister}
       onCancel={handleCancel}
       footer={[
         <div className={styles.footer}>
@@ -192,18 +197,18 @@ const isValidAge = (age) => {
             {" "}
             Retour
           </button>
-          <button className={styles.footerButton} key="submit" onClick={handleOk}>
+          <button className={styles.footerButton} key="submit" onClick={handleRegister}>
             S'inscrire
           </button>
         </div>,
       ]}
     >
-      <form className={styles.SingUpForm} onSubmit={handleOk}>
+      <form className={styles.SingUpForm} onSubmit={handleRegister}>
         <div className={styles.infoContainer}>
           <div className={styles.infoSection}>
             <p className={styles.popovertitle}> Informations personnelles</p>
             <div>
-              <select className={styles.select} name="gender" value={formData.gender} onChange={handleChange}>
+              <select className={styles.select} name="gender" value={gender} onChange={(e)=>setGender(e.target.value)}>
                 <option value="">Civilité</option>
                 <option value="male">Monsieur</option>
                 <option value="female">Madame</option>
@@ -216,10 +221,11 @@ const isValidAge = (age) => {
               <input
                 className={styles.Input}
                 type="text"
+                required
                 name="lastName"
-                value={formData.lastName}
+                value={lastName}
                 placeholder="Nom"
-                onChange={handleChange}
+                onChange={(e)=>setLastName(e.target.value)}
               />
                {errors.firstName && <div className={styles.error}>{errors.firstName}</div>}
             </div>
@@ -228,10 +234,11 @@ const isValidAge = (age) => {
               <input
               className={styles.Input}
                 type="text"
+                required
                 name="firstName"
-                value={formData.firstName}
+                value={firstName}
                 placeholder="Prénom"
-                onChange={handleChange}
+                onChange={(e)=>setfirstName(e.target.value)}
 
               />
               {errors.lastName && <div className={styles.error}>{errors.lastName}</div>}
@@ -241,10 +248,11 @@ const isValidAge = (age) => {
               <input
               className={styles.Input}
                 type="number"
+                required
                 name="age"
-                value={formData.age}
+                value={age}
                 placeholder="Age"
-                onChange={handleChange}
+                onChange={(e)=>setAge(e.target.value)}
               />
                {errors.age && <div className={styles.error}>{errors.age}</div>}
             </div>
@@ -253,10 +261,11 @@ const isValidAge = (age) => {
               <input
               className={styles.Input}
                 type="text"
+                required
                 name="phoneNumber"
-                value={formData.phoneNumber}
+                value={phoneNumber}
                 placeholder="Téléphone"
-                onChange={handleChange}
+                onChange={(e)=>setPhoneNumber(e.target.value)}
               />
                {errors.phoneNumber && <div className={styles.error}>{errors.phoneNumber}</div>}
             </div>
@@ -265,27 +274,29 @@ const isValidAge = (age) => {
               <input
               className={styles.Input}
                 type="text"
+                required
                 name="email"
-                value={formData.email}
+                value={email}
                 placeholder="Email"
-                onChange={handleChange}
+                onChange={(e)=>setEmail(e.target.value)}
                 
               />
               {errors.email && <div className={styles.error}>{errors.email}</div>}
             </div>
           </div>
 
-          <div className={styles.addressSection}>
+          {/* <div className={styles.addressSection}>
             <p className={styles.popovertitle}> Adresse</p>
             <div className={styles.addressFields}>
             <div>
               <input
               className={styles.Input}
                 type="text"
+                required
                 name="streetNumber"
-                value={formData.streetNumber}
+                value={streetNumber}
                 placeholder="N°"
-                onChange={handleChange}
+                onChange={(e)=>setStreetNumber(e.target.value)}
                 
               />
               {errors.streetNumber && <div className={styles.error}>{errors.streetNumber}</div>}
@@ -295,10 +306,11 @@ const isValidAge = (age) => {
               <input
               className={styles.Input}
                 type="text"
+                required
                 name="streetName"
-                value={formData.streetName}
+                value={streetName}
                 placeholder="Nom de Rue"
-                onChange={handleChange}
+                onChange={(e)=>setStreetName(e.target.value)}
                 
               />
               {errors.streetName && <div className={styles.error}>{errors.streetName}</div>}
@@ -308,10 +320,11 @@ const isValidAge = (age) => {
               <input
               className={styles.Input}
                 type="text"
+                required
                 name="zipCode"
-                value={formData.zipCode}
+                value={zipCode}
                 placeholder="Code Postal"
-                onChange={handleChange}
+                onChange={(e)=>setZipCode(e.target.value)}
                 
               />
               {errors.zipCode && <div className={styles.error}>{errors.zipCode}</div>}
@@ -321,17 +334,18 @@ const isValidAge = (age) => {
               <input
               className={styles.Input}
                 type="text"
+                required
                 name="city"
-                value={formData.city}
+                value={city}
                 placeholder="Ville"
-                onChange={handleChange}
+                onChange={(e)=>setCity(e.target.value)}
               />
               {errors.city && <div className={styles.error}>{errors.city}</div>}
 
             </div>
             </div>
           
-          </div>
+          </div> */}
         </div>
 
         <div className={styles.passwordSection}>
@@ -342,10 +356,11 @@ const isValidAge = (age) => {
             <input
             className={styles.Input}
               type="password"
+              required
               name="password"
-              value={formData.password}
+              value={password}
               placeholder="Mot de Passe"
-              onChange={handleChange}
+              onChange={(e)=>setPassword(e.target.value)}
              
             />
              {errors.password && <div className={styles.error}>{errors.password}</div>}
@@ -354,10 +369,11 @@ const isValidAge = (age) => {
             <input
             className={styles.Input}
               type="password"
+              required
               name="confirmPassword"
-              value={formData.confirmPassword}
+              value={confirmPassword}
               placeholder="Confirmer Mot de Passe"
-              onChange={handleChange}
+              onChange={(e)=>setConfirmPassword(e.target.value)}
               
             />
             {errors.confirmPassword && <div className={styles.error}>{errors.confirmPassword}</div>}
@@ -369,9 +385,7 @@ const isValidAge = (age) => {
     </Modal>
   );
 
-  const handleRegister = () => {
-   
-  };
+
 
   const handleConnection = () => {
     fetch("http://localhost:3000/user/signin", {
