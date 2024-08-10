@@ -34,10 +34,10 @@ function Header() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  // const [streetNumber, setStreetNumber] = useState("");
-  // const [streetName, setStreetName] = useState("");
-  // const [zipCode, setZipCode] = useState("");
-  // const [city, setCity] = useState("");
+  const [streetNumber, setStreetNumber] = useState("");
+  const [streetName, setStreetName] = useState("");
+  const [zipCode, setZipCode] = useState("");
+  const [city, setCity] = useState("");
   const [isPending, setIsPending]= useState(false)
  
    // State pour lister les erreurs dans le form
@@ -125,18 +125,18 @@ const isValidAge = (age) => {
     }else if (confirmPassword !== password) {
       newErrors.confirmPassword = "les Mots de passes doivent être identiques";
     }
-    // if(!streetNumber){
-    //   newErrors.streetNumber = " Votre numéro de rue est requis "
-    // }
-    // if(!streetName){
-    //   newErrors.streetName = " Votre nom de voie est requis "
-    // }
-    // if(!zipCode){
-    //   newErrors.zipCode = " Votre code postal est requis "
-    // }
-    // if(!city){
-    //   newErrors.city = " Votre ville est requise "
-    // }
+    if(!streetNumber){
+      newErrors.streetNumber = " Votre numéro de rue est requis "
+    }
+    if(!streetName){
+      newErrors.streetName = " Votre nom de voie est requis "
+    }
+    if(!zipCode){
+      newErrors.zipCode = " Votre code postal est requis "
+    }
+    if(!city){
+      newErrors.city = " Votre ville est requise "
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length ===0;
@@ -147,8 +147,10 @@ const isValidAge = (age) => {
   const handleRegister = (e) => {
     e.preventDefault();
     const isValid = validateForm();
+
+    const userAddress ={streetName, streetNumber, zipCode, city}
     
-    const userData ={gender, firstName, lastName,age, phoneNumber, email, password}
+    const userData ={gender, firstName, lastName,age, phoneNumber, email, password, address : [userAddress]}
     
 
 
@@ -285,7 +287,7 @@ console.log("userData isValid", userData)
             </div>
           </div>
 
-          {/* <div className={styles.addressSection}>
+          <div className={styles.addressSection}>
             <p className={styles.popovertitle}> Adresse</p>
             <div className={styles.addressFields}>
             <div>
@@ -345,7 +347,7 @@ console.log("userData isValid", userData)
             </div>
             </div>
           
-          </div> */}
+          </div>
         </div>
 
         <div className={styles.passwordSection}>
