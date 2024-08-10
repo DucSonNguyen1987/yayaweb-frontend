@@ -14,12 +14,15 @@ import { Input, Modal, Popover, Button } from "antd";
 import Link from "next/link";
 
 function Header() {
-    // const dispatch = useDisaptch();
-    // const user = useSelector((state) => state.user.value);
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.user.value);
   //   const cart = useSelector ((state)=> state.cart.value);
 
 // State Modal
   const [open, setOpen] = useState(false);
+
+//state Popover
+const [ popover, setPopover] = useState(false)
   
   // States Login
   const [signInMail, setSignInMail] = useState("");
@@ -38,7 +41,8 @@ function Header() {
   const [streetName, setStreetName] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [city, setCity] = useState("");
-  const [isPending, setIsPending]= useState(false)
+  const [isPending, setIsPending]= useState(false);
+
  
    // State pour lister les erreurs dans le form
   const [errors, setErrors]= useState ([]);
@@ -49,6 +53,9 @@ function Header() {
     setOpen(true);
   };
 
+  const showPop = () =>{
+    setPopover(true);
+  }
 
 
 // Check la validité de l'email renseignée
@@ -166,18 +173,21 @@ console.log("userData isValid", userData)
         body : JSON.stringify(userData)
         
       })
-        // .then((response) => response.json())
-        // .then(json => setUser(json.user))
-        .then(() => {
+        .then((response) => response.json())
+        .then((data) => {
           
-            console.log('new user added')
+            console.log('new user added', data)
           setIsPending(false)
+          dispatch(login({ email: email, data: data.data }))
+          setOpen(false)
         });
     } else {
        console.log("Form validation failed")
     }
 
     // setLoading(true);
+    
+    
     
   };
 
@@ -390,21 +400,24 @@ console.log("userData isValid", userData)
 
 
   const handleConnection = () => {
-    fetch("http://localhost:3000/user/signin", {
+    fetch("http://localhost:3000/users/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        mail: signInMail,
+        email: signInMail,
         password: signInPassword,
       }),
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          dispatch(login({ mail: signInMail, token: data.token }));
+          console.log(`${signInMail} connected`, data)
+          dispatch(login({ email: signInMail, data: data.data }));
           setSignInMail("");
           setSignInPassword("");
-          setIsModalVisible(false);
+          setOpen(false);
+
+          
         }
       });
   };
@@ -415,7 +428,7 @@ console.log("userData isValid", userData)
 
   let popoverUserContent;
 
-  //   if (!user.token) {
+    if (!user.accessToken) {
   popoverUserContent = (
     <div ClassName={styles.popoverUserContent}>
       <div className={styles.registerContainer}>
@@ -460,20 +473,20 @@ console.log("userData isValid", userData)
       </div>
     </div>
   );
-  //   } else if(user.token){
-  //       popoverUserContent = (
-  //           <div className ={styles.logoutSection}>
-  //               <p> Bonjour {user.firstName}</p>
-  //               <Link href="/account">
-  //               <span className={styles.link}>Mon Compte</span>
-  //               </Link>
-  //               <Link href ="/orders">
-  //               <span className={styles.link}>Mon historique</span>
-  //               </Link>
-  //               <button onClick={()=>handleLogout()}>Se déconnecter</button>
-  //           </div>
-  //       )
-  //    }
+    } else if(user.accessToken){
+        popoverUserContent = (
+            <div className ={styles.logoutSection}>
+                <p className={styles.popovertitle}> Bonjour {user.firstName},</p>
+                <Link href="/account">
+                <span ClassName={styles.linkPop}>Mon Compte</span>
+                </Link>
+                <Link href ="/orders" >
+                <span ClassName={styles.linkPop}>Mon historique</span>
+                </Link>
+                <button className={styles.buttonPop} onClick={()=>handleLogout()}>Se déconnecter</button>
+            </div>
+        )
+     }
 
   let popoverCartContent;
 
@@ -505,9 +518,11 @@ console.log("userData isValid", userData)
 
       <div className={styles.iconsContainer}>
         <Popover
+
           content={popoverUserContent}
           className={styles.popover}
           trigger="click"
+          
         >
           <FontAwesomeIcon className={styles.headerIcons} icon={faUser} />
         </Popover>

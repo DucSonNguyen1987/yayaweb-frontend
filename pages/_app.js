@@ -10,25 +10,25 @@ import {combineReducers, combineReucers, configureStore, getDefaultMiddleware} f
 import user from "../reducers/user";
 
 
-// const reducers = combineReducers({user});
+const reducers = combineReducers({user});
 
-// const persistConfig = { key: "yayawebapp", storage};
+const persistConfig = { key: "yayawebapp", storage};
 
-// const store = configureStore({
-//   reducer: persistReducer( persistConfig, reducers),
-//   middleware: (getDefaultMiddleware)=>
-//     getDefaultMiddleware( { serializableCheck : false}),
-// });
+const store = configureStore({
+  reducer: persistReducer( persistConfig, reducers),
+  middleware: (getDefaultMiddleware)=>
+    getDefaultMiddleware( { serializableCheck : false}),
+});
 
-// const persistor = persistStore(store);
+const persistor = persistStore(store);
 
 
 
 
 function App({ Component, pageProps }) {
   return (
-    // <Provider store={store}>
-    //   <PersistGate persistor={persistor}>
+     <Provider store={store}>
+       <PersistGate persistor={persistor}>
     <>
     <Head>
         <title>YAYA SPICY JUICE</title>
@@ -40,9 +40,9 @@ function App({ Component, pageProps }) {
       
     </>
       
-    //   </PersistGate>
+       </PersistGate>
       
-    // </Provider>
+     </Provider>
   );
 }
 import { format } from 'path';

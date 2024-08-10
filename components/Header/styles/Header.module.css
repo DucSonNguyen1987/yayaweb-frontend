@@ -44,6 +44,19 @@
     align-content: center;
 }
 
+.linkPop {
+    font-family: 'Concert One';
+    color: #707070;
+    margin-left: 10%;
+    margin-right: 10%;
+
+}
+
+.linkPop:hover {
+    color:#F27C00;
+    cursor: pointer;
+}
+
 .link {
     font-family: 'Concert One';
     color: #707070;
@@ -53,7 +66,7 @@
 
 .link:hover {
     color:#F27C00;
-    cursor: pointer
+    cursor: pointer;
 }
 
 .iconsContainer {
@@ -93,11 +106,20 @@
   .registerSection{
     display: flex;
     flex-direction: column;
+    width: fit-content;
   }
   
   .popovertitle {
     font-family: 'Concert One';
     color: #707070;
+  }
+
+  
+
+  .logoutSection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .Input {
@@ -121,6 +143,15 @@ height: 3vh;
 font-family: 'Concert One';
 
 }
+.buttonPop {
+    background-color: #F27C00;
+    color:white;
+    border-radius: 5px;
+    border: none;
+    height: 3vh;
+    font-family: 'Concert One';
+    margin-top: 5%;
+    }
 
 
 .popoverCartContent{
