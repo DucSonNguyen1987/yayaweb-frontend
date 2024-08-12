@@ -27,6 +27,7 @@ const [ popover, setPopover] = useState(false)
   // States Login
   const [signInMail, setSignInMail] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
+  const [Connected, setConnected]= useState(false)
   
   // States Sign Up
   const [gender, setGender] = useState("");
@@ -180,6 +181,7 @@ console.log("userData isValid", userData)
           setIsPending(false)
           dispatch(login({ email: email, data: data.data }))
           setOpen(false)
+          setConnected(true)
         });
     } else {
        console.log("Form validation failed")
@@ -413,6 +415,7 @@ console.log("userData isValid", userData)
         if (data.result) {
           console.log(`${signInMail} connected`, data)
           dispatch(login({ email: signInMail, data: data.data }));
+          setConnected(true);
           setSignInMail("");
           setSignInPassword("");
           setOpen(false);
@@ -424,6 +427,7 @@ console.log("userData isValid", userData)
 
   const handleLogout = () => {
     dispatch(logout());
+    setConnected(false)
   };
 
   let popoverUserContent;
