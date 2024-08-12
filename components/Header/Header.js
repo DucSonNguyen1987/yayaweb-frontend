@@ -217,7 +217,7 @@ console.log("userData isValid", userData)
         </div>,
       ]}
     >
-      <form className={styles.SingUpForm} onSubmit={handleRegister}>
+      <form className={styles.SignUpForm} onSubmit={handleRegister}>
         <div className={styles.infoContainer}>
           <div className={styles.infoSection}>
             <p className={styles.popovertitle}> Informations personnelles</p>
