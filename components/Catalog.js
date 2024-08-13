@@ -8,7 +8,7 @@ function Catalog() {
     <div className={styles.catalog}>
       <div className={styles.range}>
         <h2>Nos Super Jus</h2>
-        <img src="/logo.png" alt="Nos Super Jus" />
+        <img src="/icons/logo.png" alt="Nos Super Jus" />
         <Link href="/products/nos-super-jus">
           <button className={styles.viewProductsButton}>Voir les produits</button>
         </Link>
@@ -16,7 +16,7 @@ function Catalog() {
 
       <div className={styles.range}>
         <h2>Nos Infusions</h2>
-        <img src="/logo.png" alt="Nos Infusions" />
+        <img src="/icons/logo.png" alt="Nos Infusions" />
         <Link href="/products/nos-infusions">
           <button className={styles.viewProductsButton}>Voir les produits</button>
         </Link>
@@ -24,7 +24,7 @@ function Catalog() {
 
       <div className={styles.range}>
         <h2>Nos Spicy Shots</h2>
-        <img src="/logo.png" alt="Nos Spicy Shots" />
+        <img src="/icons/logo.png" alt="Nos Spicy Shots" />
         <Link href="/products/nos-spicy-shots">
           <button className={styles.viewProductsButton}>Voir les produits</button>
         </Link>

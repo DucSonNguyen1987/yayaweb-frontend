@@ -10,10 +10,10 @@ function ProductsPage() {
 
   // Sample products data
   const products = [
-    { id: 1, name: 'Super Jus 1', imgSrc: '/logo.png', price: 19.99, description: 'Un jus naturelleemnt dynamisant', range: 'nos-super-jus' },
-    { id: 2, name: 'Super Jus 2', imgSrc: '/logo.png', price: 29.99, description: 'Un jus naturelleemnt dynamisant', range: 'nos-super-jus' },
-    { id: 3, name: 'Infusion 1', imgSrc: '/logo.png', price: 9.99, description: 'Un jus naturelleemnt dynamisant', range: 'nos-infusions' },
-    { id: 4, name: 'Spicy Shot 1', imgSrc: '/logo.png', price: 4.99, description: 'Un jus naturelleemnt dynamisant', range: 'nos-spicy-shots' },
+    { id: 1, name: 'Super Jus 1', imgSrc: '/icons/logo.png', price: 19.99, description: 'Un jus naturelleemnt dynamisant', range: 'nos-super-jus' },
+    { id: 2, name: 'Super Jus 2', imgSrc: '/icons/logo.png', price: 29.99, description: 'Un jus naturelleemnt dynamisant', range: 'nos-super-jus' },
+    { id: 3, name: 'Infusion 1', imgSrc: '/icons/logo.png', price: 9.99, description: 'Un jus naturelleemnt dynamisant', range: 'nos-infusions' },
+    { id: 4, name: 'Spicy Shot 1', imgSrc: '/icons/logo.png', price: 4.99, description: 'Un jus naturelleemnt dynamisant', range: 'nos-spicy-shots' },
     // Add more products
   ];
 
