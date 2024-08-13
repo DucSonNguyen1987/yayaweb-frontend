@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Concert+One&family=Varela+Round&display=swap');
+
+
+@font-face {
+    font-family: "Varela Round";
+    src: url(/frontend/fonts/Varela_Round/VarelaRound-Regular.ttf);
+}
+
+@font-face {
+    font-family: "Concert One";
+    src: url(/frontend/fonts/Concert_One/ConcertOne-Regular.ttf);
+}
+
+
+
+
+.p {
+    font-family: 'Varela Round';
+    color:707070 ;
+}
+
+
+.mainContainer {
+    padding-top: 10%;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+}
+
+.ingredientList{
+    width : 25%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.ingredient{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+.bottleContainer{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.button{
+    background-color: #F27C00;
+    color:white;
+    border-radius: 5px;
+    border: none;
+    height: 5vh;
+    font-family: 'Concert One';
+    width: 25%;
+}
+
+.round_button{
+    border-radius: 50%;
+    border: none;
+    background-color: #D9D9D9 ;
+    color: #F27C00;
+    font-family: 'Concert One';
+    margin-left: 5%;
+    font-size: 1.5em;
+    width: 2vw;
+    justify-content: center;
+    align-content: center;
+    
+}
+
+.ingredientName{
+    font-family: 'Concert One';
+    font-size: 1.3rem;
+    margin-right: 5%;
+}
+
+.bottle_bar{
+    width: 22%;
+    height: 50%;
+    border-radius: 10px;
+    background-color: #e6e6e6;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.bottle_bar_fill{
+    height: 100%;
+    border-radius: 10px;
+    background: #F27C00;
+    transition: height 0.5s ease-out;
+}
+
+.fill_label{
+    margin-top: 5%;
+    font-size: 25px;
+    font-family: 'Concert One';
+    color: #444444;
+    margin-bottom: 5%;
+}
