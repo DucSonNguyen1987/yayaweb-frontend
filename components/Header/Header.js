@@ -473,6 +473,7 @@ console.log("userData isValid", userData)
           >
             Se Connecter
           </button>
+          
         </div>
       </div>
     </div>
@@ -504,7 +505,7 @@ console.log("userData isValid", userData)
     <header className={styles.header}>
       <div className={styles.logoContainer}>
         <Link href="/">
-          <img className={styles.logo} src={"logo.png"} alt="Logo" />
+          <img className={styles.logo} src={"icons/logo.png"} alt="Logo" />
         </Link>
       </div>
 
