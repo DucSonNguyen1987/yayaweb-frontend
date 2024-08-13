@@ -1,0 +1,19 @@
+.catalog {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+  }
+  
+  .range {
+    text-align: center;
+  }
+  
+  .viewProductsButton {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #ff7f50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
