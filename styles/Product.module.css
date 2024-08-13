@@ -1,0 +1,23 @@
+.product {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin: 10px;
+  text-align: center;
+}
+
+.productImage {
+  width: 100%;
+  height: auto;
+}
+
+.productFooter {
+  margin-top: 20px;
+}
+
+.addToCartButton {
+  padding: 10px;
+  background-color: #ff7f50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
