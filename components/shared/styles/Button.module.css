@@ -1,0 +1,23 @@
+.button {
+    background-color: #F27C00;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    height: 3vh;
+    font-family: 'Concert One';
+    font-size: 24px;
+    padding: 0.4em;
+    line-height: 0.2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.button:hover,
+.button:focus {
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.1);
+}
+
+.button:active {
+}

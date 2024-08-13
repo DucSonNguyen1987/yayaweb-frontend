@@ -7,22 +7,25 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
   faCartShopping,
+  faTrashCan
 } from "@fortawesome/free-solid-svg-icons";
 
 
 import { Input, Modal, Popover, Button } from "antd";
 import Link from "next/link";
+import { removeFromCart } from "../../reducers/cart";
 
 function Header() {
-    const dispatch = useDispatch();
-    const user = useSelector((state) => state.user.value);
-  //   const cart = useSelector ((state)=> state.cart.value);
 
-// State Modal
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.value);
+  const cart = useSelector((state) => state.cart.value);
+  console.log(cart);
+  // State Modal
   const [open, setOpen] = useState(false);
 
-//state Popover
-const [ popover, setPopover] = useState(false)
+  //state Popover
+  const [ popover, setPopover] = useState(false)
   
   // States Login
   const [signInMail, setSignInMail] = useState("");
@@ -492,11 +495,24 @@ console.log("userData isValid", userData)
         )
      }
 
+   const cartItems = cart.items.map((item, i) => {
+      return (
+        <div className={styles.popoverCartItem} key={i}>
+          <span>{item.product.id}</span>
+          <span>{item.product.name}</span>
+          <span>{item.product.price}€</span>
+          <span>&times; {item.quantity}</span>
+          <FontAwesomeIcon className={styles.headerIcons} icon={faTrashCan} onClick={() => dispatch(removeFromCart(item.product.id))}/>
+        </div>
+      );
+   });
+   
   let popoverCartContent;
-
   popoverCartContent = (
     <div className={styles.popoverCartContent}>
-      <p className={styles.popoverCartText}>Votre panier est vide</p>
+      {!cartItems.length && <p className={styles.popoverCartText}>Votre panier est vide</p>}
+      {cartItems}
+      <p>Total : {cart.total}</p>
     </div>
   );
 

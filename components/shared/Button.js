@@ -1,9 +1,22 @@
 import styles from "./styles/Button.module.css";
 
 
-const Button = () => {
+const Button = (props) => {
+  const backgroundColor = props.backgroundColor || '#F27C00';
+  const color = props.color || '#FFF';
+
+  const style = { 
+    color,
+    backgroundColor
+  }
+
+  const handleClick = () => {
+    props.onClick();
+  };
+
+  console.log(props.onClick);
   return (
-    <div>Button</div>
+    <button className={styles.button} style={style} onClick={() => handleClick()}>{props.children}</button>
   )
 }
 
