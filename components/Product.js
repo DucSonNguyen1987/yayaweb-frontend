@@ -2,8 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../styles/Product.module.css';
 import Button from './shared/Button';
+import Image from 'next/image';
 import { addToCart } from '../reducers/cart';
 import { useDispatch } from 'react-redux';
+
  
 function Product(props) {
   console.log(props);
@@ -77,13 +79,18 @@ function Product(props) {
   }
 
   return (
-    <div className={styles.product}>
-      {productId}
-      <img src={props.imgSrc} alt={props.name} className={styles.productImage} />
-      <h3 className={styles.productName}>{product.name}</h3>
-      <p className={styles.productDescription}>{product.description}</p>
-      <div className={styles.productFooter}>
-        <span className={styles.productPrice}>{product.price} €</span>
+    <div className={styles.productContainer}>
+      <div className={styles.images}>
+        {product.images.map((image, i) => i === 0 && <Image width={350} height={400} src={image} key={i} layout="responsive" objectFit='contain' />)}
+      </div>
+      <div className={styles.productDetails}>
+        <h1 className={styles.productName}>{product.name}</h1>
+        <div className={styles.productDescription}>{product.description}</div>
+        <div className={styles.productIngredients}>Ingrédients : ...</div>
+        <div className={styles.productNutritionInfo}>Bienfaits nutritionnels : ...</div>
+        <div className={styles.productVolume}>Volume</div>
+        <div className={styles.productQuantity}>Quantité</div>
+        <div className={styles.productPrice}>{product.price} €</div>
         <Button onClick={() => addProductToCart(props.id)}>Ajouter au panier</Button>
       </div>
     </div>
