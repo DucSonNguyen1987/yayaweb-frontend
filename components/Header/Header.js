@@ -501,6 +501,7 @@ console.log("userData isValid", userData)
           <span>{item.product.id}</span>
           <span>{item.product.name}</span>
           <span>{item.product.price}€</span>
+          <span>{item.product.options.volume}€</span>
           <span>&times; {item.quantity}</span>
           <FontAwesomeIcon className={styles.headerIcons} icon={faTrashCan} onClick={() => dispatch(removeFromCart(item.product.id))}/>
         </div>
@@ -520,7 +521,7 @@ console.log("userData isValid", userData)
     <header className={styles.header}>
       <div className={styles.logoContainer}>
         <Link href="/">
-          <img className={styles.logo} src={"icons/logo.png"} alt="Logo" />
+          <img className={styles.logo} src={"/icons/logo.png"} alt="Logo" />
         </Link>
       </div>
 
