@@ -41,8 +41,22 @@
 
 .productDetails {
   /* border: 2px solid red; */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   width: 50%;
   padding: 20px;
+}
+
+.productVolume,
+.productQuantity {
+  display: flex;
+  gap: 10px;  
+}
+
+.productVolume > span,
+.productQuantity > span {
+  width: 100px;
 }
 
 .productName {

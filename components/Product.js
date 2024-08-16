@@ -5,7 +5,7 @@ import Button from './shared/Button';
 import Image from 'next/image';
 import { addToCart } from '../reducers/cart';
 import { useDispatch } from 'react-redux';
-import { Flex, Radio } from 'antd';
+import { Flex, Radio, InputNumber } from 'antd';
 
 
  
@@ -14,6 +14,8 @@ function Product(props) {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const [product, setProduct] = useState(null);
+  const [volume, setVolume] = useState(null);
+  const [quantity, setQuantity] = useState(null);
   
 
 
@@ -65,11 +67,17 @@ function Product(props) {
           
   const onChangeVolume = (e) => {
     console.log(`radio checked:${e.target.value}`);
+    setVolume(e.target.value);
+  };
+
+  const onChangeQuantity = (value) => {
+    setQuantity(value);
   };
   
   const addProductToCart = (id) => {
     console.log('addProductToCart', id);
-    dispatch(addToCart({product, quantity: 1}));
+    const options = { volume };
+    dispatch(addToCart({product: {...product, options}, quantity}));
   };
 
   // display loading (while retrieving product info)
@@ -100,7 +108,10 @@ function Product(props) {
             </Radio.Group>
           </Flex>
         </div>
-        <div className={styles.productQuantity}>Quantité</div>
+        <div className={styles.productQuantity}>
+          <span>Quantité</span>
+          <InputNumber min={1} max={10} defaultValue={1} onChange={onChangeQuantity} />
+        </div>
         <div className={styles.productPrice}>{product.price} €</div>
         <Button onClick={() => addProductToCart(props.id)}>Ajouter au panier</Button>
       </div>

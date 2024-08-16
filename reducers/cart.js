@@ -13,7 +13,7 @@ export const cartSlice = createSlice({
     initialState,
     reducers: {
         addToCart : (state, action) => {
-            const foundIndex = state.value.items.findIndex(item => item.product.id === action.payload.product.id);
+            const foundIndex = state.value.items.findIndex(item => item.product.id === action.payload.product.id && item.product.options.volume == action.payload.product.volume);
             if(foundIndex !== -1) {
                 state.value.items[foundIndex].quantity += action.payload.quantity
             } else {
