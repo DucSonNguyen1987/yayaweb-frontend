@@ -99,7 +99,7 @@ function Product(props) {
       <div className={styles.productDetails}>
         <h1 className={styles.productName}>{product.name}</h1>
         <div className={styles.productDescription}>{product.description}</div>
-        <div className={styles.productIngredients}>Ingrédients : ...</div>
+        <div className={styles.productIngredients}>Ingrédients : {product.composition.sort(({amount:a}, {amount:b}) => b-a).map(ingredient => ingredient.name).join(', ')}.</div>
         <div className={styles.productNutritionInfo}>Bienfaits nutritionnels : ...</div>
         <div className={styles.productVolume}>
           <span>Volume</span>
