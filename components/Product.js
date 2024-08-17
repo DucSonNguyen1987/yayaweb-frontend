@@ -15,7 +15,7 @@ function Product(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [product, setProduct] = useState(null);
   const [volume, setVolume] = useState(null);
-  const [quantity, setQuantity] = useState(null);
+  const [quantity, setQuantity] = useState(1);
   
 
 
@@ -26,6 +26,7 @@ function Product(props) {
       .then(data => {
         if(data.result) {
           setProduct(data.product);
+          setVolume(data.product.volumes[0]);
         } 
         setIsLoading(false);
       });
@@ -104,7 +105,7 @@ function Product(props) {
           <span>Volume</span>
           <Flex vertical gap="middle">
             <Radio.Group onChange={onChangeVolume} defaultValue={product.volumes[0]}>
-            {product.volumes.map((volume,i) => <Radio.Button value={volume}>{volume}</Radio.Button>)}
+            {product.volumes.map((volume,i) => <Radio.Button value={volume}>{volume.capacity}</Radio.Button>)}
             </Radio.Group>
           </Flex>
         </div>
@@ -112,7 +113,7 @@ function Product(props) {
           <span>Quantité</span>
           <InputNumber min={1} max={10} defaultValue={1} onChange={onChangeQuantity} />
         </div>
-        <div className={styles.productPrice}>{product.price} €</div>
+        <div className={styles.productPrice}>{(product.price + volume.price) * quantity} €</div>
         <Button onClick={() => addProductToCart(props.id)}>Ajouter au panier</Button>
       </div>
     </div>

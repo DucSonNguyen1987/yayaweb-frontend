@@ -500,10 +500,10 @@ console.log("userData isValid", userData)
         <div className={styles.popoverCartItem} key={i}>
           <span>{item.product.id}</span>
           <span>{item.product.name}</span>
-          <span>{item.product.price}€</span>
-          <span>{item.product.options.volume}€</span>
+          <span>{(item.product.price+item.product.options.volume.price)}€</span>
+          <span>{item.product.options.volume.capacity}</span>
           <span>&times; {item.quantity}</span>
-          <FontAwesomeIcon className={styles.headerIcons} icon={faTrashCan} onClick={() => dispatch(removeFromCart(item.product.id))}/>
+          <FontAwesomeIcon className={styles.headerIcons} icon={faTrashCan} onClick={() => dispatch(removeFromCart(item.product))}/>
         </div>
       );
    });
