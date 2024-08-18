@@ -1,0 +1,53 @@
+
+.vignette {
+  border: 1px solid #ddd;
+  padding: 16px;
+  text-align: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.vignette:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.productImage {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.productName {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.productPrice {
+  font-size: 1rem;
+  color: #888;
+  margin-bottom: 16px;
+}
+
+.addToCartButton {
+  background-color: #28a745;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+.addToCartButton:hover {
+  background-color: #218838;
+}
+
+.productLink {
+  display: block;
+  margin-top: 8px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.productLink:hover {
+  text-decoration: underline;
+}

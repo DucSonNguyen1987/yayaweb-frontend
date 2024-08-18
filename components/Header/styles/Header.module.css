@@ -163,6 +163,15 @@ font-family: 'Concert One';
     padding-right: 1vw;
 }
 
+.popoverCartItem {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+.popoverCartItem span {
+    flex-shrink: 0;
+}
+
 .popoverCartText{
     font-family: 'Varela Round';
 }

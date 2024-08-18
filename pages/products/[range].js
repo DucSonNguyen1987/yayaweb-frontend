@@ -1,7 +1,7 @@
 // pages/products/[range].js
 import React from 'react';
 import { useRouter } from 'next/router';
-import Product from '../../components/Product';
+import ProductVignette from '../../components/ProductVignette';
 import styles from '../../styles/ProductsPage.module.css';
 
 function ProductsPage() {
@@ -29,7 +29,7 @@ function ProductsPage() {
       <h1>Produits de gamme :  {range.replace(/-/g, ' ')}</h1>
       <div className={styles.productsGrid}>
         {filteredProducts.map(product => (
-          <Product
+          <ProductVignette
             key={product.id}
             id={product.id}
             name={product.name}

@@ -32,9 +32,9 @@ function Account() {
         async function handleRouteChange() {
             // redirect to home if user is not connected
             if(!user.accessToken) {
-                // await router.push('/');
+                await router.push('/');
             }
-            // setIsLoading(false);
+            setIsLoading(false);
         }
         void handleRouteChange();
 
