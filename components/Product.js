@@ -5,7 +5,7 @@ import Button from './shared/Button';
 import Image from 'next/image';
 import { addToCart } from '../reducers/cart';
 import { useDispatch } from 'react-redux';
-import { Flex, Radio, InputNumber } from 'antd';
+import { Flex, Radio, InputNumber, Carousel } from 'antd';
 
 
  
@@ -94,7 +94,14 @@ function Product(props) {
   return (
     <div className={styles.productContainer}>
       <div className={styles.images}>
-        {product.images.map((image, i) => i === 0 && <Image width={350} height={400} src={image} key={i} layout="responsive" objectFit='contain' />)}
+        <Carousel arrows infinite={false} draggable={true}>
+          {product.images.map((image, i) => (
+              <div className={styles.productImage}>
+                <Image src={image} key={i} layout="fill" objectFit='contain' objectPosition='center' />
+              </div>
+            )
+          )}
+        </Carousel>
       </div>
       <div className={styles.productDetails}>
         <h1 className={styles.productName}>{product.name}</h1>
