@@ -1,0 +1,48 @@
+.contentContainer {
+    /* border: 1px solid red; */
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contentContainer h1, 
+.contentContainer h2, 
+.contentContainer h3, 
+.contentContainer h4, 
+.contentContainer h5, 
+.contentContainer h6 {
+    font-family: 'Concert One';
+    color: var(--yaya-neutral);
+}
+
+.contentContainer h1 {
+    color: var(--yaya-prime);
+    text-align: center;
+    margin-bottom: calc(var(--yaya-padding) * 2);
+}
+
+.contentContainer h2 {
+
+}
+
+.contentContainer h3 {
+
+}
+
+.contentContainer h4 {
+
+}
+
+.contentContainer h5 {
+
+}
+
+.contentContainer h6 {
+
+}
+
+@media screen and (min-width: 1420px) {
+    .contentContainer {
+        max-width: 1420px;
+    }
+}

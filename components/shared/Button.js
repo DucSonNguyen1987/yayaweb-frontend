@@ -14,7 +14,6 @@ const Button = (props) => {
     props.onClick();
   };
 
-  console.log(props.onClick);
   return (
     <button className={styles.button} style={style} onClick={() => handleClick()}>{props.children}</button>
   )

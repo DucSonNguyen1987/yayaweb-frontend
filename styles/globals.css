@@ -15,3 +15,50 @@ body > div#__next > main {
 * {
   box-sizing: border-box;
 }
+
+/* variables */
+:root {
+  /* colors */
+  --yaya-neutral: #707070;
+  --yaya-prime: #F27C00;
+  --yaya-second: #04656B;
+  --yaya-third: #01A281;
+  --yaya-third-rgb: rgb(1, 162, 129);
+  --yaya-third-rgbval: 1, 162, 129;
+  /* paddings */
+  --yaya-padding: 16px;
+}
+
+@media screen and (min-width: 360px) {
+  
+}
+
+@media screen and (min-width: 480px) {
+  :root {
+    --yaya-padding: 20px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  :root {
+    --yaya-padding: 24px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  
+}
+
+@media screen and (min-width: 1280px) {
+  :root {
+    --yaya-padding: 30px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  
+}
+
+@media screen and (min-width: 1920px) {
+  
+}

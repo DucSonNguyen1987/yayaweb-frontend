@@ -1,4 +1,5 @@
 import '../styles/globals.css';
+import styles from '../styles/AppLayout.module.css';
 import Head from 'next/head';
 import Header from "../components/Header/Header";
 import { Provider } from 'react-redux';
@@ -30,19 +31,16 @@ function App({ Component, pageProps }) {
   return (
      <Provider store={store}>
        <PersistGate persistor={persistor}>
-    <>
-    <Head>
-        <title>YAYA SPICY JUICE</title>
-      </Head>
-      <Header/>
-      <main>
-      <Component {...pageProps} />
-      </main>
-      
-    </>
-      
-       </PersistGate>
-      
+        <>
+          <Head>
+            <title>YAYA SPICY JUICE</title>
+          </Head>
+          <Header/>
+          <main className={styles.contentContainer}>
+            <Component {...pageProps} />
+          </main>
+        </>
+      </PersistGate>
      </Provider>
   );
 }
