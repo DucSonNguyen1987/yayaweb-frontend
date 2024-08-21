@@ -1,0 +1,22 @@
+
+.validationPage {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+  
+  .placeOrderButton {
+    background-color: #28a745;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    width: 100%;
+    margin-top: 16px;
+  }
+  
+  .placeOrderButton:hover {
+    background-color: #218838;
+  }
+  

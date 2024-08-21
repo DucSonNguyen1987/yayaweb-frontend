@@ -1,0 +1,22 @@
+/* components/OrderSummary.module.css */
+.orderSummary {
+    padding: 20px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .productName {
+    font-weight: bold;
+  }
+  
+  .productQuantity {
+    margin-left: 10px;
+  }
+  
+  .totalPrice {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
