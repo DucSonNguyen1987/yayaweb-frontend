@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import styles from '../styles/OrderPayment.module.css';
+import styles from './Order/styles/OrderPayment.module.css';
 import Button from './shared/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

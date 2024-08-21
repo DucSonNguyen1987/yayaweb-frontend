@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../styles/OrderPayment.module.css'; 
+import styles from './styles/OrderPayment.module.css'; 
 import Button from '../shared/Button';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCcPaypal, faCcStripe, faCreditCard } from '@fortawesome/free-brands-svg-icons';
