@@ -7,11 +7,11 @@
 }
 
 .orderSummary {
-
+    margin-bottom: var(--yaya-padding);
 }
 
 .orderDelivery {
-
+    margin-bottom: var(--yaya-padding);
 }
 
 .orderPaymentProceed {
