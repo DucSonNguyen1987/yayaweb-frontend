@@ -1,0 +1,17 @@
+
+
+.deliveryAddress {
+    padding: 16px;
+    border: 1px solid #ddd;
+    margin-bottom: 16px;
+  }
+  
+  .editButton {
+    margin-top: 8px;
+    background-color: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
