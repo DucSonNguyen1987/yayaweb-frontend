@@ -444,7 +444,7 @@ console.log("userData isValid", userData)
 
     if (!user.accessToken) {
   popoverUserContent = (
-    <div ClassName={styles.popoverUserContent}>
+    <div className={styles.popoverUserContent}>
       <div className={styles.registerContainer}>
         <div className={styles.registerSection}>
           <p className={styles.popovertitle}>Pas de compte ?</p>
@@ -558,7 +558,7 @@ console.log("userData isValid", userData)
           trigger="click"
           
         >
-          <FontAwesomeIcon className={styles.headerIcons} icon={faUser} />
+          <span className={styles.headerIcons}><FontAwesomeIcon icon={faUser} /></span>
         </Popover>
 
         <Popover
@@ -566,10 +566,7 @@ console.log("userData isValid", userData)
           className={styles.popover}
           trigger="click"
         >
-          <FontAwesomeIcon
-            className={styles.headerIcons}
-            icon={faCartShopping}
-          />
+          <span className={styles.headerIcons}><FontAwesomeIcon icon={faCartShopping} /></span>
         </Popover>
       </div>
 
