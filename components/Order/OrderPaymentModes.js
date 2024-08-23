@@ -3,10 +3,14 @@ import styles from './styles/OrderPayment.module.css';
 import Button from '../shared/Button';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCcPaypal, faCcStripe, faCreditCard } from '@fortawesome/free-brands-svg-icons';
+import api from '../../api/axios';
+
 
 function OrderPaymentModes(props) {
-  const handlePaymentCreditCard = () => {
+  const handlePaymentCreditCard = async () => {
     console.log('handlePaymentCreditCard');
+    const response = await api.post('/order-confirm');
+    
   };
   
   const handlePaymentStripe = () => {
