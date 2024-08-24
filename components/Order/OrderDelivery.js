@@ -1,6 +1,5 @@
-// Order/components/OrderDelivery.js
 import React from 'react';
-import styles from '../styles/OrderPayment.module.css';
+import styles from '../../styles/OrderPayment.module.css'; 
 import { useSelector } from 'react-redux';
 
 function OrderDelivery(props) {
