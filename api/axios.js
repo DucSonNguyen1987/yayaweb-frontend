@@ -11,6 +11,10 @@ export const injectStore = _store => {
 
 const api = axios.create({
     baseURL: 'http://localhost:3000',
+    headers: {
+        // Overwrite Axios's automatically set Content-Type
+        'Content-Type': 'application/json'
+    }
 });
 
 // Add a request interceptor
@@ -33,7 +37,7 @@ api.interceptors.response.use(
         // const dispatch = useDispatch();
         const originalRequest = error.config;
   
-        // If the error status is 401 and there is no originalRequest._retry flag,
+        // If the error status is 403 and there is no originalRequest._retry flag,
         // it means the token has expired and we need to refresh it
         if (error.response.status === 403 && !originalRequest._retry) {
             originalRequest._retry = true;
