@@ -1,5 +1,9 @@
 import React from 'react';
+<<<<<<< HEAD
+import styles from '../../styles/OrderPayment.module.css'; 
+=======
 import styles from './styles/OrderPayment.module.css';
+>>>>>>>>> Temporary merge branch 2
 import { useSelector } from 'react-redux';
 
 function OrderDelivery(props) {
