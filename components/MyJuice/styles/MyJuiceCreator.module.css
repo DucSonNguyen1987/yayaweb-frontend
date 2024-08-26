@@ -28,12 +28,23 @@
     flex-direction: row;
 }
 
-.ingredientList{
-    width : 25%;
+.ingredientList1{
+    width : 33%;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     padding-left: 5%;
+    margin-top: -2%;
+    
+}
+
+.ingredientList2{
+    width : 33%;
+    display: flex;
+    flex-direction: column;
     padding-right: 5%;
+    justify-content: flex-start;
+    margin-top: -2%;
 }
 
 .ingredient{
@@ -41,8 +52,23 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-
+    justify-content: space-between;
 }
+
+.ingredientButton{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-left: 5%;
+}
+
+.ingredientButton2{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-right: 5%;
+}
+
 
 .bottleContainer{
     width: 50%;
@@ -71,7 +97,6 @@
     background-color: #D9D9D9 ;
     color: #F27C00;
     font-family: 'Concert One';
-    margin-left: 5%;
     font-size: 1.5em;
     width: 2vw;
     justify-content: center;
@@ -79,13 +104,28 @@
     
 }
 
-.ingredientName{
+.ingredientNameBox{
+    width: 75%;
+    align-content: center;
+}
+
+.ingredientName1{
     font-family: 'Concert One';
     font-size: 1.3rem;
-    margin-right: 5%;
+    margin-right: 2%;
+    text-align: right;
+    
+}
+
+.ingredientName2{
+    font-family: 'Concert One';
+    font-size: 1.3rem;
+    margin-right: 2%;
+    text-align: start;
 }
 
 .bottle_bar{
+    
     width: 22%;
     height: 50%;
     border-radius: 10px;
