@@ -201,7 +201,7 @@ console.log("userData isValid", userData)
   };
 
   
-
+// Modal Register
   let modalContent = (
     <Modal
       open={open}
@@ -435,9 +435,16 @@ console.log("userData isValid", userData)
 
   let popoverUserContent;
 
+ // arrondir à 1 décimale
+ const roundTo = (num, precision) => {
+  const factor = Math.pow(10, precision);
+  return Math.round(num * factor) / factor;
+};
+
+
     if (!user.accessToken) {
   popoverUserContent = (
-    <div ClassName={styles.popoverUserContent}>
+    <div className={styles.popoverUserContent}>
       <div className={styles.registerContainer}>
         <div className={styles.registerSection}>
           <p className={styles.popovertitle}>Pas de compte ?</p>
@@ -510,11 +517,16 @@ console.log("userData isValid", userData)
    });
    
   let popoverCartContent;
+
+  let TotalCart = cart.total.toFixed(2);
+
+
   popoverCartContent = (
+    
     <div className={styles.popoverCartContent}>
       {!cartItems.length && <p className={styles.popoverCartText}>Votre panier est vide</p>}
       {cartItems}
-      <p>Total : {cart.total}</p>
+      <p>Total : {TotalCart} €</p>
     </div>
   );
 
@@ -546,7 +558,7 @@ console.log("userData isValid", userData)
           trigger="click"
           
         >
-          <FontAwesomeIcon className={styles.headerIcons} icon={faUser} />
+          <span className={styles.headerIcons}><FontAwesomeIcon icon={faUser} /></span>
         </Popover>
 
         <Popover
@@ -554,10 +566,7 @@ console.log("userData isValid", userData)
           className={styles.popover}
           trigger="click"
         >
-          <FontAwesomeIcon
-            className={styles.headerIcons}
-            icon={faCartShopping}
-          />
+          <span className={styles.headerIcons}><FontAwesomeIcon icon={faCartShopping} /></span>
         </Popover>
       </div>
 

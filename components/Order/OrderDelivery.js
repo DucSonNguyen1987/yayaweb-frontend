@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../styles/OrderPayment.module.css'; 
+import styles from './styles/OrderPayment.module.css';
 import { useSelector } from 'react-redux';
 
 function OrderDelivery(props) {
@@ -13,6 +13,10 @@ function OrderDelivery(props) {
       <h3>Adresse de livraison</h3>
       {user.address && (
         <div className={styles.userDeliveryAddress}>
+          <div className={styles.userCivility}>
+            <span className={styles.userLabel}>Civilité</span>
+            <span className={styles.userField}>{user.gender === 'male' ? 'M.' : user.gender === 'female' ? 'Mme' : user.gender}</span>
+          </div>
           <div className={styles.userFirstName}>
             <span className={styles.userLabel}>Prénom</span>
             <span className={styles.userField}>{user.firstName}</span>

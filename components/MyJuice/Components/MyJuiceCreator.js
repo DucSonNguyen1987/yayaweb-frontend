@@ -3,48 +3,95 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/MyJuiceCreator.module.css";
 import { saveMyJuice } from "../../../reducers/myJuice";
 import { addToCart } from "../../../reducers/cart";
-import { Modal, Input } from "antd";
+import { Modal, Input, Flex, Radio, InputNumber, Button } from "antd";
 
 export const MyJuiceCreator = () => {
-
-const dispatch = useDispatch ();
-const user = useSelector((state)=> state.user.value);
-const cart = useSelector((state)=>state.cart.value);
-// const myJuice = useSelector((state)=>state.myJuice.value)
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.value);
+  const cart = useSelector((state) => state.cart.value);
+  // const myJuice = useSelector((state)=>state.myJuice.value)
 
   // state dégradé
   const [colorGradient, setColorGradient] = useState([]);
 
   // Recette Saved
-  const [savedJuice, setSavedJuice]= useState([]);
+  const [savedJuice, setSavedJuice] = useState([]);
 
+  
 
-let ingredients = [
-    { name: "Ananas", dosage: 10, color: "#F2B705", amount: 0 },
-    { name: "Pomme", dosage: 10, color: "#F2EFBD", amount: 0 },
-    { name: "Carotte", dosage: 10, color: "#F24405", amount: 0 },
-    { name: "Gingembre", dosage: 2, color: "#F2DD72", amount: 0 },
-    { name: "Curcuma", dosage: 1.5, color: "#F2790F", amount: 0 },
+  //Save recette finie
+  const [myJuice, setMyJuice] = useState([]);
+  const [productId, setProductId] = useState(null);
+  const [productName, setProductName]= useState(null);
+  const [composition, setComposition] = useState([]);
+  const [volume, setVolume] = useState("250ml");
+  const [category, setCategory]= useState("MYJUICE")
+  const [quantity, setQuantity] = useState(6);
+  const [price, setPrice] = useState(0);
+  const [bottle, setBottle]= useState('verre');
+  const [description, setDescription]= useState(null);
+
+  // state ouverture/fermeture modal de commande
+  const [open, setOpen] = useState(false);
+
+  let ingredients = [
+    {
+      name: "Ananas",
+      dosage: 10,
+      color: "#F2B705",
+      percentage: 0,
+      price: 0.15,
+    },
+    { name: "Pomme",
+      dosage: 10,
+      color: "#F2EFBD",
+      percentage: 0,
+      price: 0.07 },
+    {
+      name: "Carotte",
+      dosage: 10,
+      color: "#F24405",
+      percentage: 0,
+      price: 0.067,
+    },
+    {
+      name: "Gingembre",
+      dosage: 2,
+      color: "#F2DD72",
+      percentage: 0,
+      price: 0.027,
+    },
+    {
+      name: "Curcuma",
+      dosage: 0.75,
+      color: "#F2790F",
+      percentage: 0,
+      price: 0.015,
+    },
   ];
+  
   // state recette Myjuice
   const [juice, setJuice] = useState(ingredients);
 
+  useEffect(() => {
+    calculatePrice(myJuice, volume);
+  }, [myJuice]);
+
   // fonction ouverture/fermeture modal
-  const showModal = ()=>{
-    setOpen(!open)
+  const showModal = () => {
+    setOpen(!open);
   };
 
-  // state ouverture/fermeture modal de commande
-    const [open, setOpen]= useState(false);
+  
 
-  // Update le fill de la bouteille en fonction du montant d'ingrédients 
-  const calculateFillFromAmount = (drink) => {
-    return drink.reduce((acc, val) => (acc += val.amount), 0);
+  // Update le fill de la bouteille en fonction du montant d'ingrédients
+  const calculateFillFrompercentage = (drink) => {
+    return drink.reduce((acc, val) => (acc += val.percentage), 0);
   };
 
-// Update le dégradé du fill en fonction des ingrédients et de leur montant
+  // Update le dégradé du fill en fonction des ingrédients et de leur montant
   const updateColorGradient = () => {
-    const fill = calculateFillFromAmount(juice);
+    const fill = calculateFillFrompercentage(juice);
     let colorStop;
 
     if (colorStop > 100) {
@@ -52,31 +99,31 @@ let ingredients = [
     }
     setColorGradient(
       juice
-        .filter((ingredient) => ingredient.amount !== 0)
+        .filter((ingredient) => ingredient.percentage !== 0)
         .map((ingredient, i, ingredients) => {
           console.log(
             ingredient.name,
-            "ingredient.amount",
-            ingredient.amount,
+            "ingredient.percentage",
+            ingredient.percentage,
             "fill",
             fill
           );
           console.log("colorGradient", colorGradient);
           let colorStart = "";
           if (i === 0) {
-            colorStop = Number((ingredient.amount / fill) * 100);
+            colorStop = Number((ingredient.percentage / fill) * 100);
             colorStart += `${ingredient.color} 0%`;
             console.log("colorStop", colorStop);
             return `${colorStart}, ${ingredient.color} ${
-              Number(ingredient.amount / fill) * 100
+              Number(ingredient.percentage / fill) * 100
             }%`;
           } else {
             let colorString = ` ${ingredient.color} `;
             colorString +=
-              Number((ingredient.amount / fill) * 100) + Number(colorStop);
+              Number((ingredient.percentage / fill) * 100) + Number(colorStop);
             colorString += "%";
             colorStop =
-              Number((ingredient.amount / fill) * 100) + Number(colorStop);
+              Number((ingredient.percentage / fill) * 100) + Number(colorStop);
 
             return colorString;
           }
@@ -91,14 +138,14 @@ let ingredients = [
         name,
         dosage,
         color,
-        amount: 0,
+        percentage: 0,
       }))
     );
   };
 
   // Ajoute une dose d'un ingrédient dans la compo du jus
   const handleButtonPlus = (dosage, color, name) => {
-    const fill = calculateFillFromAmount(juice);
+    const fill = calculateFillFrompercentage(juice);
     if (dosage > 100 - fill) {
       return false;
     }
@@ -110,7 +157,7 @@ let ingredients = [
         } else {
           return {
             ...ingredient,
-            amount: ingredient.amount + dosage,
+            percentage: ingredient.percentage + dosage,
           };
         }
       });
@@ -126,7 +173,7 @@ let ingredients = [
 
   // Retire une dose d'un ingrédient dans la compo du jus
   const handleButtonMinus = (dosage, color, name) => {
-    const fill = calculateFillFromAmount(juice);
+    const fill = calculateFillFrompercentage(juice);
     console.log("juice", juice);
 
     if (fill > 0 && fill <= 100) {
@@ -134,10 +181,10 @@ let ingredients = [
         if (ingredient.name !== name) {
           return ingredient;
         } else {
-          if (ingredient.amount > 0) {
+          if (ingredient.percentage > 0) {
             return {
               ...ingredient,
-              amount: ingredient.amount - dosage,
+              percentage: ingredient.percentage - dosage,
             };
           }
         }
@@ -149,105 +196,177 @@ let ingredients = [
     }
   };
 
-
   // Affiche la liste des ingrédients
   const IngredientList = ingredients.map((e) => {
     return (
       <div className={styles.ingredient}>
         <p className={styles.ingredientName}>{e.name}</p>
-        <button
-          className={styles.round_button}
+        <Button
+          className={styles.round_Button}
           onClick={() => handleButtonPlus(e.dosage, e.color, e.name)}
         >
           +
-        </button>
-        <button
-          className={styles.round_button}
+        </Button>
+        <Button
+          className={styles.round_Button}
           onClick={() => handleButtonMinus(e.dosage, e.color, e.name)}
         >
           -
-        </button>
+        </Button>
       </div>
     );
   });
 
+  // Ouvrir la modal de commande
+  const ConfigureMyJuice = () => {
+    const myJuiceOrder = juice.filter(
+      (ingredient) => ingredient.percentage !== 0
+    );
 
-  //Save recette finie 
- const [myJuice, setMyJuice] = useState([]);
- const [recipeName, setRecipeName]= useState("");
+    myJuiceOrder.map((ingredient, i) => {
+      Reflect.deleteProperty(ingredient, "color");
+    });
+    setMyJuice(myJuiceOrder);
 
-const SaveMyJuice = ()=>{
-  
-  setMyJuice (
-    juice
-    .filter((ingredient) => ingredient.amount !== 0)
-  );
-  setOpen(true);
+    setOpen(true);
+  };
+
+  console.log("myJuice", myJuice);
+
+// Choisir son format
+  const onChangeVolume = (e) => {
+    console.log(`radio checked:${e.target.value}`);
+    calculatePrice(myJuice, e.target.value);
+    setVolume(e.target.value);
+  };
+  console.log("volume", volume);
+
+  // arrondir à 1 décimale
+  const roundTo = (num, precision) => {
+    const factor = Math.pow(10, precision);
+    return Math.round(num * factor) / factor;
+  };
+
+  //Calculer le prix d'1 pack de 6 en fonction du format
+  const calculatePrice = (drink, vol) => {
+    console.log("yo");
+    let calculatedPrice = drink.reduce(
+      (acc, val) => (acc += (val.percentage * val.price) / val.dosage),
+      0
+    );
+
+    if (vol === "1l") {
+      calculatedPrice *= 3.5;
+    }
+
+    
+    setPrice(roundTo(calculatedPrice, 1));
+  };
+
+//Nommer sa recette
+const nameMyJuice =(e)=>{
+  setProductName(e)
 }
- 
 
+const orderMyJuice = ()=>{
+  // ProductName => ProductId
+  const formatedName = productName.replace(" ","-");
+  setProductId(formatedName);
 
+  // Si user connecté, description = username
+  if (user.isConnected){
+    const descriptionText = `Created by ${user.name}`;
+    setDescription(descriptionText);
+  }
 
-console.log ("Myjuice", myJuice)
+  const recipe = myJuice.map((ingredient)=>{
+    return {name: ingredient.name, percentage : ingredient.percentage}
+  })
 
+  setComposition(recipe)
 
-let myIngredients;
-// Formulaire de commande
+  const options = {volume: {capacity: volume, price :0}}
+  
+  const myJuiceOrder ={productId:productId, name:productName, category, options, bottle, description, price, composition};
 
-let modalContent = (
+  console.log("myJuiceOrder", myJuiceOrder)
+  dispatch(addToCart({product: myJuiceOrder, quantity}));
+  setOpen(false);
 
-myIngredients = myJuice.map((ingredient,i)=> {
-  return (<li>{ingredient.name} {ingredient.amount}%</li>)
-}),
+}
+console.log(composition)
 
+const rememberMyJuice =()=>{
 
-  <Modal
-  open={open}
-  title ="Commander mon jus"
-  onCancel={showModal}
-  footer ={[
-    <div className={styles.footer}>
-          <button className={styles.footerButton} key="Retour" onClick={showModal} >
-            {" "}
-            Retour
-          </button>
-          <button className={styles.footerButton} key="submit" >
-           Commander
-          </button>
-      </div>
-  ]}>
+  const favoriteJuice = {name: productName, composition: composition, price: price}
+  console.log("favoriteJuice", favoriteJuice)
+  dispatch(saveMyJuice({favoriteJuice}))
+  
+}
+  
 
-  <div className ={styles.recapContainer}>
-    <Input
-    className={styles.input}
-    type ="text"
-    placeholder= "Donnez un Nom à votre recette"
-    id= "RecipeName"
-    onChange={(e)=> setRecipeName(e.target.value)}
-    value={recipeName}
-    ></Input>
-    <h3>ingrédients</h3>
+  // Formulaire de commande
+  let myIngredients;
+  let modalContent =
+    ((myIngredients = myJuice.map((ingredient, i) => {
+      return (
+        <li className={styles.MyingredientsList}>
+          {ingredient.name} {ingredient.percentage}%
+        </li>
+      );
+    })),
+    (
+      <Modal
+        open={open}
+        title="Commander mon jus"
+        onCancel={showModal}
+        footer={[
+          <div className={styles.footer}>
+            <Button className={styles.Button} onClick={rememberMyJuice}>Enregistrer ce jus</Button>
+            <Button className={styles.footerButton} key="submit" onClick={orderMyJuice}>
+              Commander
+            </Button>
+            
+          </div>
+        ]}
+      >
+        <div className={styles.modalMain}>
+          <div className={styles.recapContainer}>
+            <Input
+            className ={styles.Input}
+            type= "text"
+            name = "ProductName"
+            value ={productName}
+            placeholder = "Nommez votre recette"
+            onChange={(e)=>setProductName(e.target.value)}
+            ></Input>
+            <h4 className={styles.subTitle}>Ingrédients</h4>
 
-    {myIngredients}
+            {myIngredients}
 
-      
+            <h4 className={styles.subTitle}>Volume</h4>
 
+            <Flex vertical gap="middle">
+              <Radio.Group
+                onChange={onChangeVolume}
+                defaultValue={"250ml"}
+                ButtonStyle="solid"
+                ButtonCheckedBgDisabled="#444444"
+                ButtonSolidCheckedColor="#F27C00"
+              >
+                <Radio.Button value="250">250ml</Radio.Button>
+                <Radio.Button value="1l">1l</Radio.Button>
+              </Radio.Group>
+            </Flex>
+          </div>
+          <div className={styles.pricetag}></div>
+          <h4 className={styles.subTitle}>Prix</h4>
+          <h2 className={styles.price}>{price} €</h2>
+        </div>
 
-
-
-  </div>
-
-
-
-
-
-  </Modal>
-)
-
-
-
-
-
+        
+      </Modal>
+    ));
 
   return (
     <div className={styles.mainContainer}>
@@ -257,7 +376,7 @@ myIngredients = myJuice.map((ingredient,i)=> {
           <div
             className={styles.bottle_bar_fill}
             style={{
-              height: `${calculateFillFromAmount(juice)}%`,
+              height: `${calculateFillFrompercentage(juice)}%`,
               backgroundImage: `linear-gradient(to top, ${colorGradient.join(
                 ","
               )} )`,
@@ -268,22 +387,25 @@ myIngredients = myJuice.map((ingredient,i)=> {
         </div>
 
         <div className={styles.fill_label}>
-          {calculateFillFromAmount(juice)}%
+          {calculateFillFrompercentage(juice)}%
         </div>
-        <div className ={styles.buttonContainer}>
-        <button className={styles.button} onClick={()=>{SaveMyJuice()}} >Commander ce jus</button>
-        <button className={styles.button} onClick={handleReset}>
-          Reset
-        </button>
-
+        <div className={styles.ButtonContainer}>
+          <Button
+            className={styles.Button}
+            onClick={() => {
+              ConfigureMyJuice();
+            }}
+          >
+            Commander ce jus
+          </Button>
+          <Button className={styles.Button} onClick={handleReset}>
+            Reset
+          </Button>
         </div>
-        
       </div>
 
       <div className={styles.ingredientList}>{IngredientList}</div>
       {modalContent}
-
     </div>
-   
   );
 };
