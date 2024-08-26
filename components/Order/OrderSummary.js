@@ -1,9 +1,9 @@
 import React from 'react';
-import styles from '../../styles/OrderPayment.module.css'; 
+import styles from './styles/OrderPayment.module.css'; 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from 'react-redux';
-import { removeFromCart } from '../store/cartSlice';
+import { removeFromCart } from '../../reducers/cart';
 import Image from 'next/image';
 
 function OrderSummary(props) {

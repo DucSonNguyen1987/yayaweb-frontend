@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../styles/OrderPayment.module.css';
+import styles from '../components/Order/styles/OrderPayment.module.css';
 import OrderSummary from '../components/Order/OrderSummary';
 import OrderDelivery from '../components/Order/OrderDelivery';
 import OrderPaymentModes from '../components/Order/OrderPaymentModes';

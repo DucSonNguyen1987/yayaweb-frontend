@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    value: { recipe : [], createdBy: null, price: null }
+    value: { productId : null, composition : [], createdBy: null, price: null }
 }
 
 export const  myJuiceSlice = createSlice ({
@@ -9,13 +9,15 @@ export const  myJuiceSlice = createSlice ({
     initialState,
     reducers : {
         saveMyJuice: (state, action)=>{
-            state.value.recipe = action.payload.recipe;
+            state.value.productId = action.payload.productId;
+            state.value.composition = action.payload.composition;
             state.value.createdBy = action.payload.createdBy;
             state.value.price = action.payload.price;
         },
 
         forgetMyJuice : (state)=>{
-            state.value.recipe = [];
+            state.value.productId= null;
+            state.value.composition = [];
             state.value.createdBy = null;
             state.value.price = null;
         },

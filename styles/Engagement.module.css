@@ -1,0 +1,20 @@
+.engagementContainer {
+    background-color: var(--yaya-third);
+    padding: 40px 20px;
+    text-align: center;
+    border-radius: 8px;
+    margin-top: 40px; 
+  }
+  
+  .engagementTitle {
+    font-size: 28px;
+    color: white; 
+    margin-bottom: 20px;
+  }
+  
+  .engagementDescription {
+    font-size: 18px;
+    color: black; 
+    line-height: 1.5;
+  }
+  

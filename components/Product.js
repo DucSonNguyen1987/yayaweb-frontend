@@ -67,7 +67,7 @@ function Product(props) {
   // console.log('product', product);
           
   const onChangeVolume = (e) => {
-    console.log(`radio checked:${e.target.value}`);
+    console.log(`radio checked:${e.target.value}`, e.target.value.capacity);
     setVolume(e.target.value);
   };
 
@@ -81,6 +81,7 @@ function Product(props) {
     dispatch(addToCart({product: {...product, options}, quantity}));
   };
 
+
   // display loading (while retrieving product info)
   if(isLoading || !props) {
     return <div className={styles.loading}></div>;
@@ -91,28 +92,32 @@ function Product(props) {
     return null;
   }
 
+  const productImages = product.images.filter((image, i) => !image.productOptions || image.productOptions.volume && volume.capacity === image.productOptions.volume.capacity);
+  console.log(productImages);
+  
   return (
     <div className={styles.productContainer}>
       <div className={styles.images}>
-        <Carousel arrows infinite={false} draggable={true}>
-          {product.images.map((image, i) => (
-              <div className={styles.productImage}>
-                <Image src={image} key={i} layout="fill" objectFit='contain' objectPosition='center' />
-              </div>
-            )
-          )}
-        </Carousel>
+        {productImages.length && 
+          <Carousel arrows infinite={false} draggable={true}>
+            {productImages.map((image, i) => (
+                  <div className={styles.productImage} key={'productImage-'+i}>
+                    <Image src={image.url} key={i} layout="fill" objectFit='contain' objectPosition='center' />
+                  </div>
+            ))}
+          </Carousel>
+        }
       </div>
       <div className={styles.productDetails}>
         <h1 className={styles.productName}>{product.name}</h1>
         <div className={styles.productDescription}>{product.description}</div>
-        <div className={styles.productIngredients}>Ingrédients : {product.composition.sort(({amount:a}, {amount:b}) => b-a).map(ingredient => ingredient.name).join(', ')}.</div>
+        <div className={styles.productIngredients}>Ingrédients : {product.composition.sort(({percentage:a}, {percentage:b}) => b-a).map(ingredient => ingredient.name).join(', ')}.</div>
         <div className={styles.productNutritionInfo}>Bienfaits nutritionnels : ...</div>
         <div className={styles.productVolume}>
           <span>Volume</span>
           <Flex vertical gap="middle">
             <Radio.Group onChange={onChangeVolume} defaultValue={product.volumes[0]}>
-            {product.volumes.map((volume,i) => <Radio.Button value={volume}>{volume.capacity}</Radio.Button>)}
+            {product.volumes.map((volume,i) => <Radio.Button value={volume} key={i}>{volume.capacity}</Radio.Button>)}
             </Radio.Group>
           </Flex>
         </div>
