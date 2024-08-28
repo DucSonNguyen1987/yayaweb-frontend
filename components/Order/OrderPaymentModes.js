@@ -33,7 +33,7 @@ function OrderPaymentModes(props) {
       items: cart.items,
       deliveryDate: twoDaysAfter,
       deliveryAddress,
-      totalAmount: cart.total,
+      total: cart.total,
     };
     // send post request to backend
     const response = await api.post('/order-confirm', {
