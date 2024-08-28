@@ -5,8 +5,8 @@ import { useRouter } from 'next/router';
 import api from '../api/axios';
 import { Collapse } from "antd";
 
-import OrderSummary from '../components/Order/OrderSummary';
-import OrderDelivery from '../components/Order/OrderDelivery';
+import OrderSummary from './Order/OrderSummary';
+import OrderDelivery from './Order/OrderDelivery';
 
 
 function UserOrders() {
