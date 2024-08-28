@@ -60,10 +60,9 @@ function CategoryProductsPage() {
         {filteredProducts.map(product => (
           <ProductVignette
             key={product._id}
-            id={product._id}
-            name={product.name}
+            {...product}
             imgSrc={product.images[0]?.url || '/no-image.png'}
-            price={product.price}
+            // price={product.price}
             onAddToCart={handleAddToCart}
           />
         ))}

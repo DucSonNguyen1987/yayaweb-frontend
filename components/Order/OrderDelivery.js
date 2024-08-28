@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './styles/OrderPayment.module.css'; 
 import { useSelector } from 'react-redux';
+import DeliverySchedule from './DeliverySchedule';
 
 function OrderDelivery(props) {
   const user = useSelector((state) => state.user.value);
@@ -20,7 +21,7 @@ function OrderDelivery(props) {
     <div className={styles.orderDelivery}>
       <h2>Livraison</h2>
       <h3>Créneau de livraison</h3>
-      <p>...</p>
+      <DeliverySchedule />
       <h3>Adresse de livraison</h3>
       {deliveryAddress && (
         <div className={styles.userDeliveryAddress}>

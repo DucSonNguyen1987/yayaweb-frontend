@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout, signUp } from "../../reducers/user";
+import { useRouter } from 'next/router';
+import Button from '../shared/Button';
+
+
 
 import styles from "./styles/Header.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,12 +15,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 
-import { Input, Modal, Popover, Button } from "antd";
+import { Input, Modal, Popover } from "antd";
 import Link from "next/link";
 import { removeFromCart } from "../../reducers/cart";
 
 function Header() {
-
+  const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
   const cart = useSelector((state) => state.cart.value);
@@ -512,6 +516,7 @@ console.log("userData isValid", userData)
           <span>{item.product.options.volume.capacity}</span>
           <span>&times; {item.quantity}</span>
           <FontAwesomeIcon className={styles.headerIcons} icon={faTrashCan} onClick={() => dispatch(removeFromCart(item.product))}/>
+          <Button onClick={() => router.push('/commander')}>Commander</Button>
         </div>
       );
    });

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { DatePicker, Radio } from 'antd';
-import 'antd/dist/antd.css';
-import styles from '../../styles/OrderPayment.module.css';
+// import 'antd/dist/antd.css';
+import styles from './styles/OrderPayment.module.css';
 
 function DeliverySchedule() {
   const [selectedDate, setSelectedDate] = useState(null);
