@@ -1,0 +1,8 @@
+.userOrdersPage {
+    padding: var(--yaya-padding);
+}
+
+.orderHeader {
+    display: flex;
+    justify-content: space-between;
+}
