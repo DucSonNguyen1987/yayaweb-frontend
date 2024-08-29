@@ -18,7 +18,7 @@ export const cartSlice = createSlice({
             } else {
                 state.value.items.push(action.payload);
             }
-            state.value.total = state.value.items.reduce((acc, item) => { return (acc + ((item.product.price+item.product.options.volume.price) * item.quantity)).toFixed(2) }, 0);
+            state.value.total = state.value.items.reduce((acc, item) => { return (acc + ((item.product.price+item.product.options.volume.price) * item.quantity)) }, 0);
         },
         removeFromCart : (state, action) => {
             const items = state.value.items;

@@ -1,11 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from './styles/OrderPayment.module.css'; 
 import Button from '../shared/Button';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCcPaypal, faCcStripe } from '@fortawesome/free-brands-svg-icons';
 import { faCreditCard } from "@fortawesome/free-solid-svg-icons";
 import api from '../../api/axios';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector,  } from 'react-redux';
+import { loadStripe} from '@stripe/stripe-js';
+
+const stripePromise= loadStripe(`${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`);
 
 
 function OrderPaymentModes(props) {
@@ -13,8 +16,27 @@ function OrderPaymentModes(props) {
   const cart = useSelector((state) => state.cart.value);
   const user = useSelector((state) => state.user.value);
 
-  const handlePaymentCreditCard = async () => {
-    console.log('handlePaymentCreditCard');
+
+useEffect(()=>{
+ // Check to see if this is a redirect back from Checkout
+    const query = new URLSearchParams(window.location.search);
+    if(query.get('success')){
+      console.log('Order placed! Youwill receive an email confirmation');
+    }
+
+    if (query.get('canceled')){
+      console.log('Order Canceled -- continue to shop around and checkout when you’re ready. ');
+    }
+
+},[])
+
+
+
+
+
+
+  const handlePaymentStripe = async () => {
+    console.log('handlePaymentStripe');
 
     // fake date, TODO get real date from delivery choices
     const today = new Date();
@@ -44,35 +66,41 @@ function OrderPaymentModes(props) {
     console.log('/order-confirm data', data);
     if(data.result) {
       console.log('Order confirmed', data.data);
+      // requete post vers /api/checkout_sessions avec en data orderData
+      fetch('/api/checkout_sessions', {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderData),
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        router.push(data.url);
+      });
     } else {
       console.error('Order confirmation failed', data);
     }
 
+
+
   };
   
-  const handlePaymentStripe = () => {
-    console.log('handlePaymentStripe');
-  };
   
-  const handlePaymentPayPal = () => {
-    console.log('handlePaymentPayPal');
-  };
+  
+ 
 
   return (
     <div className={styles.orderPaymentProceed}>
       <h2>Paiement</h2>
       <div className={styles.orderPaymentModes}>
-        <Button backgroundColor='var(--yaya-third)' color='#FFF' onClick={handlePaymentCreditCard}>
-          <FontAwesomeIcon icon={faCreditCard} /> Carte Bleue
-        </Button>
         <Button backgroundColor='var(--yaya-third)' color='#FFF' onClick={handlePaymentStripe}>
-          <FontAwesomeIcon icon={faCcStripe} /> Stripe
+          <FontAwesomeIcon icon={faCreditCard} /> Stripe
         </Button>
-        <Button backgroundColor='var(--yaya-third)' color='#FFF' onClick={handlePaymentPayPal}>
-          <FontAwesomeIcon icon={faCcPaypal} /> Paypal
-        </Button>
+        
       </div>
     </div>
+    
+
   );
 }
 

@@ -14,20 +14,20 @@ import {
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 
-<<<<<<< HEAD
-import { Input, Modal, Popover, Button } from "antd";
-=======
+
+
+
 
 import { Input, Modal, Popover } from "antd";
->>>>>>> 2eb5d18fdc222c7f09b7df815ab645f2242828d7
+
 import Link from "next/link";
 import { removeFromCart } from "../../reducers/cart";
 
 function Header() {
-<<<<<<< HEAD
-=======
+
+
   const router = useRouter();
->>>>>>> 2eb5d18fdc222c7f09b7df815ab645f2242828d7
+
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
   const cart = useSelector((state) => state.cart.value);
@@ -471,7 +471,6 @@ function Header() {
     return Math.round(num * factor) / factor;
   };
 
-<<<<<<< HEAD
   // Popover Account
   if (!user.accessToken) {
     popoverUserContent = (
@@ -515,7 +514,11 @@ function Header() {
               Se Connecter
             </button>
           </div>
-=======
+
+        </div>
+        </div>
+);
+  }
 
     if (!user.accessToken) {
   popoverUserContent = (
@@ -559,10 +562,10 @@ function Header() {
             Se Connecter
           </button>
           
->>>>>>> 2eb5d18fdc222c7f09b7df815ab645f2242828d7
         </div>
       </div>
-    );
+    </div>
+  )
   } else if (user.accessToken) {
     popoverUserContent = (
       <div className={styles.logoutSection}>
@@ -577,28 +580,11 @@ function Header() {
           Se déconnecter
         </button>
       </div>
-    );
+    )
   }
 
-  const cartItems = cart.items.map((item, i) => {
-    return (
-      <div className={styles.popoverCartItem} key={i}>
-        <span>{item.product.id}</span>
-        <span>{item.product.name}</span>
-        <span>{item.product.price + item.product.options.volume.price}€</span>
-        <span>{item.product.options.volume.capacity}</span>
-        <span>&times; {item.quantity}</span>
-        <FontAwesomeIcon
-          className={styles.headerIcons}
-          icon={faTrashCan}
-          onClick={() => dispatch(removeFromCart(item.product))}
-        />
-      </div>
-    );
-  });
+  
 
-<<<<<<< HEAD
-=======
    const cartItems = cart.items.map((item, i) => {
       return (
         <div className={styles.popoverCartItem} key={i}>
@@ -613,10 +599,9 @@ function Header() {
       );
    });
    
->>>>>>> 2eb5d18fdc222c7f09b7df815ab645f2242828d7
   let popoverCartContent;
 
-  let TotalCart = cart.total.toFixed(2);
+  let TotalCart = cart.total;
 
   // Popover Panier
   popoverCartContent = (
