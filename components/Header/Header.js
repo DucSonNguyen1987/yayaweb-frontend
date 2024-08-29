@@ -7,16 +7,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
   faCartShopping,
-  faTrashCan
+  faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
-
 
 import { Input, Modal, Popover, Button } from "antd";
 import Link from "next/link";
 import { removeFromCart } from "../../reducers/cart";
 
 function Header() {
-
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
   const cart = useSelector((state) => state.cart.value);
@@ -24,19 +22,22 @@ function Header() {
   // State Modal
   const [open, setOpen] = useState(false);
 
-  //state Popover
-  const [ popover, setPopover] = useState(false)
-  
+  //state Popover Cart
+  const [popover, setPopover] = useState(false);
+
+  //State popover Shop
+  const [shopPopover, setShopPopover] = useState(false);
+
   // States Login
   const [signInMail, setSignInMail] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
-  const [Connected, setConnected]= useState(false)
-  
+  const [Connected, setConnected] = useState(false);
+
   // States Sign Up
   const [gender, setGender] = useState("");
   const [lastName, setLastName] = useState("");
   const [firstName, setfirstName] = useState("");
-  const [ age, setAge] = useState("");
+  const [age, setAge] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,38 +46,34 @@ function Header() {
   const [streetName, setStreetName] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [city, setCity] = useState("");
-  const [isPending, setIsPending]= useState(false);
+  const [isPending, setIsPending] = useState(false);
 
- 
-   // State pour lister les erreurs dans le form
-  const [errors, setErrors]= useState ([]);
-
-    
+  // State pour lister les erreurs dans le form
+  const [errors, setErrors] = useState([]);
 
   const showModal = () => {
     setOpen(true);
   };
 
-  const showPop = () =>{
+  const showPop = () => {
     setPopover(true);
-  }
+  };
 
+  // Check la validité de l'email renseignée
+  const isValidEmail = (email) => {
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    return emailRegex.test(email);
+  };
 
-// Check la validité de l'email renseignée
-const isValidEmail = (email)=>{
-  const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-  return emailRegex.test(email);
-}
+  // check si le numéro de tel fait 10 chiffres
+  const isValidPhoneNumber = (phoneNumber) => {
+    const phoneRegex = /^\d{10}$/;
+    return phoneRegex.test(phoneNumber);
+  };
 
-// check si le numéro de tel fait 10 chiffres
-const isValidPhoneNumber = (phoneNumber)=>{
-  const phoneRegex = /^\d{10}$/;
-  return phoneRegex.test (phoneNumber);
-}
-
-// Check le password (>8 caractères, au moins 1 Maj, et 1 min, 1 caractère spécial)
-const isValidPassword = (password)=> {
-  const symbolRegex = /[!@#$%^&*(),.?":{}|<>]/;
+  // Check le password (>8 caractères, au moins 1 Maj, et 1 min, 1 caractère spécial)
+  const isValidPassword = (password) => {
+    const symbolRegex = /[!@#$%^&*(),.?":{}|<>]/;
     const numberRegex = /[0-9]/;
     const upperCaseRegex = /[A-Z]/;
     const lowerCaseRegex = /[a-z]/;
@@ -87,121 +84,120 @@ const isValidPassword = (password)=> {
       upperCaseRegex.test(password) &&
       lowerCaseRegex.test(password)
     );
-};
+  };
 
+  // user majeur ?
+  const isValidAge = (age) => {
+    return parseInt(age) >= 18;
+  };
 
-// user majeur ?
-const isValidAge = (age) => {
-  return parseInt(age) >= 18;
-};
-
-
-// messages en cas d'erreur(s)
-  const validateForm= ()=>{
+  // messages en cas d'erreur(s)
+  const validateForm = () => {
     let newErrors = {};
 
-    if(!gender){
-      newErrors.gender = " Votre civilité est requise "
+    if (!gender) {
+      newErrors.gender = " Votre civilité est requise ";
     }
-    if(!firstName){
-      newErrors.firstName = " Votre prénom est requis "
+    if (!firstName) {
+      newErrors.firstName = " Votre prénom est requis ";
     }
-    if(!lastName){
-      newErrors.lastName = " Votre nom est requis "
+    if (!lastName) {
+      newErrors.lastName = " Votre nom est requis ";
     }
-    if(!age){
-      newErrors.age = " Votre age est requis "
-    }else if (!isValidAge(age)) {
-      newErrors.age = "Vous devez être majeur"
+    if (!age) {
+      newErrors.age = " Votre age est requis ";
+    } else if (!isValidAge(age)) {
+      newErrors.age = "Vous devez être majeur";
     }
-    if(!phoneNumber){
-      newErrors.phoneNumber = " Votre téléphone est requis "
-    }else if (!isValidPhoneNumber(phoneNumber)){
-      newErrors.phoneNumber = "Votre numéro doit comporter 10 chiffres"
+    if (!phoneNumber) {
+      newErrors.phoneNumber = " Votre téléphone est requis ";
+    } else if (!isValidPhoneNumber(phoneNumber)) {
+      newErrors.phoneNumber = "Votre numéro doit comporter 10 chiffres";
     }
 
-    if(!email){
-      newErrors.email = " Votre adresse mail est requise "
+    if (!email) {
+      newErrors.email = " Votre adresse mail est requise ";
     } else if (!isValidEmail(email)) {
-      newErrors.email = " Votre adresse mail est invalide"
+      newErrors.email = " Votre adresse mail est invalide";
     }
 
-    if(!password){
-      newErrors.password = " Un Mot de passe est requis "
-    } else if(!isValidPassword(password)){
-      newErrors.password = "Votre mot de pass doit comporter au moins 8 caractères et au moins 1 scaractère spécial, 1 chiffre, 1 majuscule et 1 minuscule";
+    if (!password) {
+      newErrors.password = " Un Mot de passe est requis ";
+    } else if (!isValidPassword(password)) {
+      newErrors.password =
+        "Votre mot de pass doit comporter au moins 8 caractères et au moins 1 scaractère spécial, 1 chiffre, 1 majuscule et 1 minuscule";
     }
-    if(!confirmPassword){
-      newErrors.confirmPassword = " Votre civilité est requise "
-    }else if (confirmPassword !== password) {
+    if (!confirmPassword) {
+      newErrors.confirmPassword = " Votre civilité est requise ";
+    } else if (confirmPassword !== password) {
       newErrors.confirmPassword = "les Mots de passes doivent être identiques";
     }
-    if(!streetNumber){
-      newErrors.streetNumber = " Votre numéro de rue est requis "
+    if (!streetNumber) {
+      newErrors.streetNumber = " Votre numéro de rue est requis ";
     }
-    if(!streetName){
-      newErrors.streetName = " Votre nom de voie est requis "
+    if (!streetName) {
+      newErrors.streetName = " Votre nom de voie est requis ";
     }
-    if(!zipCode){
-      newErrors.zipCode = " Votre code postal est requis "
+    if (!zipCode) {
+      newErrors.zipCode = " Votre code postal est requis ";
     }
-    if(!city){
-      newErrors.city = " Votre ville est requise "
+    if (!city) {
+      newErrors.city = " Votre ville est requise ";
     }
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length ===0;
-  }
+    return Object.keys(newErrors).length === 0;
+  };
 
-  console.log("errors",errors);
+  console.log("errors", errors);
 
   const handleRegister = (e) => {
     e.preventDefault();
     const isValid = validateForm();
 
-    const userAddress ={streetName, streetNumber, zipCode, city}
-    
-    const userData ={gender, firstName, lastName,age, phoneNumber, email, password, address : [userAddress]}
-    
+    const userAddress = { streetName, streetNumber, zipCode, city };
 
+    const userData = {
+      gender,
+      firstName,
+      lastName,
+      age,
+      phoneNumber,
+      email,
+      password,
+      address: [userAddress],
+    };
 
-    if(isValid){
+    if (isValid) {
+      setIsPending(true);
 
-      setIsPending(true)
-      
-console.log("userData isValid", userData)
+      console.log("userData isValid", userData);
 
-      fetch('http://localhost:3000/users/signup', {
+      fetch("http://localhost:3000/users/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body : JSON.stringify(userData)
-        
+        body: JSON.stringify(userData),
       })
         .then((response) => response.json())
         .then((data) => {
-          
-            console.log('new user added', data)
-          setIsPending(false)
-          dispatch(login({ email: email, data: data.data }))
-          setOpen(false)
-          setConnected(true)
+          console.log("new user added", data);
+          setIsPending(false);
+          dispatch(login({ email: email, data: data.data }));
+          setOpen(false);
+          setConnected(true);
         });
     } else {
-       console.log("Form validation failed")
+      console.log("Form validation failed");
     }
 
     // setLoading(true);
-    
-    
-    
   };
 
   const handleCancel = () => {
     setOpen(false);
   };
 
-  
-// Modal Register
+  // Modal Register
   let modalContent = (
     <Modal
       open={open}
@@ -210,11 +206,19 @@ console.log("userData isValid", userData)
       onCancel={handleCancel}
       footer={[
         <div className={styles.footer}>
-          <button className={styles.footerButton} key="Retour" onClick={handleCancel}>
+          <button
+            className={styles.footerButton}
+            key="Retour"
+            onClick={handleCancel}
+          >
             {" "}
             Retour
           </button>
-          <button className={styles.footerButton} key="submit" onClick={handleRegister}>
+          <button
+            className={styles.footerButton}
+            key="submit"
+            onClick={handleRegister}
+          >
             S'inscrire
           </button>
         </div>,
@@ -225,13 +229,20 @@ console.log("userData isValid", userData)
           <div className={styles.infoSection}>
             <p className={styles.popovertitle}> Informations personnelles</p>
             <div>
-              <select className={styles.select} name="gender" value={gender} onChange={(e)=>setGender(e.target.value)}>
+              <select
+                className={styles.select}
+                name="gender"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+              >
                 <option value="">Civilité</option>
                 <option value="male">Monsieur</option>
                 <option value="female">Madame</option>
                 <option value="other">Autre</option>
               </select>
-              {errors.gender && <div className={styles.error}>{errors.gender}</div>}
+              {errors.gender && (
+                <div className={styles.error}>{errors.gender}</div>
+              )}
             </div>
 
             <div>
@@ -242,126 +253,135 @@ console.log("userData isValid", userData)
                 name="lastName"
                 value={lastName}
                 placeholder="Nom"
-                onChange={(e)=>setLastName(e.target.value)}
+                onChange={(e) => setLastName(e.target.value)}
               />
-               {errors.firstName && <div className={styles.error}>{errors.firstName}</div>}
+              {errors.firstName && (
+                <div className={styles.error}>{errors.firstName}</div>
+              )}
             </div>
 
             <div>
               <input
-              className={styles.Input}
+                className={styles.Input}
                 type="text"
                 required
                 name="firstName"
                 value={firstName}
                 placeholder="Prénom"
-                onChange={(e)=>setfirstName(e.target.value)}
-
+                onChange={(e) => setfirstName(e.target.value)}
               />
-              {errors.lastName && <div className={styles.error}>{errors.lastName}</div>}
+              {errors.lastName && (
+                <div className={styles.error}>{errors.lastName}</div>
+              )}
             </div>
 
             <div>
               <input
-              className={styles.Input}
+                className={styles.Input}
                 type="number"
                 required
                 name="age"
                 value={age}
                 placeholder="Age"
-                onChange={(e)=>setAge(e.target.value)}
+                onChange={(e) => setAge(e.target.value)}
               />
-               {errors.age && <div className={styles.error}>{errors.age}</div>}
+              {errors.age && <div className={styles.error}>{errors.age}</div>}
             </div>
 
             <div>
               <input
-              className={styles.Input}
+                className={styles.Input}
                 type="text"
                 required
                 name="phoneNumber"
                 value={phoneNumber}
                 placeholder="Téléphone"
-                onChange={(e)=>setPhoneNumber(e.target.value)}
+                onChange={(e) => setPhoneNumber(e.target.value)}
               />
-               {errors.phoneNumber && <div className={styles.error}>{errors.phoneNumber}</div>}
+              {errors.phoneNumber && (
+                <div className={styles.error}>{errors.phoneNumber}</div>
+              )}
             </div>
 
             <div>
               <input
-              className={styles.Input}
+                className={styles.Input}
                 type="text"
                 required
                 name="email"
                 value={email}
                 placeholder="Email"
-                onChange={(e)=>setEmail(e.target.value)}
-                
+                onChange={(e) => setEmail(e.target.value)}
               />
-              {errors.email && <div className={styles.error}>{errors.email}</div>}
+              {errors.email && (
+                <div className={styles.error}>{errors.email}</div>
+              )}
             </div>
           </div>
 
           <div className={styles.addressSection}>
             <p className={styles.popovertitle}> Adresse</p>
             <div className={styles.addressFields}>
-            <div>
-              <input
-              className={styles.Input}
-                type="text"
-                required
-                name="streetNumber"
-                value={streetNumber}
-                placeholder="N°"
-                onChange={(e)=>setStreetNumber(e.target.value)}
-                
-              />
-              {errors.streetNumber && <div className={styles.error}>{errors.streetNumber}</div>}
-            </div>
+              <div>
+                <input
+                  className={styles.Input}
+                  type="text"
+                  required
+                  name="streetNumber"
+                  value={streetNumber}
+                  placeholder="N°"
+                  onChange={(e) => setStreetNumber(e.target.value)}
+                />
+                {errors.streetNumber && (
+                  <div className={styles.error}>{errors.streetNumber}</div>
+                )}
+              </div>
 
-            <div>
-              <input
-              className={styles.Input}
-                type="text"
-                required
-                name="streetName"
-                value={streetName}
-                placeholder="Nom de Rue"
-                onChange={(e)=>setStreetName(e.target.value)}
-                
-              />
-              {errors.streetName && <div className={styles.error}>{errors.streetName}</div>}
-            </div>
+              <div>
+                <input
+                  className={styles.Input}
+                  type="text"
+                  required
+                  name="streetName"
+                  value={streetName}
+                  placeholder="Nom de Rue"
+                  onChange={(e) => setStreetName(e.target.value)}
+                />
+                {errors.streetName && (
+                  <div className={styles.error}>{errors.streetName}</div>
+                )}
+              </div>
 
-            <div>
-              <input
-              className={styles.Input}
-                type="text"
-                required
-                name="zipCode"
-                value={zipCode}
-                placeholder="Code Postal"
-                onChange={(e)=>setZipCode(e.target.value)}
-                
-              />
-              {errors.zipCode && <div className={styles.error}>{errors.zipCode}</div>}
-            </div>
+              <div>
+                <input
+                  className={styles.Input}
+                  type="text"
+                  required
+                  name="zipCode"
+                  value={zipCode}
+                  placeholder="Code Postal"
+                  onChange={(e) => setZipCode(e.target.value)}
+                />
+                {errors.zipCode && (
+                  <div className={styles.error}>{errors.zipCode}</div>
+                )}
+              </div>
 
-            <div>
-              <input
-              className={styles.Input}
-                type="text"
-                required
-                name="city"
-                value={city}
-                placeholder="Ville"
-                onChange={(e)=>setCity(e.target.value)}
-              />
-              {errors.city && <div className={styles.error}>{errors.city}</div>}
-
+              <div>
+                <input
+                  className={styles.Input}
+                  type="text"
+                  required
+                  name="city"
+                  value={city}
+                  placeholder="Ville"
+                  onChange={(e) => setCity(e.target.value)}
+                />
+                {errors.city && (
+                  <div className={styles.error}>{errors.city}</div>
+                )}
+              </div>
             </div>
-            </div>
-          
           </div>
         </div>
 
@@ -369,40 +389,39 @@ console.log("userData isValid", userData)
           <p className={styles.popovertitle}> Mot de Passe</p>
 
           <div className={styles.passwordFields}>
-          <div>
-            <input
-            className={styles.Input}
-              type="password"
-              required
-              name="password"
-              value={password}
-              placeholder="Mot de Passe"
-              onChange={(e)=>setPassword(e.target.value)}
-             
-            />
-             {errors.password && <div className={styles.error}>{errors.password}</div>}
+            <div>
+              <input
+                className={styles.Input}
+                type="password"
+                required
+                name="password"
+                value={password}
+                placeholder="Mot de Passe"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              {errors.password && (
+                <div className={styles.error}>{errors.password}</div>
+              )}
+            </div>
+            <div>
+              <input
+                className={styles.Input}
+                type="password"
+                required
+                name="confirmPassword"
+                value={confirmPassword}
+                placeholder="Confirmer Mot de Passe"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+              {errors.confirmPassword && (
+                <div className={styles.error}>{errors.confirmPassword}</div>
+              )}
+            </div>
           </div>
-          <div>
-            <input
-            className={styles.Input}
-              type="password"
-              required
-              name="confirmPassword"
-              value={confirmPassword}
-              placeholder="Confirmer Mot de Passe"
-              onChange={(e)=>setConfirmPassword(e.target.value)}
-              
-            />
-            {errors.confirmPassword && <div className={styles.error}>{errors.confirmPassword}</div>}
-          </div>
-          </div>
-          
         </div>
       </form>
     </Modal>
   );
-
-
 
   const handleConnection = () => {
     fetch("http://localhost:3000/users/login", {
@@ -416,117 +435,133 @@ console.log("userData isValid", userData)
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          console.log(`${signInMail} connected`, data)
+          console.log(`${signInMail} connected`, data);
           dispatch(login({ email: signInMail, data: data.data }));
           setConnected(true);
           setSignInMail("");
           setSignInPassword("");
           setOpen(false);
-
-          
         }
       });
   };
 
   const handleLogout = () => {
     dispatch(logout());
-    setConnected(false)
+    setConnected(false);
   };
 
   let popoverUserContent;
 
- // arrondir à 1 décimale
- const roundTo = (num, precision) => {
-  const factor = Math.pow(10, precision);
-  return Math.round(num * factor) / factor;
-};
+  // arrondir à 1 décimale
+  const roundTo = (num, precision) => {
+    const factor = Math.pow(10, precision);
+    return Math.round(num * factor) / factor;
+  };
 
-
-    if (!user.accessToken) {
-  popoverUserContent = (
-    <div ClassName={styles.popoverUserContent}>
-      <div className={styles.registerContainer}>
-        <div className={styles.registerSection}>
-          <p className={styles.popovertitle}>Pas de compte ?</p>
-          <button
-            className={styles.button}
-            id="register"
-            onClick={() => {
-              setOpen(true);
-            }}
-          >
-            S'inscrire
-          </button>
-        </div>
-        <div className={styles.registerSection}>
-          <p className={styles.popovertitle}>Se Connecter</p>
-          <Input
-            className={styles.Input}
-            type="text"
-            placeholder=" Adresse Mail"
-            id="signInMail"
-            onChange={(e) => setSignInMail(e.target.value)}
-            value={signInMail}
-          />
-          <Input
-            className={styles.Input}
-            type="password"
-            placeholder="Mot de Passe"
-            id="signInPassword"
-            onChange={(e) => setSignInPassword(e.target.value)}
-            value={signInPassword}
-          />
-          <button
-            className={styles.button}
-            id="register"
-            onClick={() => handleConnection()}
-          >
-            Se Connecter
-          </button>
-          
+  // Popover Account
+  if (!user.accessToken) {
+    popoverUserContent = (
+      <div ClassName={styles.popoverUserContent}>
+        <div className={styles.registerContainer}>
+          <div className={styles.registerSection}>
+            <p className={styles.popovertitle}>Pas de compte ?</p>
+            <button
+              className={styles.button}
+              id="register"
+              onClick={() => {
+                setOpen(true);
+              }}
+            >
+              S'inscrire
+            </button>
+          </div>
+          <div className={styles.registerSection}>
+            <p className={styles.popovertitle}>Se Connecter</p>
+            <Input
+              className={styles.Input}
+              type="text"
+              placeholder=" Adresse Mail"
+              id="signInMail"
+              onChange={(e) => setSignInMail(e.target.value)}
+              value={signInMail}
+            />
+            <Input
+              className={styles.Input}
+              type="password"
+              placeholder="Mot de Passe"
+              id="signInPassword"
+              onChange={(e) => setSignInPassword(e.target.value)}
+              value={signInPassword}
+            />
+            <button
+              className={styles.button}
+              id="register"
+              onClick={() => handleConnection()}
+            >
+              Se Connecter
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  );
-    } else if(user.accessToken){
-        popoverUserContent = (
-            <div className ={styles.logoutSection}>
-                <p className={styles.popovertitle}> Bonjour {user.firstName},</p>
-                <Link href="/account">
-                <span ClassName={styles.linkPop}>Mon Compte</span>
-                </Link>
-                <Link href ="/orders" >
-                <span ClassName={styles.linkPop}>Mon historique</span>
-                </Link>
-                <button className={styles.buttonPop} onClick={()=>handleLogout()}>Se déconnecter</button>
-            </div>
-        )
-     }
+    );
+  } else if (user.accessToken) {
+    popoverUserContent = (
+      <div className={styles.logoutSection}>
+        <p className={styles.popovertitle}> Bonjour {user.firstName},</p>
+        <Link href="/account">
+          <span ClassName={styles.linkPop}>Mon Compte</span>
+        </Link>
+        <Link href="/orders">
+          <span ClassName={styles.linkPop}>Mon historique</span>
+        </Link>
+        <button className={styles.buttonPop} onClick={() => handleLogout()}>
+          Se déconnecter
+        </button>
+      </div>
+    );
+  }
 
-   const cartItems = cart.items.map((item, i) => {
-      return (
-        <div className={styles.popoverCartItem} key={i}>
-          <span>{item.product.id}</span>
-          <span>{item.product.name}</span>
-          <span>{(item.product.price+item.product.options.volume.price)}€</span>
-          <span>{item.product.options.volume.capacity}</span>
-          <span>&times; {item.quantity}</span>
-          <FontAwesomeIcon className={styles.headerIcons} icon={faTrashCan} onClick={() => dispatch(removeFromCart(item.product))}/>
-        </div>
-      );
-   });
-   
+  const cartItems = cart.items.map((item, i) => {
+    return (
+      <div className={styles.popoverCartItem} key={i}>
+        <span>{item.product.id}</span>
+        <span>{item.product.name}</span>
+        <span>{item.product.price + item.product.options.volume.price}€</span>
+        <span>{item.product.options.volume.capacity}</span>
+        <span>&times; {item.quantity}</span>
+        <FontAwesomeIcon
+          className={styles.headerIcons}
+          icon={faTrashCan}
+          onClick={() => dispatch(removeFromCart(item.product))}
+        />
+      </div>
+    );
+  });
+
   let popoverCartContent;
 
   let TotalCart = cart.total.toFixed(2);
 
-
+  // Popover Panier
   popoverCartContent = (
-    
     <div className={styles.popoverCartContent}>
-      {!cartItems.length && <p className={styles.popoverCartText}>Votre panier est vide</p>}
+      {!cartItems.length && (
+        <p className={styles.popoverCartText}>Votre panier est vide</p>
+      )}
       {cartItems}
       <p>Total : {TotalCart} €</p>
+    </div>
+  );
+
+  //Popover Shop Menu
+  let shopMenuPopoverContent = (
+    <div className={styles.popoverShopContent}>
+      <Link href="/shop">
+        <span className={styles.link}>Nos Jus</span>
+      </Link>
+      <Link href="/myjuice">
+        <span className={styles.link}>MYJUICE</span>
+      </Link>
     </div>
   );
 
@@ -542,9 +577,16 @@ console.log("userData isValid", userData)
         <Link href="/concept">
           <span className={styles.link}>Concept</span>
         </Link>
-        <Link href="/shop">
-          <span className={styles.link}>Shop</span>
-        </Link>
+        <div>
+          <Popover
+            className={styles.popover}
+            content={shopMenuPopoverContent}
+            placement="bottom"
+            trigger="hover"
+          >
+            <span className={styles.link}>Shop</span>
+          </Popover>
+        </div>
         <Link href="/contact">
           <span className={styles.link}>Contact</span>
         </Link>
@@ -552,11 +594,9 @@ console.log("userData isValid", userData)
 
       <div className={styles.iconsContainer}>
         <Popover
-
           content={popoverUserContent}
           className={styles.popover}
           trigger="click"
-          
         >
           <FontAwesomeIcon className={styles.headerIcons} icon={faUser} />
         </Popover>

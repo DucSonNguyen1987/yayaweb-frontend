@@ -227,3 +227,12 @@ margin-left: 5%;
     color: red;
     
 }
+
+.popoverShopContent{
+    display :flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: auto;
+    padding-left: 1vw;
+    padding-right: 1vw;
+}
