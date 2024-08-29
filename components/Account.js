@@ -48,7 +48,7 @@ function Account() {
     }
 
     return (
-      <div>
+      <div className={styles.accountPage}>
         <main className={styles.main}>
             <h1 className={styles.title}>Mon compte</h1>
             <h2>Mes informations personnelles</h2>

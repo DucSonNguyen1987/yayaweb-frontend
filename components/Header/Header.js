@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout, signUp } from "../../reducers/user";
+import { useRouter } from 'next/router';
+import Button from '../shared/Button';
+
+
 
 import styles from "./styles/Header.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,11 +14,20 @@ import {
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 
+<<<<<<< HEAD
 import { Input, Modal, Popover, Button } from "antd";
+=======
+
+import { Input, Modal, Popover } from "antd";
+>>>>>>> 2eb5d18fdc222c7f09b7df815ab645f2242828d7
 import Link from "next/link";
 import { removeFromCart } from "../../reducers/cart";
 
 function Header() {
+<<<<<<< HEAD
+=======
+  const router = useRouter();
+>>>>>>> 2eb5d18fdc222c7f09b7df815ab645f2242828d7
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
   const cart = useSelector((state) => state.cart.value);
@@ -458,6 +471,7 @@ function Header() {
     return Math.round(num * factor) / factor;
   };
 
+<<<<<<< HEAD
   // Popover Account
   if (!user.accessToken) {
     popoverUserContent = (
@@ -501,6 +515,51 @@ function Header() {
               Se Connecter
             </button>
           </div>
+=======
+
+    if (!user.accessToken) {
+  popoverUserContent = (
+    <div className={styles.popoverUserContent}>
+      <div className={styles.registerContainer}>
+        <div className={styles.registerSection}>
+          <p className={styles.popovertitle}>Pas de compte ?</p>
+          <button
+            className={styles.button}
+            id="register"
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
+            S'inscrire
+          </button>
+        </div>
+        <div className={styles.registerSection}>
+          <p className={styles.popovertitle}>Se Connecter</p>
+          <Input
+            className={styles.Input}
+            type="text"
+            placeholder=" Adresse Mail"
+            id="signInMail"
+            onChange={(e) => setSignInMail(e.target.value)}
+            value={signInMail}
+          />
+          <Input
+            className={styles.Input}
+            type="password"
+            placeholder="Mot de Passe"
+            id="signInPassword"
+            onChange={(e) => setSignInPassword(e.target.value)}
+            value={signInPassword}
+          />
+          <button
+            className={styles.button}
+            id="register"
+            onClick={() => handleConnection()}
+          >
+            Se Connecter
+          </button>
+          
+>>>>>>> 2eb5d18fdc222c7f09b7df815ab645f2242828d7
         </div>
       </div>
     );
@@ -538,6 +597,23 @@ function Header() {
     );
   });
 
+<<<<<<< HEAD
+=======
+   const cartItems = cart.items.map((item, i) => {
+      return (
+        <div className={styles.popoverCartItem} key={i}>
+          <span>{item.product.id}</span>
+          <span>{item.product.name}</span>
+          <span>{(item.product.price+item.product.options.volume.price)}€</span>
+          <span>{item.product.options.volume.capacity}</span>
+          <span>&times; {item.quantity}</span>
+          <FontAwesomeIcon className={styles.headerIcons} icon={faTrashCan} onClick={() => dispatch(removeFromCart(item.product))}/>
+          <Button onClick={() => router.push('/commander')}>Commander</Button>
+        </div>
+      );
+   });
+   
+>>>>>>> 2eb5d18fdc222c7f09b7df815ab645f2242828d7
   let popoverCartContent;
 
   let TotalCart = cart.total.toFixed(2);
@@ -598,7 +674,7 @@ function Header() {
           className={styles.popover}
           trigger="click"
         >
-          <FontAwesomeIcon className={styles.headerIcons} icon={faUser} />
+          <span className={styles.headerIcons}><FontAwesomeIcon icon={faUser} /></span>
         </Popover>
 
         <Popover
@@ -606,10 +682,7 @@ function Header() {
           className={styles.popover}
           trigger="click"
         >
-          <FontAwesomeIcon
-            className={styles.headerIcons}
-            icon={faCartShopping}
-          />
+          <span className={styles.headerIcons}><FontAwesomeIcon icon={faCartShopping} /></span>
         </Popover>
       </div>
 

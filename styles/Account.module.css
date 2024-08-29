@@ -1,3 +1,7 @@
 .loading {
     height: 100%;
 }
+
+.accountPage {
+    padding: var(--yaya-padding);
+}

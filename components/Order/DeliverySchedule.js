@@ -1,21 +1,31 @@
-import { useState } from 'react';
-import styles from '../../styles/OrderPayment.module.css'; 
+import React, { useState } from 'react';
+import { DatePicker, Radio } from 'antd';
+// import 'antd/dist/antd.css';
+import styles from './styles/OrderPayment.module.css';
 
 function DeliverySchedule() {
-  const [schedule, setSchedule] = useState('');
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [deliveryTime, setDeliveryTime] = useState('morning');
 
-  const handleScheduleChange = (event) => {
-    setSchedule(event.target.value);
+  const handleDateChange = (date, dateString) => {
+    setSelectedDate(dateString);  // Optionally, use date formatting here if needed
+  };
+
+  const handleTimeChange = (e) => {
+    setDeliveryTime(e.target.value);
   };
 
   return (
     <div className={styles.deliverySchedule}>
-      <h2>Delivery Schedule</h2>
-      <select value={schedule} onChange={handleScheduleChange}>
-        <option value="">Select a schedule</option>
-        <option value="morning">Matin (8h:00 - 12h00)</option>
-        <option value="afternoon">Arpès-midi (12h00 - 5h00)</option>
-      </select>
+      <h3>Choisir la date de livraison</h3>
+      <DatePicker onChange={handleDateChange} />
+      {selectedDate && <p>Date sélectionnée: {selectedDate}</p>} {/* Optional feedback */}
+
+      <h3>Choisir le Créneau</h3>
+      <Radio.Group onChange={handleTimeChange} value={deliveryTime}>
+        <Radio value="morning">Matin (8h00 - 12h00)</Radio>
+        <Radio value="afternoon">Après-midi (12h00- 17h00)</Radio>
+      </Radio.Group>
     </div>
   );
 }

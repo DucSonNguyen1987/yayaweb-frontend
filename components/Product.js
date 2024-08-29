@@ -21,15 +21,17 @@ function Product(props) {
 
   // fetch product data from backend when component mounts
   useEffect(() => {
-    fetch('http://localhost:3000/products/product-info/'+productId)
-      .then(response => response.json())
-      .then(data => {
-        if(data.result) {
-          setProduct(data.product);
-          setVolume(data.product.volumes[0]);
-        } 
-        setIsLoading(false);
-      });
+    if(productId) {
+      fetch('http://localhost:3000/products/product-info/'+productId)
+        .then(response => response.json())
+        .then(data => {
+          if(data.result) {
+            setProduct(data.product);
+            setVolume(data.product.volumes[0]);
+          } 
+          setIsLoading(false);
+        });
+    }
   }, [props]);
 
   const productId = props.id;
@@ -67,7 +69,7 @@ function Product(props) {
   // console.log('product', product);
           
   const onChangeVolume = (e) => {
-    console.log(`radio checked:${e.target.value}`);
+    console.log(`radio checked:${e.target.value}`, e.target.value.capacity);
     setVolume(e.target.value);
   };
 
@@ -81,6 +83,7 @@ function Product(props) {
     dispatch(addToCart({product: {...product, options}, quantity}));
   };
 
+
   // display loading (while retrieving product info)
   if(isLoading || !props) {
     return <div className={styles.loading}></div>;
@@ -91,28 +94,58 @@ function Product(props) {
     return null;
   }
 
+  console.log('product', product);
+
+  const productImages = product.images.filter((image, i) => !image.productOptions || image.productOptions.volume && volume.capacity === image.productOptions.volume.capacity);
+  console.log(productImages);
+
+  const productBenefits = [];
+  product.composition.forEach((element,i) => {
+    const ingredientBenefits = element.ingredient ? element.ingredient?.benefits : null;
+    if(ingredientBenefits) {
+      // console.log(ingredientBenefits);
+      ingredientBenefits.forEach((ingredientBenefit,j) => {
+        const foundBenefit = productBenefits.findIndex((productBenefit,i) => productBenefit.benefit === ingredientBenefit);
+        if(foundBenefit !== -1) {
+          productBenefits[foundBenefit].weight += element.percentage;
+        } else {
+          productBenefits.push({benefit: ingredientBenefit, weight: element.percentage});
+        }
+      });
+    }
+  });
+  // sort benefits by weight
+  productBenefits.sort((a, b) => a.weight < b.weight ? 1 : -1);
+  console.log(productBenefits);
+  
   return (
     <div className={styles.productContainer}>
       <div className={styles.images}>
-        <Carousel arrows infinite={false} draggable={true}>
-          {product.images.map((image, i) => (
-              <div className={styles.productImage}>
-                <Image src={image} key={i} layout="fill" objectFit='contain' objectPosition='center' />
-              </div>
-            )
-          )}
-        </Carousel>
+        {productImages.length && 
+          <Carousel arrows infinite={false} draggable={true}>
+            {productImages.map((image, i) => (
+                  <div className={styles.productImage} key={'productImage-'+i}>
+                    <Image src={image.url} key={i} layout="fill" objectFit='contain' objectPosition='center' />
+                  </div>
+            ))}
+          </Carousel>
+        }
       </div>
       <div className={styles.productDetails}>
         <h1 className={styles.productName}>{product.name}</h1>
         <div className={styles.productDescription}>{product.description}</div>
-        <div className={styles.productIngredients}>Ingrédients : {product.composition.sort(({amount:a}, {amount:b}) => b-a).map(ingredient => ingredient.name).join(', ')}.</div>
-        <div className={styles.productNutritionInfo}>Bienfaits nutritionnels : ...</div>
+        <div className={styles.productIngredients}>Ingrédients : {product.composition.sort(({percentage:a}, {percentage:b}) => b-a).map(ingredient => ingredient.name).join(', ')}.</div>
+        <div className={styles.productNutritionInfo}>
+          <span className={styles.productBenefitsTitle}>Bienfaits nutritionnels</span>
+          <p className={styles.productBenefits}>
+            {productBenefits.map((productBenefit,i) => <span className={styles.productBenefitsTitle} key={i} style={{fontSize: (productBenefits.length - i < 11 ? 11 : (productBenefits.length - i))}}>{productBenefit.benefit}</span>)}
+          </p>
+        </div>
         <div className={styles.productVolume}>
           <span>Volume</span>
           <Flex vertical gap="middle">
             <Radio.Group onChange={onChangeVolume} defaultValue={product.volumes[0]}>
-            {product.volumes.map((volume,i) => <Radio.Button value={volume}>{volume.capacity}</Radio.Button>)}
+            {product.volumes.map((volume,i) => <Radio.Button value={volume} key={i}>{volume.capacity}</Radio.Button>)}
             </Radio.Group>
           </Flex>
         </div>

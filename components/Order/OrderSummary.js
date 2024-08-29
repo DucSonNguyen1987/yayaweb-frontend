@@ -9,12 +9,14 @@ import Image from 'next/image';
 function OrderSummary(props) {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.value);
+  console.log(props.order);
+  const order = props.order ? props.order : cart;
 
   return (
     <div className={styles.orderSummary}>
       <h2>Récapitulatif de votre commande</h2>
       <div className={styles.orderContent}>
-        {cart && cart.items.map((item, i) => (
+        {order && order.items.map((item, i) => (
           <div className={styles.cartItem} key={i}>
             {item.images && (
               <Image 
@@ -46,7 +48,7 @@ function OrderSummary(props) {
       <div className={styles.orderTotal}>
         <div className={styles.orderTotalLabel}>Total</div>
         <div className={styles.orderTotalPrice}>
-          {cart && cart.total}€
+          {order && order.total}€
         </div>
       </div>
     </div>

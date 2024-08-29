@@ -1,0 +1,56 @@
+/* styles/ConceptPage.module.css */
+.conceptPage {
+    padding: var(--yaya-padding);
+    max-width: 768px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .pageTitle {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: calc(var(--yaya-padding) * 2);
+    color: var(--yaya-prime);
+  }
+    
+  .concept {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 40px; 
+    padding: var(--yaya-padding);
+  }
+
+  .concepts {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .concept.reverse {
+    flex-direction: row-reverse; 
+  }
+  
+  .conceptImage {
+    width: 300px;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+  .conceptDetails {
+    flex-grow: 1;
+    text-align: left;
+  }
+  
+  .conceptTitle {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    color: var(--yaya-prime);
+  }
+  
+  .conceptDescription {
+    font-size: 18px;
+    color: var(--yaya-second);
+  }
+  
