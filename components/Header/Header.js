@@ -186,7 +186,7 @@ function Header() {
 
       console.log("userData isValid", userData);
 
-      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/signup"`, {
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
