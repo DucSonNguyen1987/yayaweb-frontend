@@ -186,7 +186,7 @@ function Header() {
 
       console.log("userData isValid", userData);
 
-      fetch("http://localhost:3000/users/signup", {
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/signup"`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
@@ -437,7 +437,7 @@ function Header() {
   );
 
   const handleConnection = () => {
-    fetch("http://localhost:3000/users/login", {
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

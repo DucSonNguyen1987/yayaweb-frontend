@@ -10,7 +10,7 @@ export const injectStore = _store => {
 
 
 const api = axios.create({
-    baseURL: 'http://localhost:3000',
+    baseURL: `${process.env.NEXT_PUBLIC_BACKEND_URL}`,
     headers: {
         // Overwrite Axios's automatically set Content-Type
         'Content-Type': 'application/json'

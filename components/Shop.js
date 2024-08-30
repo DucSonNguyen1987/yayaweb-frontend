@@ -8,7 +8,7 @@ function Shop() {
 
   useEffect(() => {
     // Assuming you have an endpoint to fetch category data
-    fetch('http://localhost:3000/products/categories')
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/categories`)
       .then(response => response.json())
       .then(data => setCategories(data))
       .catch(error => console.error("Failed to load categories", error));
@@ -42,7 +42,7 @@ export default Shop;
 //   const [selectedCategory, setSelectedCategory] = useState('');
 
 //   useEffect(() => {
-//     fetch('http://localhost:3000/products/categories')
+//     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/categories`)
 //       .then(response => response.json())
 //       .then(data => {
 //         setCategories(data);
@@ -54,7 +54,7 @@ export default Shop;
 
 //   useEffect(() => {
 //     if (selectedCategory) {
-//       fetch(`http://localhost:3000/products/category/${selectedCategory}`)
+//       fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/category/${selectedCategory}`)
 //         .then(response => response.json())
 //         .then(data => {
 //           setProducts(data);

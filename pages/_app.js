@@ -44,6 +44,5 @@ function App({ Component, pageProps }) {
      </Provider>
   );
 }
-import { format } from 'path';
 
 export default App;

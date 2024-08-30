@@ -41,7 +41,7 @@ export const MyJuiceCreator = () => {
   useEffect(() => {
     //Get ingredients from DB
 
-    fetch("http://localhost:3000/ingredients")
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/ingredients`)
       .then((response) => response.json())
       .then((data) => {
         // filter data form ingredients

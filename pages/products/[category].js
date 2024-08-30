@@ -20,7 +20,7 @@ function CategoryProductsPage() {
   };
 
   useEffect(() => {
-    fetch('http://localhost:3000/products')
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products`)
       .then(response => response.json())
       .then(data => {
         setAllProducts(data);
@@ -95,7 +95,7 @@ export default CategoryProductsPage;
 
 //   useEffect(() => {
 //     // Fetch all products when the component mounts
-//     fetch('http://localhost:3000/products')  // Adjust URL as needed
+//     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products`)  // Adjust URL as needed
 //       .then(response => response.json())
 //       .then(data => {
 //         setAllProducts(data);

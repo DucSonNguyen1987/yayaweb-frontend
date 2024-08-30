@@ -22,7 +22,7 @@ function Product(props) {
   // fetch product data from backend when component mounts
   useEffect(() => {
     if(productId) {
-      fetch('http://localhost:3000/products/product-info/'+productId)
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/product-info/`+productId)
         .then(response => response.json())
         .then(data => {
           if(data.result) {

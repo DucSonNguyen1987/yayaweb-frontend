@@ -8,7 +8,7 @@ function Catalog() {
 
   useEffect(() => {
     // Assuming you have an endpoint to fetch category data
-    fetch('http://localhost:3000/products/categories')
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/categories`)
       .then(response => response.json())
       .then(data => setCategories(data))
       .catch(error => console.error("Failed to load categories", error));
