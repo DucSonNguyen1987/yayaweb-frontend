@@ -40,7 +40,7 @@ function OrderSummary(props) {
               onClick={() => dispatch(removeFromCart(item.product))} 
             />
             <span className={styles.itemPrice}>
-              {(item.product.price + item.product.options.volume.price) * item.quantity}€
+              {(item.product.price * item.product.options.volume.priceMultiplier) * item.quantity}€
             </span>
           </div>
         ))}

@@ -47,7 +47,7 @@ const OrderPayment = () => {
                                     <span>&times; {item.quantity}</span>
                                 </div>
                                 <FontAwesomeIcon className={styles.itemIcons} icon={faTrashCan} onClick={() => dispatch(removeFromCart(item.product))}/>
-                                <span className={styles.itemPrice}>{(item.product.price+item.product.options.volume.price)*item.quantity}€</span>
+                                <span className={styles.itemPrice}>{(item.product.price * item.product.options.volume.priceMultiplier)*item.quantity}€</span>
                             </div>
                             );
                     })}
