@@ -8,5 +8,4 @@ function MyJuice() {
   );
 }
 
-
 export default MyJuice;
