@@ -594,7 +594,6 @@ function Header() {
           <span>{item.product.options.volume.capacity}</span>
           <span>&times; {item.quantity}</span>
           <FontAwesomeIcon className={styles.headerIcons} icon={faTrashCan} onClick={() => dispatch(removeFromCart(item.product))}/>
-          <Button onClick={() => router.push('/commander')}>Commander</Button>
         </div>
       );
    });
@@ -611,6 +610,7 @@ function Header() {
       )}
       {cartItems}
       <p>Total : {TotalCart} €</p>
+      {(cartItems.length > 0) && <Button onClick={() => router.push('/commander')}>Commander</Button>}
     </div>
   );
 
