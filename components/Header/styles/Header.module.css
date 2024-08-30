@@ -3,12 +3,12 @@
 
 @font-face {
     font-family: "Varela Round";
-    src: url(/frontend/fonts/Varela_Round/VarelaRound-Regular.ttf);
+    src: url(/fonts/Varela_Round/VarelaRound-Regular.ttf);
 }
 
 @font-face {
     font-family: "Concert One";
-    src: url(/frontend/fonts/Concert_One/ConcertOne-Regular.ttf);
+    src: url(/fonts/Concert_One/ConcertOne-Regular.ttf);
 }
 
 .header {
