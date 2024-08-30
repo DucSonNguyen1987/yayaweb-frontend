@@ -97,7 +97,7 @@ function Product(props) {
   console.log('product', product);
 
   const productImages = product.images.filter((image, i) => !image.productOptions || image.productOptions.volume && volume.capacity === image.productOptions.volume.capacity);
-  console.log(productImages);
+  console.log('productImages', productImages);
 
   const productBenefits = [];
   product.composition.forEach((element,i) => {
@@ -121,7 +121,7 @@ function Product(props) {
   return (
     <div className={styles.productContainer}>
       <div className={styles.images}>
-        {productImages.length && 
+        {(productImages.length > 0) && 
           <Carousel arrows infinite={false} draggable={true}>
             {productImages.map((image, i) => (
                   <div className={styles.productImage} key={'productImage-'+i}>
