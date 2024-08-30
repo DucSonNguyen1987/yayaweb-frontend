@@ -96,7 +96,7 @@ function Product(props) {
 
   console.log('product', product);
 
-  const productImages = product.images.filter((image, i) => !image.productOptions || image.productOptions.volume && volume.capacity === image.productOptions.volume.capacity);
+  const productImages = product.images.filter((image, i) => image !== '' && !image.productOptions || (image.productOptions && image.productOptions.volume && volume.capacity === image.productOptions.volume.capacity));
   console.log('productImages', productImages);
 
   const productBenefits = [];
