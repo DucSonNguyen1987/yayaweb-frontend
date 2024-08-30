@@ -1,6 +1,6 @@
 import {MyJuiceCreator} from '../components/MyJuice/Components/MyJuiceCreator';
 
-function myjuice() {
+function MyJuice() {
   return (
     <div>
          <MyJuiceCreator/>
@@ -9,4 +9,4 @@ function myjuice() {
 }
 
 
-export default myjuice;
+export default MyJuice;
