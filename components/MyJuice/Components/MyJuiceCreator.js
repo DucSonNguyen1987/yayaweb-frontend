@@ -280,8 +280,9 @@ export const MyJuiceCreator = () => {
   // Choisir son format
   const onChangeVolume = (e) => {
     console.log(`radio checked:${e.target.value}`);
-  calculatePrice(myJuice, e.target.value);
     setVolume(e.target.value);
+    calculatePrice(myJuice, volume.capacity);
+    
   };
   console.log("volume", volume);
 
