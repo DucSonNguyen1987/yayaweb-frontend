@@ -6,12 +6,18 @@ import { faCcPaypal, faCcStripe } from '@fortawesome/free-brands-svg-icons';
 import { faCreditCard } from "@fortawesome/free-solid-svg-icons";
 import api from '../../api/axios';
 import { useDispatch, useSelector,  } from 'react-redux';
-import { loadStripe} from '@stripe/stripe-js';
+// import { loadStripe} from '@stripe/stripe-js';
+import { useRouter } from 'next/router'
 
-const stripePromise= loadStripe(`${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`);
+const preventDefault = f => e => {
+  e.preventDefault()
+  f(e)
+}
+
+// const stripePromise= loadStripe(`${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`);
 
 
-console.log("stripePromise",stripePromise)
+// console.log("stripePromise",stripePromise)
 
 
 function OrderPaymentModes(props) {
@@ -38,8 +44,8 @@ useEffect(()=>{
 
 
 
-  const handlePaymentStripe = async () => {
-    console.log('handlePaymentStripe');
+  const handlePaymentStripe = async (e) => {
+    console.log('handlePaymentStripe', e);
 
     // fake date, TODO get real date from delivery choices
     const today = new Date();
@@ -69,17 +75,20 @@ useEffect(()=>{
     console.log('/order-confirm data', data);
     if(data.result) {
       console.log('Order confirmed', data.data);
-      // requete post vers /api/checkout_sessions avec en data orderData
-      fetch(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/checkout_sessions`, {
-        method: 'POST',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(orderData),
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        router.push(data.url);
-      });
+      // requete post vers le backend /create-checkout-session avec en data orderData
+      const responseSession = await api.post('/create-checkout-session', { ...orderData });
+      const dataSession = responseSession.data;
+      console.log(dataSession);
+      // fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/create-checkout-session`, {
+      //   method: 'POST',
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(orderData),
+      // })
+      // .then(response => response.json())
+      // .then(data => {
+      //   console.log(data);
+      //   //router.push(data.url);
+      // });
     } else {
       console.error('Order confirmation failed', data);
     }
