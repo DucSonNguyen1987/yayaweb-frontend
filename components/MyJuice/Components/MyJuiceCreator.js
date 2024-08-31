@@ -303,7 +303,7 @@ export const MyJuiceCreator = () => {
       calculatedPrice * vol.priceMultiplier;
     }
 
-    setPrice(roundTo(calculatedPrice, 2));
+    setPrice(roundTo(calculatedPrice, 1));
     console.log("price", price)
   };
 
@@ -329,7 +329,7 @@ export const MyJuiceCreator = () => {
 
     setComposition(recipe);
 
-    const options = { volume };
+    const options = {capacity: "250ml", priceMultiplier: 1};
 
     const myJuiceOrder = {
       productId: productId,
