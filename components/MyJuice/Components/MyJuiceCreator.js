@@ -330,7 +330,7 @@ export const MyJuiceCreator = () => {
 
     setComposition(recipe);
 
-    const options = {capacity: "250ml", priceMultiplier: 1};
+    const options = {volume};
 
     const myJuiceOrder = {
       productId: productId,
