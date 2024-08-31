@@ -79,16 +79,7 @@ useEffect(()=>{
       const responseSession = await api.post('/create-checkout-session', { ...orderData });
       const dataSession = responseSession.data;
       console.log(dataSession);
-      // fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/create-checkout-session`, {
-      //   method: 'POST',
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify(orderData),
-      // })
-      // .then(response => response.json())
-      // .then(data => {
-      //   console.log(data);
-      //   //router.push(data.url);
-      // });
+      router.push(dataSession.url);
     } else {
       console.error('Order confirmation failed', data);
     }
