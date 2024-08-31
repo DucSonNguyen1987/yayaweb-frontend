@@ -406,7 +406,7 @@ export const MyJuiceCreator = () => {
             <Flex vertical gap="middle">
               <Radio.Group
                 onChange={onChangeVolume}
-                defaultValue={"250ml"}
+                defaultValue={{capacity: "250ml", priceMultiplier: 1}}
                 ButtonStyle="solid"
                 ButtonCheckedBgDisabled="#444444"
                 ButtonSolidCheckedColor="#F27C00"
