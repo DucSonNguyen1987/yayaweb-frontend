@@ -304,6 +304,7 @@ export const MyJuiceCreator = () => {
     }
 
     setPrice(roundTo(calculatedPrice, 1));
+    console.log("price", price)
   };
 
   //Nommer sa recette
