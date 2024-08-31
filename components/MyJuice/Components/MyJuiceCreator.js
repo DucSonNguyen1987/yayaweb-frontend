@@ -22,7 +22,7 @@ export const MyJuiceCreator = () => {
   const [productId, setProductId] = useState(null);
   const [productName, setProductName] = useState(null);
   const [composition, setComposition] = useState([]);
-  const [volume, setVolume] = useState("250ml");
+  const [volume, setVolume] = useState({capacity: "250ml", priceMultiplier: 1});
   const [category, setCategory] = useState("MYJUICE");
   const [quantity, setQuantity] = useState(6);
   const [price, setPrice] = useState(0);
@@ -299,8 +299,8 @@ export const MyJuiceCreator = () => {
       0
     );
 
-    if (vol === "1l") {
-      calculatedPrice *= 3.5;
+    if (vol.capacity === "1l") {
+      calculatedPrice * vol.priceMultiplier;
     }
 
     setPrice(roundTo(calculatedPrice, 1));
@@ -328,7 +328,7 @@ export const MyJuiceCreator = () => {
 
     setComposition(recipe);
 
-    const options = { volume: { capacity: volume, price: 0 } };
+    const options = { volume };
 
     const myJuiceOrder = {
       productId: productId,
@@ -411,8 +411,8 @@ export const MyJuiceCreator = () => {
                 ButtonCheckedBgDisabled="#444444"
                 ButtonSolidCheckedColor="#F27C00"
               >
-                <Radio.Button value="250">250ml</Radio.Button>
-                <Radio.Button value="1l">1l</Radio.Button>
+                <Radio.Button value={{capacity: "250ml", priceMultiplier: 1}}>250ml</Radio.Button>
+                <Radio.Button value={{capacity: "1l", priceMultiplier: 3.5}}>1l</Radio.Button>
               </Radio.Group>
             </Flex>
           </div>
