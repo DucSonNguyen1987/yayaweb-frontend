@@ -96,8 +96,9 @@ useEffect(()=>{
     <div className={styles.orderPaymentProceed}>
       <h2>Paiement</h2>
       <div className={styles.orderPaymentModes}>
-        <Button backgroundColor='var(--yaya-third)' color='#FFF' onClick={handlePaymentStripe}>
-          <FontAwesomeIcon icon={faCreditCard} /> Stripe
+        <Button backgroundColor='var(--yaya-third)' color='#FFFF' onClick={handlePaymentStripe}>
+          <FontAwesomeIcon icon={faCreditCard} /> 
+          <p>Stripe</p>
         </Button>
         
       </div>
