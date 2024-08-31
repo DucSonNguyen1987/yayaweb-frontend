@@ -70,7 +70,7 @@ useEffect(()=>{
     if(data.result) {
       console.log('Order confirmed', data.data);
       // requete post vers /api/checkout_sessions avec en data orderData
-      fetch('/api/checkout_sessions', {
+      fetch(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/checkout_sessions`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(orderData),
@@ -87,10 +87,6 @@ useEffect(()=>{
 
 
   };
-  
-  
-  
- 
 
   return (
     <div className={styles.orderPaymentProceed}>
