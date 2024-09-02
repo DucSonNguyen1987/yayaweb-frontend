@@ -7,7 +7,7 @@ import { faCreditCard } from "@fortawesome/free-solid-svg-icons";
 import api from '../../api/axios';
 import { useDispatch, useSelector,  } from 'react-redux';
 // import { loadStripe} from '@stripe/stripe-js';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 
 const preventDefault = f => e => {
   e.preventDefault()
@@ -22,6 +22,7 @@ const preventDefault = f => e => {
 
 function OrderPaymentModes(props) {
   const dispatch = useDispatch();
+  const router = useRouter();
   const cart = useSelector((state) => state.cart.value);
   const user = useSelector((state) => state.user.value);
 

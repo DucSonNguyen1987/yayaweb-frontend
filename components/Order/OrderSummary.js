@@ -48,7 +48,7 @@ function OrderSummary(props) {
       <div className={styles.orderTotal}>
         <div className={styles.orderTotalLabel}>Total</div>
         <div className={styles.orderTotalPrice}>
-          {order && order.total}€
+          {order && order.total.toFixed(2)}€
         </div>
       </div>
     </div>
