@@ -327,13 +327,14 @@ export const MyJuiceCreator = () => {
     const recipe = myJuice.map((ingredient) => {
       return { name: ingredient.name, percentage: ingredient.percentage, ingredient:ingredient._id };
     });
+    console.log ("recipe", recipe)
 
     setComposition(recipe);
 
     const options = {volume};
 
     const myJuiceOrder = {
-      productId: productId,
+      productId: productName,
       name: productName,
       category,
       options,
