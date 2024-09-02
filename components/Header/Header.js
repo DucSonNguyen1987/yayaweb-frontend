@@ -600,7 +600,7 @@ function Header() {
    
   let popoverCartContent;
 
-  let TotalCart = cart.total;
+  let TotalCart = (cart.total).toFixed(2);
 
   // Popover Panier
   popoverCartContent = (

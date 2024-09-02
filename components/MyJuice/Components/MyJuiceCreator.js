@@ -410,8 +410,7 @@ export const MyJuiceCreator = () => {
                 onChange={onChangeVolume}
                 defaultValue={{capacity: "250ml", priceMultiplier: 1}}
                 ButtonStyle="solid"
-                ButtonCheckedBgDisabled="#444444"
-                ButtonSolidCheckedColor="#F27C00"
+                
               >
                 <Radio.Button value={{capacity: "250ml", priceMultiplier: 1}}>250ml</Radio.Button>
                 <Radio.Button value={{capacity: "1l", priceMultiplier: 3.5}}>1l</Radio.Button>
