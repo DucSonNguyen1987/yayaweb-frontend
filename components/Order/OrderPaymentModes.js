@@ -101,7 +101,7 @@ const showModal = () => {
     <Modal
     open={open}
     title = "Ooops, il y a eu un problème..."
-    onCancel={showModal}
+    onOk={showModal}
     >
       <h4>Le paiement n'a pas abouti... Try again...</h4>
     </Modal>
