@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react';
+import React, {useEffect,useState} from 'react';
 import styles from './styles/OrderPayment.module.css'; 
 import Button from '../shared/Button';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCcPaypal, faCcStripe } from '@fortawesome/free-brands-svg-icons';
 import { faCreditCard } from "@fortawesome/free-solid-svg-icons";
 import api from '../../api/axios';
-import { useDispatch, useSelector, useState } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // import { loadStripe} from '@stripe/stripe-js';
 import { useRouter } from 'next/router';
 import { Modal } from 'antd';
