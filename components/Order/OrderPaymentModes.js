@@ -8,6 +8,7 @@ import api from '../../api/axios';
 import { useDispatch, useSelector,  } from 'react-redux';
 // import { loadStripe} from '@stripe/stripe-js';
 import { useRouter } from 'next/router';
+import { Modal } from 'antd';
 
 const preventDefault = f => e => {
   e.preventDefault()
@@ -21,6 +22,9 @@ const preventDefault = f => e => {
 
 
 function OrderPaymentModes(props) {
+// state ouverture/fermeture modal de message
+const [open, setOpen] = useState(false);
+
   const dispatch = useDispatch();
   const router = useRouter();
   const cart = useSelector((state) => state.cart.value);
@@ -31,16 +35,20 @@ useEffect(()=>{
  // Check to see if this is a redirect back from Checkout
     const query = new URLSearchParams(window.location.search);
     if(query.get('success')){
-      console.log('Order placed! Youwill receive an email confirmation');
+      console.log('Order placed! You will receive an email confirmation');
     }
 
     if (query.get('canceled')){
       console.log('Order Canceled -- continue to shop around and checkout when you’re ready. ');
+      setOpen(true);
     }
 
 },[])
 
-
+// fonction ouverture/fermeture modal
+const showModal = () => {
+  setOpen(!open);
+};
 
 
 
@@ -89,6 +97,16 @@ useEffect(()=>{
 
   };
 
+  let oopsModalContent = (
+    <Modal
+    open={open}
+    title = "Ooops, il y a eu un problème..."
+    onCancel={showModal}
+    >
+      <h4>Le paiement n'a pas abouti... Try again...</h4>
+    </Modal>
+  )
+
   return (
     <div className={styles.orderPaymentProceed}>
       <h2>Paiement</h2>
@@ -97,7 +115,7 @@ useEffect(()=>{
           <FontAwesomeIcon icon={faCreditCard} /> 
           <p>Stripe</p>
         </Button>
-        
+        {oopsModalContent}
       </div>
     </div>
     

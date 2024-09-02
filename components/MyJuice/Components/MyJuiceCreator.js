@@ -327,11 +327,8 @@ export const MyJuiceCreator = () => {
     const recipe = myJuice.map((ingredient) => {
       return { name: ingredient.name, percentage: ingredient.percentage, ingredient:ingredient._id };
     });
-    console.log ("recipe", recipe)
-
-    setComposition(recipe);
-    console.log("composition", composition)
-
+    
+    
     const options = {volume};
 
     const myJuiceOrder = {
@@ -342,7 +339,7 @@ export const MyJuiceCreator = () => {
       bottle,
       description,
       price,
-      composition: composition,
+      composition: recipe,
     };
 
     console.log("myJuiceOrder", myJuiceOrder);
