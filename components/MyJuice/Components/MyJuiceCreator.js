@@ -269,6 +269,7 @@ export const MyJuiceCreator = () => {
     myJuiceOrder.map((ingredient, i) => {
       Reflect.deleteProperty(ingredient, "color");
     });
+    console.log(myJuiceOrder);
     setMyJuice(myJuiceOrder);
 
     setOpen(true);
