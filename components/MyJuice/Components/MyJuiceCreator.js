@@ -26,7 +26,7 @@ export const MyJuiceCreator = () => {
   const [category, setCategory] = useState("MYJUICE");
   const [quantity, setQuantity] = useState(6);
   const [price, setPrice] = useState(0);
-  const [bottle, setBottle] = useState("verre");
+  const [bottle, setBottle] = useState("Verre");
   const [description, setDescription] = useState(null);
 
   // state ouverture/fermeture modal de commande
@@ -301,7 +301,7 @@ export const MyJuiceCreator = () => {
     );
 
     if (vol.capacity === "1l") {
-      calculatedPrice * vol.priceMultiplier;
+      (calculatedPrice * vol.priceMultiplier).toFixed(2);
     }
 
     setPrice(roundTo(calculatedPrice, 1));
