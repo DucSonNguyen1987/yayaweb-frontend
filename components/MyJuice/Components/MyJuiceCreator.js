@@ -330,6 +330,7 @@ export const MyJuiceCreator = () => {
     console.log ("recipe", recipe)
 
     setComposition(recipe);
+    console.log("composition", composition)
 
     const options = {volume};
 
