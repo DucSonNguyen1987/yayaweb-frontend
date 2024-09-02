@@ -420,7 +420,7 @@ export const MyJuiceCreator = () => {
           </div>
           <div className={styles.pricetag}></div>
           <h4 className={styles.subTitle}>Prix</h4>
-          <h2 className={styles.price}>{price} €</h2>
+          <h2 className={styles.price}>{price*volume.priceMultiplier} €</h2>
         </div>
       </Modal>
     ));
