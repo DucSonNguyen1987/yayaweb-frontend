@@ -48,7 +48,6 @@ export const MyJuiceCreator = () => {
         let juiceRecipe = data.ingredients;
         juiceRecipe.forEach((i) => {
           i.percentage = 0;
-          delete i._id;
         });
         setIngredients(juiceRecipe);
         setJuice(juiceRecipe);
@@ -325,7 +324,7 @@ export const MyJuiceCreator = () => {
     }
 
     const recipe = myJuice.map((ingredient) => {
-      return { name: ingredient.name, percentage: ingredient.percentage };
+      return { name: ingredient.name, percentage: ingredient.percentage, ingredient:ingredient._id };
     });
 
     setComposition(recipe);
@@ -340,7 +339,7 @@ export const MyJuiceCreator = () => {
       bottle,
       description,
       price,
-      composition,
+      composition: composition,
     };
 
     console.log("myJuiceOrder", myJuiceOrder);
