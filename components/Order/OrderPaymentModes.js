@@ -79,7 +79,7 @@ useEffect(()=>{
       // requete post vers le backend /create-checkout-session avec en data orderData
       const responseSession = await api.post('/create-checkout-session', { ...orderData });
       const dataSession = responseSession.data;
-      console.log(dataSession);
+      console.log(dataSession, dataSession.url);
       router.push(dataSession.url);
     } else {
       console.error('Order confirmation failed', data);
