@@ -10,6 +10,10 @@ export const MyJuiceCreator = () => {
   const user = useSelector((state) => state.user.value);
   const cart = useSelector((state) => state.cart.value);
   // const myJuice = useSelector((state)=>state.myJuice.value)
+  const volumes = [
+    {capacity: "250ml", priceMultiplier: 1},
+    {capacity: "1l", priceMultiplier: 3.5}
+  ];
 
   // state dégradé
   const [colorGradient, setColorGradient] = useState([]);
@@ -22,10 +26,7 @@ export const MyJuiceCreator = () => {
   const [productId, setProductId] = useState(null);
   const [productName, setProductName] = useState(null);
   const [composition, setComposition] = useState([]);
-  const [volume, setVolume] = useState({
-    capacity: "250ml",
-    priceMultiplier: 1,
-  });
+  const [volume, setVolume] = useState(volumes[0]);
   const [category, setCategory] = useState("MYJUICE");
   const [quantity, setQuantity] = useState(6);
   const [price, setPrice] = useState(0);
@@ -43,7 +44,6 @@ export const MyJuiceCreator = () => {
 
   useEffect(() => {
     //Get ingredients from DB
-
     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/ingredients`)
       .then((response) => response.json())
       .then((data) => {
@@ -56,6 +56,9 @@ export const MyJuiceCreator = () => {
         setJuice(juiceRecipe);
       });
 
+  }, []);
+
+  useEffect(() => {
     calculatePrice(myJuice, volume);
   }, [myJuice]);
 
@@ -68,7 +71,7 @@ export const MyJuiceCreator = () => {
 
   // Update le fill de la bouteille en fonction du montant d'ingrédients
   const calculateFillFrompercentage = (drink) => {
-    return drink.reduce((acc, val) => (acc += val.percentage), 0);
+    return drink.reduce((acc, val) => (acc += val.percentage), 0).toFixed(2);
   };
 
   // Update le dégradé du fill en fonction des ingrédients et de leur montant
@@ -189,7 +192,7 @@ export const MyJuiceCreator = () => {
   const IngredientListFruits = ingredients.map((ingredient, i) => {
     if (ingredient.type === "Fruit") {
       return (
-        <div className={styles.ingredient}>
+        <div className={styles.ingredient} key={i}>
           <div className={styles.ingredientIcon}>
             <img src={`/icons/${ingredient.name}_Icon.png`} />
           </div>
@@ -361,8 +364,8 @@ export const MyJuiceCreator = () => {
   // Choisir son format
   const onChangeVolume = (e) => {
     console.log(`radio checked:${e.target.value}`);
-    setVolume(e.target.value);
-    calculatePrice(myJuice, e.target.value);
+    calculatePrice(myJuice, volumes[e.target.value]);
+    setVolume(volumes[e.target.value]);
   };
   console.log("volume", volume);
 
@@ -490,21 +493,16 @@ export const MyJuiceCreator = () => {
             <Flex vertical gap="middle">
               <Radio.Group
                 onChange={onChangeVolume}
-                defaultValue={{ capacity: "250ml", priceMultiplier: 1 }}
+                defaultValue={0}
                 ButtonStyle="solid"
               >
-                <Radio.Button value={{ capacity: "250ml", priceMultiplier: 1 }}>
-                  250ml
-                </Radio.Button>
-                <Radio.Button value={{ capacity: "1l", priceMultiplier: 3.5 }}>
-                  1l
-                </Radio.Button>
+                {volumes.map((vol,i) => <Radio.Button value={i} key={i}>{vol.capacity}</Radio.Button>)}
               </Radio.Group>
             </Flex>
           </div>
           <div className={styles.pricetag}></div>
           <h4 className={styles.subTitle}>Prix</h4>
-          <h2 className={styles.price}>{price * volume.priceMultiplier} €</h2>
+          <h2 className={styles.price}>{(price * volume.priceMultiplier).toFixed(2)} €</h2>
         </div>
       </Modal>
     ));
