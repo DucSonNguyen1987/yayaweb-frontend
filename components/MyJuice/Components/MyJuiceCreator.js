@@ -71,7 +71,7 @@ export const MyJuiceCreator = () => {
 
   // Update le fill de la bouteille en fonction du montant d'ingrédients
   const calculateFillFrompercentage = (drink) => {
-    return drink.reduce((acc, val) => (acc += val.percentage), 0).toFixed(2);
+    return drink.reduce((acc, val) => (acc += val.percentage), 0);
   };
 
   // Update le dégradé du fill en fonction des ingrédients et de leur montant
@@ -568,7 +568,7 @@ export const MyJuiceCreator = () => {
       onClick={() => {
         ConfigureMyJuice();
       }}
-      disabled={calculateFillFrompercentage(juice) === 100 ? false : true}
+      disabled={calculateFillFrompercentage(juice) !== 100 ? true : false}
     >
       Commander ce jus
     </Button>
