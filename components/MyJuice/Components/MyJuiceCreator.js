@@ -22,7 +22,10 @@ export const MyJuiceCreator = () => {
   const [productId, setProductId] = useState(null);
   const [productName, setProductName] = useState(null);
   const [composition, setComposition] = useState([]);
-  const [volume, setVolume] = useState({capacity: "250ml", priceMultiplier: 1});
+  const [volume, setVolume] = useState({
+    capacity: "250ml",
+    priceMultiplier: 1,
+  });
   const [category, setCategory] = useState("MYJUICE");
   const [quantity, setQuantity] = useState(6);
   const [price, setPrice] = useState(0);
@@ -69,15 +72,15 @@ export const MyJuiceCreator = () => {
   };
 
   // Update le dégradé du fill en fonction des ingrédients et de leur montant
-  const updateColorGradient = () => {
-    const fill = calculateFillFrompercentage(juice);
+  const updateColorGradient = (newJuice) => {
+    const fill = calculateFillFrompercentage(newJuice);
     let colorStop;
 
     if (colorStop > 100) {
       return colorStop;
     }
     setColorGradient(
-      juice
+      newJuice
         .filter((ingredient) => ingredient.percentage !== 0)
         .map((ingredient, i, ingredients) => {
           console.log(
@@ -112,8 +115,7 @@ export const MyJuiceCreator = () => {
 
   // Reset à 0 les montants d'ingrédients
   const handleReset = () => {
-    setMyJuice([])
-  
+    setMyJuice([]);
   };
 
   // Ajoute une dose d'un ingrédient dans la compo du jus
@@ -144,7 +146,7 @@ export const MyJuiceCreator = () => {
       });
       setJuice(newJuice);
 
-      updateColorGradient(juice);
+      updateColorGradient(newJuice);
 
       console.log("colorGradient", colorGradient);
     }
@@ -178,18 +180,21 @@ export const MyJuiceCreator = () => {
 
       setJuice(minusJuice);
       if (!isEmpty) {
-        updateColorGradient(juice);
+        updateColorGradient(minusJuice);
       }
     }
   };
 
   // Affiche la liste des fruits
-  const IngredientListFruits = ingredients.map((ingredient) => {
+  const IngredientListFruits = ingredients.map((ingredient, i) => {
     if (ingredient.type === "Fruit") {
       return (
         <div className={styles.ingredient}>
+          <div className={styles.ingredientIcon}>
+            <img src={`/icons/${ingredient.name}_Icon.png`} />
+          </div>
           <div className={styles.ingredientNameBox}>
-          <p className={styles.ingredientName1}>{ingredient.name}</p>
+            <p className={styles.ingredientName}>{ingredient.name}</p>
           </div>
           <div className={styles.ingredientButton}>
             <Button
@@ -201,6 +206,11 @@ export const MyJuiceCreator = () => {
                   ingredient.name
                 )
               }
+              disabled={
+                calculateFillFrompercentage(juice) + ingredient.dosage > 100
+                  ? true
+                  : false
+              }
             >
               +
             </Button>
@@ -210,22 +220,35 @@ export const MyJuiceCreator = () => {
                 handleButtonMinus(
                   ingredient.dosage,
                   ingredient.color,
-                  ingredient.name)
+                  ingredient.name
+                )
               }
+              disabled={juice[i].percentage === 0 ? true : false}
             >
               -
             </Button>
+          </div>
+          <div className={styles.ingredientAmount}>
+            <p className={styles.amount}>{juice[i].percentage}%</p>
           </div>
         </div>
       );
     }
   });
 
-  // Affiche les légumes et épices
-  const IngredientListVeg = ingredients.map((ingredient) => {
-    if (ingredient.type === "Legume" || ingredient.type === "Epice") {
+  // Affiche les légumes
+  const IngredientListVeg = ingredients.map((ingredient, i) => {
+    if (ingredient.type === "Legume") {
       return (
         <div className={styles.ingredient}>
+          <div className={styles.ingredientIcon}>
+            <img src={`/icons/${ingredient.name}_Icon.png`} />
+          </div>
+
+          <div className={styles.ingredientNameBox}>
+            <p className={styles.ingredientName}>{ingredient.name}</p>
+          </div>
+
           <div className={styles.ingredientButton2}>
             <Button
               className={styles.round_Button}
@@ -236,6 +259,11 @@ export const MyJuiceCreator = () => {
                   ingredient.name
                 )
               }
+              disabled={
+                calculateFillFrompercentage(juice) + ingredient.dosage > 100
+                  ? true
+                  : false
+              }
             >
               +
             </Button>
@@ -245,16 +273,69 @@ export const MyJuiceCreator = () => {
                 handleButtonMinus(
                   ingredient.dosage,
                   ingredient.color,
-                  ingredient.name)
+                  ingredient.name
+                )
               }
+              disabled={juice[i].percentage === 0 ? true : false}
+            >
+              -
+            </Button>
+          </div>
+          <div className={styles.ingredientAmount}>
+            <p className={styles.amount}>{juice[i].percentage}%</p>
+          </div>
+        </div>
+      );
+    }
+  });
+
+  //Affiche la liste des épices
+  const IngredientListSpices = ingredients.map((ingredient, i) => {
+    if (ingredient.type === "Epice" && ingredient.name !== "Poivre" && ingredient.name !== "Cannelle" ) {
+      return (
+        <div className={styles.Spice}>
+          <div >
+            <img className={styles.ingredientIcon} src={`/icons/${ingredient.name}_Icon.png`} />
+          </div>
+
+          <div className={styles.ingredientButton2}>
+            <Button
+              className={styles.round_Button}
+              onClick={() =>
+                handleButtonPlus(
+                  ingredient.dosage,
+                  ingredient.color,
+                  ingredient.name
+                )
+              }
+              disabled={
+                calculateFillFrompercentage(juice) + ingredient.dosage > 100
+                  ? true
+                  : false
+              }
+            >
+              +
+            </Button>
+            <Button
+              className={styles.round_Button}
+              onClick={() =>
+                handleButtonMinus(
+                  ingredient.dosage,
+                  ingredient.color,
+                  ingredient.name
+                )
+              }
+              disabled={juice[i].percentage === 0 ? true : false}
             >
               -
             </Button>
           </div>
           <div className={styles.ingredientNameBox}>
-          <p className={styles.ingredientName2}>{ingredient.name}</p>
+            <p className={styles.ingredientName}>{ingredient.name}</p>
           </div>
-          
+          <div className={styles.ingredientAmount}>
+            <p className={styles.amount}>{juice[i].percentage}%</p>
+          </div>
         </div>
       );
     }
@@ -282,7 +363,6 @@ export const MyJuiceCreator = () => {
     console.log(`radio checked:${e.target.value}`);
     setVolume(e.target.value);
     calculatePrice(myJuice, e.target.value);
-    
   };
   console.log("volume", volume);
 
@@ -305,7 +385,7 @@ export const MyJuiceCreator = () => {
     }
 
     setPrice(roundTo(calculatedPrice, 1));
-    console.log("price", price)
+    console.log("price", price);
   };
 
   //Nommer sa recette
@@ -325,11 +405,14 @@ export const MyJuiceCreator = () => {
     }
 
     const recipe = myJuice.map((ingredient) => {
-      return { name: ingredient.name, percentage: ingredient.percentage, ingredient:ingredient._id };
+      return {
+        name: ingredient.name,
+        percentage: ingredient.percentage,
+        ingredient: ingredient._id,
+      };
     });
-    
-    
-    const options = {volume};
+
+    const options = { volume };
 
     const myJuiceOrder = {
       productId: productName,
@@ -407,63 +490,95 @@ export const MyJuiceCreator = () => {
             <Flex vertical gap="middle">
               <Radio.Group
                 onChange={onChangeVolume}
-                defaultValue={{capacity: "250ml", priceMultiplier: 1}}
+                defaultValue={{ capacity: "250ml", priceMultiplier: 1 }}
                 ButtonStyle="solid"
-                
               >
-                <Radio.Button value={{capacity: "250ml", priceMultiplier: 1}}>250ml</Radio.Button>
-                <Radio.Button value={{capacity: "1l", priceMultiplier: 3.5}}>1l</Radio.Button>
+                <Radio.Button value={{ capacity: "250ml", priceMultiplier: 1 }}>
+                  250ml
+                </Radio.Button>
+                <Radio.Button value={{ capacity: "1l", priceMultiplier: 3.5 }}>
+                  1l
+                </Radio.Button>
               </Radio.Group>
             </Flex>
           </div>
           <div className={styles.pricetag}></div>
           <h4 className={styles.subTitle}>Prix</h4>
-          <h2 className={styles.price}>{price*volume.priceMultiplier} €</h2>
+          <h2 className={styles.price}>{price * volume.priceMultiplier} €</h2>
         </div>
       </Modal>
     ));
 
   return (
-    <div className={styles.mainContainer}>
-      <div className={styles.ingredientList1}>{IngredientListFruits}</div>
+    <div className={styles.main}>
+      <div className={styles.titleContainer}>
+        <h1>Créez votre jus</h1>
+      </div>
 
- {/* loadingBar classique */}
-      <div className={styles.bottleContainer}>
-        <div className={styles.bottle_bar}>
-          <div
-            className={`${styles.bottle_bar_fill}`}
-            style={{
-              height: `${calculateFillFrompercentage(juice)}%`,
-              backgroundImage: `linear-gradient(to top, ${colorGradient.join(
-                ","
-              )} )`,
-            }}
-          >
-            {" "}
+      <div className={styles.mainContainer}>
+        <div className={styles.FruitsList}>
+          <div className={styles.CategoryTitle}>
+            <h2>Fruits</h2>
+          </div>
+
+          <div className={styles.ingredientList1}>{IngredientListFruits}</div>
+        </div>
+
+        {/* loadingBar classique */}
+        <div className={styles.bottleContainer}>
+          <div className={styles.bottle_bar}>
+            <div
+              className={`${styles.bottle_bar_fill}`}
+              style={{
+                height: `${calculateFillFrompercentage(juice)}%`,
+                backgroundImage: `linear-gradient(to top, ${colorGradient.join(
+                  ","
+                )} )`,
+              }}
+            >
+              {" "}
+            </div>
           </div>
         </div>
-
-        <div className={styles.fill_label}>
-          {calculateFillFrompercentage(juice)}%
-        </div>
-        <div className={styles.ButtonContainer}>
-          <Button
-            className={styles.Button}
-            onClick={() => {
-              ConfigureMyJuice();
-            }}
-          >
-            Commander ce jus
-          </Button>
-          <Button className={styles.Button} onClick={handleReset}>
-            Reset
-          </Button>
+        <div className={styles.VegList}>
+          <div className={styles.CategoryTitle}>
+            <h2>Légumes</h2>
+          </div>
+          <div className={styles.ingredientList2}>{IngredientListVeg}</div>
         </div>
       </div>
 
+      <div>
+      <div className={styles.SpiceList}>
+          <div className={styles.CategoryTitle}>
+            <h2 className={styles.category}>épices</h2>
+          </div>
+          <div className={styles.SpicesListContainer}>
+        <div className={styles.ingredientList3}>{IngredientListSpices}</div>
+      </div>
+      </div>
+      
+      </div>
 
-
-      <div className={styles.ingredientList2}>{IngredientListVeg}</div>
+      <div className={styles.CompletionStatus}>
+  <div className={styles.fill_label}>
+    {calculateFillFrompercentage(juice)}%
+  </div>
+  <div className={styles.ButtonContainer}>
+    <Button
+      className={styles.Button}
+      onClick={() => {
+        ConfigureMyJuice();
+      }}
+      disabled={calculateFillFrompercentage(juice) === 100 ? false : true}
+    >
+      Commander ce jus
+    </Button>
+    <Button className={styles.Button} onClick={handleReset}>
+      Reset
+    </Button>
+  </div>
+</div>
 
       {modalContent}
     </div>

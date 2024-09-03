@@ -19,35 +19,60 @@
 
 
 .mainContainer {
-    padding-top: 10%;
     width: 80vw;
     height: 100vh;
     display: flex;
     flex-direction: row;
-    padding-left: 5%;
-    padding-right: 5%;
+    margin-top: -3%;
+   
 }
 
+
+.FruitsList{
+    width: 40%;
+    justify-content: end;
+    align-content: start;
+
+}
+
+.VegList{
+    width: 40%;
+    justify-content: center;
+    justify-items: center;
+}
+
+.CategoryTitle{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-transform: capitalize;
+}
+
+
+
 .ingredientList1{
-    width : 25%;
+    width :100%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    padding-left: 0%;
-    margin-top: -2%;
-    
-    
+    justify-content: center;
+   align-content: space-around;
+   
 }
 
 .ingredientList2{
-    width : 33%;
+    width :100%;
     display: flex;
     flex-direction: column;
-    padding-right: 10%;
-    justify-content: flex-start;
-    margin-top: -2%;
-    align-items: center;
+    justify-content: center;
+   align-content: space-around;
+}
+
+
+.ingredientList3{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .ingredient{
@@ -56,6 +81,17 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    margin-top: 2%;
+}
+
+.Spice{
+    width:35%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2%;
+   
 }
 
 .ingredientButton{
@@ -74,14 +110,19 @@
 
 
 .bottleContainer{
-    width: 100%;
+    width: 80%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left: -10%;
-    margin-right: -10%;
+    margin-top: 10%;
+    
 }
 
+.ingredientIcon{
+    margin-right: 5%;
+   
+
+}
 
 .button{
     background-color: #F27C00;
@@ -106,27 +147,36 @@
     width: 2vw;
     justify-content: center;
     align-content: center;
+
     
 }
 
 .ingredientNameBox{
-    width: 75%;
     align-content: center;
+    width: 8vw;
 }
 
-.ingredientName1{
+.ingredientName{
     font-family: 'Concert One';
-    font-size: 1.3rem;
-    margin-right: 2%;
-    text-align: right;
+    font-size: 1rem;
+    text-align: center;
+    margin-left: 5%;
+    
     
 }
 
-.ingredientName2{
+/* .ingredientName2{
     font-family: 'Concert One';
     font-size: 1.3rem;
     margin-right: 2%;
     text-align: start;
+} */
+
+.ingredientAmount{
+    align-items: end;
+    width: 15%;
+    justify-content:end;
+    margin-left: 5%;
 }
 
 .bottle_bar{
@@ -174,4 +224,35 @@
     font-size: 1.2rem;
     
 }
+.amount{
+    font-family: 'Concert One';
+}
 
+.titleContainer{
+    align-items: center;
+}
+
+.SpicesListContainer{
+    display: flex;
+    flex-direction: row;
+    width: 80vw;
+    justify-content: space-evenly;
+    
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+
+}
+.CompletionStatus{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -8%;
+}
+
+.SpiceList{
+    margin-top: -17%;
+    align-items: center;  
+}
