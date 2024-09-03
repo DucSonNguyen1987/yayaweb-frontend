@@ -63,6 +63,7 @@ useEffect(()=>{
     // construct order data object
     const orderData = {
       items: cart.items,
+      customer_email: user.email,
       deliveryDate: twoDaysAfter,
       deliveryAddress,
       total: cart.total,
@@ -77,7 +78,7 @@ useEffect(()=>{
     if(data.result) {
       console.log('Order confirmed', data.data);
       // requete post vers le backend /create-checkout-session avec en data orderData
-      const responseSession = await api.post('/create-checkout-session', { ...orderData });
+      const responseSession = await api.post('/create-checkout-session', { ...orderData, orderId: data.data.orderId });
       const dataSession = responseSession.data.data;
       console.log(dataSession, dataSession.url);
       router.push(dataSession.url);
