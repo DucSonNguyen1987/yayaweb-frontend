@@ -55,7 +55,7 @@ function CategoryProductsPage() {
 
   return (
     <div className={styles.productsPage}>
-      <h1>Products in: {formatCategory(category)}</h1>
+      <h1>{formatCategory(category)}</h1>
       <div className={styles.productsGrid}>
         {filteredProducts.map(product => (
           <ProductVignette

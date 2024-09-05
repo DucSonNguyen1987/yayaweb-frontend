@@ -6,7 +6,8 @@ import Image from 'next/image';
 import { addToCart } from '../reducers/cart';
 import { useDispatch } from 'react-redux';
 import { Flex, Radio, InputNumber, Carousel } from 'antd';
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faArrowLeft,faArrowRight} from '@fortawesome/free-solid-svg-icons';
 
  
 function Product(props) {
@@ -117,20 +118,28 @@ function Product(props) {
   // sort benefits by weight
   productBenefits.sort((a, b) => a.weight < b.weight ? 1 : -1);
   console.log(productBenefits);
+
+
   
   return (
     <div className={styles.productContainer}>
+      <div className={styles.Carousel}>
+      <FontAwesomeIcon className={styles.arrow_prev} icon={faArrowLeft} />
       <div className={styles.images}>
+      
         {(productImages.length > 0) && 
-          <Carousel arrows infinite={false} draggable={true}>
+          <Carousel className={styles.caroussel} arrows infinite={false} draggable={true}>
             {productImages.map((image, i) => (
-                  <div className={styles.productImage} key={'productImage-'+i}>
+                  <div className={styles.productImage}  key={'productImage-'+i}>
                     <Image src={image.url} key={i} layout="fill" objectFit='contain' objectPosition='center' />
                   </div>
             ))}
           </Carousel>
         }
       </div>
+      
+      </div>
+      <FontAwesomeIcon className={styles.arrow_next} icon={faArrowRight} />
       <div className={styles.productDetails}>
         <h1 className={styles.productName}>{product.name}</h1>
         <div className={styles.productDescription}>{product.description}</div>

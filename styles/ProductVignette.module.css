@@ -4,6 +4,10 @@
   padding: 16px;
   text-align: center;
   transition: box-shadow 0.3s ease;
+  width: 15vw;
+  border-radius: 5%;
+  overflow: hidden;
+  margin-bottom: 5vh;
 }
 
 .vignette:hover {
@@ -15,39 +19,41 @@
   height: auto;
   cursor: pointer;
   margin-bottom: 8px;
+  transition: 0.2s ease;
+}
+
+.productImage:hover {
+  transform : scale(1.5);
+}
+.productImage:hover + .productName{
+color: var(--yaya-prime);
 }
 
 .productName {
   font-size: 1.2rem;
   margin-bottom: 8px;
+  margin-top: 5vh;
+
 }
 
 .productPrice {
   font-size: 1rem;
   color: #888;
   margin-bottom: 16px;
+  font-family: 'concert-one';
+  text-transform: uppercase;
 }
 
 .addToCartButton {
-  background-color: #28a745;
+  background-color: var(--yaya-third);
   color: white;
   padding: 8px 16px;
   border: none;
   cursor: pointer;
   margin-bottom: 16px;
+  border-radius: 5px;
 }
 
 .addToCartButton:hover {
-  background-color: #218838;
-}
-
-.productLink {
-  display: block;
-  margin-top: 8px;
-  color: #007bff;
-  text-decoration: none;
-}
-
-.productLink:hover {
-  text-decoration: underline;
+  background-color: var(--yaya-prime);
 }
