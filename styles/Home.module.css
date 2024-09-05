@@ -23,12 +23,15 @@
 
 .heroBanner{
   background-image: url("../public/HeroBanner.png");
+  background-size: 100%;
+  background-position-y:  -15vh ;
   width: 100vw;
   height: 80vh;
   display: flex;
   flex-direction:column;
   align-content: center;
   justify-content: center;
+  margin-top: -8vh;
 }
 
 .logoContainer{
@@ -38,11 +41,133 @@
   height: fit-content;
   width: fit-content;
   justify-content: center;
+  align-self: center;
+  
+
+}
+.logo{
+  height: 18vh;
+}
+
+.descriptionContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   align-content: center;
+  padding-top: 5vh;
+  
+}
+.iconContainer{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  margin-left: 3vw;
+  margin-right: 3vw;
+}
+
+.icons{
+  height: 10vh;
+  align-self: center;
+}
+
+.icontext{
+  font-family: 'concert-one';
+  font-size: 2.5vh;
+  color: white;
+  margin-bottom: 15vh;
+}
+
+.introSection{
+  display:flex;
+  flex-direction: column;
+  
+}
+
+.presentation{
+  display:flex;
+  flex-direction:row;
+  width: 100%;
+}
+.illustration{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 500px;
+  margin-left: 10vw;
+}
+
+.blob{
+  overflow: visible;
+  width: 500px;
+  height: 462px;
+  left: 0;
+  top: 45px;
+  transform:matrix(1,0,0,1,0,0);
+  z-index: 2;
+}
+
+.kooples{
+    position: relative;
+    bottom: 50px;
+    width: 490.812px;
+    height: 613.515px;
+    right: 500px;
+    top: 0px;
+    overflow: visible;
+    z-index: 4;
+}
+
+.presentationText{
+width: fit-content;
+z-index: 6;
+left: 800px;
 
 }
-.yaya{
-  width: 300px;
-  height: 110px;
+
+.secondTitle{
+  font-size: 1.5em;
+  margin: auto;
 }
 
+.exergue{
+  font-family: 'concert-one';
+  color :var(--yaya-prime);
+}
+
+.citation{
+  font-family: 'Varela-round';
+  color:var(--yaya-neutral);
+  font-size: 1.5rem;
+}
+.quoteSub{
+  position:relative;
+  text-align:end;
+  right: 9vw;
+  font-variant: small-caps;
+} 
+.buttonLink{
+  background-color: var(--yaya-second);
+  font-family: 'concert-one';
+  color:white;
+  left: 25vw;
+}
+
+.gammes{
+  display: flex;
+  flex-direction: row;
+ align-items: center;
+}
+
+.discover{
+  background-color: var(--yaya-second);
+  width: 20%;
+  height: 370px;
+  color: white;
+  text-align: center;
+  align-content: center;
+  font-family: 'concert-one';
+  font-size: 2.5vh;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
