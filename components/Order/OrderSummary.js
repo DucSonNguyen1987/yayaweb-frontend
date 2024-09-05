@@ -34,13 +34,13 @@ function OrderSummary(props) {
             <div className={styles.itemQuantity}>
               <span>&times; {item.quantity}</span>
             </div>
-            <FontAwesomeIcon 
+            {!order.orderDate && <FontAwesomeIcon 
               className={styles.itemIcons} 
               icon={faTrashCan} 
               onClick={() => dispatch(removeFromCart(item.product))} 
-            />
+            />}
             <span className={styles.itemPrice}>
-              {(item.product.price * item.product.options.volume.priceMultiplier) * item.quantity}€
+              {((item.product.price * item.product.options.volume.priceMultiplier) * item.quantity).toFixed(2)}€
             </span>
           </div>
         ))}

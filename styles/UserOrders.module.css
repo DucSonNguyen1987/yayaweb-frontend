@@ -6,3 +6,19 @@
     display: flex;
     justify-content: space-between;
 }
+.userOrdersDetails {
+    display: flex;
+    column-gap: var(--yaya-padding);
+}
+.userOrdersDetails > div {
+    flex: 1 0 50%;
+}
+.orderPayment {
+    
+}
+.orderStatus {
+    border: 1px solid rgba(var(--yaya-third-rgbval), 30%);
+    border-radius: 5px;
+    padding: calc(var(--yaya-padding) / 2);
+    margin-bottom: var(--yaya-padding);
+}

@@ -11,6 +11,7 @@ import { injectStore } from '../api/axios'
 
 import user from "../reducers/user";
 import cart from "../reducers/cart";
+import { useState } from 'react';
 
 
 const reducers = combineReducers({user, cart});
@@ -28,6 +29,10 @@ const persistor = persistStore(store);
 injectStore(store)
 
 function App({ Component, pageProps }) {
+  const [modalRegisterOpen, setModalRegisterOpen] = useState(false);
+  const toggleModalRegister = () => {
+    setModalRegisterOpen(!modalRegisterOpen);
+  }
   return (
      <Provider store={store}>
        <PersistGate persistor={persistor}>
@@ -35,9 +40,10 @@ function App({ Component, pageProps }) {
           <Head>
             <title>YAYA SPICY JUICE</title>
           </Head>
-          <Header/>
+          {modalRegisterOpen && <Header open={modalRegisterOpen} toggleModalRegister={toggleModalRegister} />}
+          {!modalRegisterOpen && <Header />}
           <main className={styles.contentContainer}>
-            <Component {...pageProps} />
+            <Component { ...pageProps} toggleModalRegister={toggleModalRegister} />
           </main>
         </>
       </PersistGate>
