@@ -64,7 +64,7 @@ const showModal = () => {
     console.log(deliveryDate);
 
     // add user info to delivery address
-    const deliveryAddress = user.address[0];
+    const deliveryAddress = { ...user.address[0] };
     deliveryAddress.civility = user.gender === 'male' ? 'M.' : user.gender === 'female' ? 'Mme' : user.gender;
     deliveryAddress.firstName = user.firstName;
     deliveryAddress.lastName = user.lastName;
