@@ -11,6 +11,13 @@ function OrderSummary(props) {
   const cart = useSelector((state) => state.cart.value);
   console.log(props.order);
   const order = props.order ? props.order : cart;
+  console.log('order summary', order);
+
+
+  const getProductImageUrlByOption = (item) => {
+    const foundImageIndex = item.product.images.findIndex(image => image !== '' && (image.productOptions && image.productOptions.volume && item.product.options.volume.capacity === image.productOptions.volume.capacity));
+    return (foundImageIndex !== -1) ? item.product.images[foundImageIndex].url : item.product.images[0].url;
+  }
 
   return (
     <div className={styles.orderSummary}>
@@ -18,14 +25,32 @@ function OrderSummary(props) {
       <div className={styles.orderContent}>
         {order && order.items.map((item, i) => (
           <div className={styles.cartItem} key={i}>
-            {item.images && (
+            {item.product.images && (
               <Image 
-                src={item.images[0]} 
-                layout="fill" 
-                objectFit='contain' 
-                objectPosition='center' 
+                src={getProductImageUrlByOption(item)} 
+                width='100px' 
+                height='100px' 
                 alt={item.product.name} 
               />
+            )}
+            {item.product.image && (
+              <Image 
+                src={item.product.image} 
+                width='100px' 
+                height='100px' 
+                alt={item.product.name} 
+              />
+            )}
+            {!item.product.images && item.product.category === 'MYJUICE' && (
+              <div className={styles.itemMyJuice}>
+                <Image 
+                  src={'/icons/logo.png'} 
+                  width='40px' 
+                  height='40px' 
+                  alt={item.product.name} 
+                />
+                <span>MyJuice</span>
+              </div>
             )}
             <div className={styles.itemDetails}>
               <span className={styles.itemName}>{item.product.name}</span>
