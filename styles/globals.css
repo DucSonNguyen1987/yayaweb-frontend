@@ -25,6 +25,7 @@ body > div#__next > main {
   --yaya-third: #01A281;
   --yaya-third-rgb: rgb(1, 162, 129);
   --yaya-third-rgbval: 1, 162, 129;
+  --yaya-neutral-rgbval: 112, 112, 112;
   /* paddings */
   --yaya-padding: 16px;
 }
