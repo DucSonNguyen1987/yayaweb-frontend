@@ -1,13 +1,13 @@
 import React from 'react';
-import Link from "next/link"; // Import the Next.js Link component
-import styles from './styles/Footer.module.css'; // Assuming you're using CSS Modules
+import Link from "next/link"; 
+import styles from './styles/Footer.module.css'; 
 
 const Footer = () => {
     return (
         <footer className={styles.footer}>
             <div className={styles.footerContainer}>
                 <div className={styles.footerLogo}>
-                    <img src="/path-to-your-logo.png" alt="YAYA Logo" />
+                    <img src="/logo.png" alt="YAYA Logo" />
                 </div>
 
                 <div className={styles.footerLinks}>
