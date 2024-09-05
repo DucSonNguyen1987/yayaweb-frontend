@@ -156,3 +156,72 @@
 .orderTotalPrice {
     font-size: 24px;
 }
+
+.deliveryTimeRanges {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: calc(3 * 22px);
+    align-content: flex-start;
+    column-gap: var(--yaya-padding);
+    /* align-items: flex-start; */
+}
+
+.deliveryInfo {
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+      Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.orderDeliveryAddress {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.orderDeliveryAddress .userField {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.orderDeliveryDetails {
+    border: 1px solid rgba(var(--yaya-third-rgbval), 30%);
+    border-radius: 5px;
+    padding: calc(var(--yaya-padding) / 2);
+    margin-bottom: var(--yaya-padding);
+}
+
+.orderNotConnected {
+    display: flex;
+    column-gap: var(--yaya-padding);
+    position: relative;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.orderNotConnected > div {
+    flex: 0 0 calc(30% - var(--yaya-padding) / 2);
+}
+
+.orderNotConnected::before {
+    content: "";
+    display: block;
+    width: 1px;
+    height: 50%;
+    position: absolute;
+    left: 50%;
+    top: 25%;
+    background-color: var(--yaya-neutral);
+}
+
+.registerSection {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--yaya-padding) / 2);
+}
+
+
+.registerSection > p {
+    margin-bottom: 0;
+}

@@ -62,7 +62,7 @@ export const MyJuiceCreator = () => {
     calculatePrice(myJuice, volume);
   }, [myJuice]);
 
-  console.log("ingredients", ingredients);
+  
 
   // fonction ouverture/fermeture modal
   const showModal = () => {
@@ -85,20 +85,20 @@ export const MyJuiceCreator = () => {
     setColorGradient(
       newJuice
         .filter((ingredient) => ingredient.percentage !== 0)
-        .map((ingredient, i, ingredients) => {
-          console.log(
-            ingredient.name,
-            "ingredient.percentage",
-            ingredient.percentage,
-            "fill",
-            fill
-          );
-          console.log("colorGradient", colorGradient);
+        .map((ingredient, i) => {
+          // console.log(
+          //   ingredient.name,
+          //   "ingredient.percentage",
+          //   ingredient.percentage,
+          //   "fill",
+          //   fill
+          // );
+          
           let colorStart = "";
           if (i === 0) {
             colorStop = Number((ingredient.percentage / fill) * 100);
             colorStart += `${ingredient.color} 0%`;
-            console.log("colorStop", colorStop);
+            
             return `${colorStart}, ${ingredient.color} ${
               Number(ingredient.percentage / fill) * 100
             }%`;
@@ -118,9 +118,12 @@ export const MyJuiceCreator = () => {
 
   // Reset à 0 les montants d'ingrédients
   const handleReset = () => {
-    setMyJuice([]);
-  };
+    setJuice(ingredients)
 
+    
+    
+  };
+  
   // Ajoute une dose d'un ingrédient dans la compo du jus
   const handleButtonPlus = (dosage, color, name) => {
     const fill = calculateFillFrompercentage(juice);
@@ -151,16 +154,15 @@ export const MyJuiceCreator = () => {
 
       updateColorGradient(newJuice);
 
-      console.log("colorGradient", colorGradient);
+      
     }
   };
 
-  console.log("juice", juice);
 
   // Retire une dose d'un ingrédient dans la compo du jus
   const handleButtonMinus = (dosage, color, name) => {
     const fill = calculateFillFrompercentage(juice);
-    console.log("juice", juice);
+  
 
     let isEmpty = false;
 
@@ -353,21 +355,22 @@ export const MyJuiceCreator = () => {
     myJuiceOrder.map((ingredient, i) => {
       Reflect.deleteProperty(ingredient, "color");
     });
-    console.log(myJuiceOrder);
+   
     setMyJuice(myJuiceOrder);
 
     setOpen(true);
+    
   };
 
-  console.log("myJuice", myJuice);
+  console.log("myjuice", myJuice)
 
   // Choisir son format
   const onChangeVolume = (e) => {
-    console.log(`radio checked:${e.target.value}`);
+  
     calculatePrice(myJuice, volumes[e.target.value]);
     setVolume(volumes[e.target.value]);
   };
-  console.log("volume", volume);
+  
 
   // arrondir à 1 décimale
   const roundTo = (num, precision) => {
@@ -377,7 +380,7 @@ export const MyJuiceCreator = () => {
 
   //Calculer le prix d'1 pack de 6 en fonction du format
   const calculatePrice = (drink, vol) => {
-    console.log("yo");
+    
     let calculatedPrice = drink.reduce(
       (acc, val) => (acc += (val.percentage * val.price) / val.dosage),
       0
@@ -388,7 +391,7 @@ export const MyJuiceCreator = () => {
     }
 
     setPrice(roundTo(calculatedPrice, 1));
-    console.log("price", price);
+    
   };
 
   //Nommer sa recette
@@ -401,11 +404,10 @@ export const MyJuiceCreator = () => {
     const formatedName = productName.replace(" ", "-");
     setProductId(formatedName);
 
-    // Si user connecté, description = username
-    if (user.isConnected) {
+    
       const descriptionText = `Created by ${user.name}`;
       setDescription(descriptionText);
-    }
+  
 
     const recipe = myJuice.map((ingredient) => {
       return {
@@ -428,20 +430,22 @@ export const MyJuiceCreator = () => {
       composition: recipe,
     };
 
-    console.log("myJuiceOrder", myJuiceOrder);
+    
     dispatch(addToCart({ product: myJuiceOrder, quantity }));
     setOpen(false);
+    console.log("myJuiceorder", myJuiceOrder)
   };
-  console.log(composition);
+ 
 
   const rememberMyJuice = () => {
     const favoriteJuice = {
       name: productName,
-      composition: composition,
+      composition: myJuice,
       price: price,
     };
     console.log("favoriteJuice", favoriteJuice);
-    dispatch(saveMyJuice({ favoriteJuice }));
+    dispatch(saveMyJuice({ savedJuice }));
+    
   };
 
   // Formulaire de commande
@@ -537,6 +541,25 @@ export const MyJuiceCreator = () => {
               {" "}
             </div>
           </div>
+          <div className={styles.CompletionStatus}>
+  <div className={styles.fill_label}>
+    {calculateFillFrompercentage(juice)}%
+  </div>
+  <div className={styles.ButtonContainer}>
+    <Button
+      className={styles.Button}
+      onClick={() => {
+        ConfigureMyJuice();
+      }}
+      disabled={calculateFillFrompercentage(juice) !== 100 ? true : false}
+    >
+      Commander ce jus
+    </Button>
+    <Button className={styles.Button} onClick={handleReset}>
+      Reset
+    </Button>
+  </div>
+</div>
         </div>
         <div className={styles.VegList}>
           <div className={styles.CategoryTitle}>
@@ -558,25 +581,7 @@ export const MyJuiceCreator = () => {
       
       </div>
 
-      <div className={styles.CompletionStatus}>
-  <div className={styles.fill_label}>
-    {calculateFillFrompercentage(juice)}%
-  </div>
-  <div className={styles.ButtonContainer}>
-    <Button
-      className={styles.Button}
-      onClick={() => {
-        ConfigureMyJuice();
-      }}
-      disabled={calculateFillFrompercentage(juice) !== 100 ? true : false}
-    >
-      Commander ce jus
-    </Button>
-    <Button className={styles.Button} onClick={handleReset}>
-      Reset
-    </Button>
-  </div>
-</div>
+      
 
       {modalContent}
     </div>

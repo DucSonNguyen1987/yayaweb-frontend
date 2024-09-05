@@ -66,23 +66,28 @@ function UserOrders() {
             key: i,
             label: <div className={styles.orderHeader}>
                 <span className={styles.orderTitle}>N°{order.orderId}</span>
-                <span className={styles.orderDate}>Date : {new Date(order.orderDate).toLocaleString()}</span>
-                <span className={styles.orderDate}>Statut : {orderStatuses[order.status]}</span>
+                <span className={styles.orderDate}>Date : <strong>{new Date(order.orderDate).toLocaleString()}</strong></span>
+                <span className={styles.orderDate}>Statut : <strong>{orderStatuses[order.status]}</strong></span>
             </div>,
             children: <div>
                 <OrderSummary order={order} />
-                <OrderDelivery order={order} />
-                <div className={styles.orderPayment}>
-                    <h2>Paiement</h2>
-                    {order.status === 'Pending payment' && 'En attente'}
-                    {/* Informations sur le paiement : type, date?, ... */}
+                <div className={styles.userOrdersDetails}>
+                    <OrderDelivery order={order} />
+                    <div className={styles.orderPayment}>
+                        <h2>Paiement</h2>
+                        <div className={styles.orderStatus}>
+                            {order.status === 'Pending payment' && 'En attente'}
+                            {order.status === 'Paid' && 'Effectué'}
+                            {/* Informations sur le paiement : type, date?, ... */}
+                        </div>
+                    </div>
                 </div>
             </div>
         }
     })
 
     return (
-      <div>
+      <div className={styles.userOrdersPage}>
         <main className={styles.main}>
             <h1 className={styles.title}>Mon historique</h1>
             <h2>Mes commandes</h2>
