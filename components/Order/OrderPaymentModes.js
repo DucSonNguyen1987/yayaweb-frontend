@@ -58,8 +58,10 @@ const showModal = () => {
 
     // fake date, TODO get real date from delivery choices
     const today = new Date();
-    const twoDaysAfter = new Date(today.setDate(today.getDate() + 2));
-    console.log(twoDaysAfter);
+    const dateParts = cart.deliveryDate.split("/");
+    // month is 0-based, that's why we need dataParts[1] - 1
+    const deliveryDate = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]); 
+    console.log(deliveryDate);
 
     // add user info to delivery address
     const deliveryAddress = user.address[0];
@@ -72,7 +74,8 @@ const showModal = () => {
     const orderData = {
       items: cart.items,
       customer_email: user.email,
-      deliveryDate: twoDaysAfter,
+      deliveryDate,
+      deliveryTime: cart.deliveryTime,
       deliveryAddress,
       total: cart.total,
     };
@@ -107,12 +110,13 @@ const showModal = () => {
       <h4>Le paiement n'a pas abouti... Try again...</h4>
     </Modal>
   )
-
+  console.log('cart.deliveryDate', cart.deliveryDate);
+  console.log('cart.deliveryTime', cart.deliveryTime);
   return (
     <div className={styles.orderPaymentProceed}>
       <h2>Paiement</h2>
       <div className={styles.orderPaymentModes}>
-        <Button backgroundColor='var(--yaya-third)' color='#FFFF' onClick={handlePaymentStripe}>
+        <Button backgroundColor='var(--yaya-third)' color='#FFFF' onClick={handlePaymentStripe} disabled={!cart.deliveryDate || !cart.deliveryTime}>
           <FontAwesomeIcon icon={faCreditCard} /> 
           <p>Stripe</p>
         </Button>

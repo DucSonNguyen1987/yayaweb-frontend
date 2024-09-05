@@ -23,8 +23,7 @@ import { Input, Modal, Popover } from "antd";
 import Link from "next/link";
 import { removeFromCart } from "../../reducers/cart";
 
-function Header() {
-
+function Header(props) {
 
   const router = useRouter();
 
@@ -63,6 +62,13 @@ function Header() {
 
   // State pour lister les erreurs dans le form
   const [errors, setErrors] = useState([]);
+
+  useEffect(() => {
+    // console.log('HEADER useEffect', props.open);
+    if(props.open) {
+      setOpen(true);
+    }
+  }, []);
 
   const showModal = () => {
     setOpen(true);
@@ -207,6 +213,8 @@ function Header() {
   };
 
   const handleCancel = () => {
+    // console.log('handleCancel', props.open);
+    if(props.open) props.toggleModalRegister();
     setOpen(false);
   };
 
@@ -218,7 +226,6 @@ function Header() {
       onOk={handleRegister}
       onCancel={handleCancel}
       footer={[
-        <div className={styles.footer}>
           <button
             className={styles.footerButton}
             key="Retour"
@@ -226,7 +233,7 @@ function Header() {
           >
             {" "}
             Retour
-          </button>
+          </button>,
           <button
             className={styles.footerButton}
             key="submit"
@@ -234,7 +241,6 @@ function Header() {
           >
             S'inscrire
           </button>
-        </div>,
       ]}
     >
       <form className={styles.SignUpForm} onSubmit={handleRegister}>
@@ -474,7 +480,7 @@ function Header() {
   // Popover Account
   if (!user.accessToken) {
     popoverUserContent = (
-      <div ClassName={styles.popoverUserContent}>
+      <div className={styles.popoverUserContent}>
         <div className={styles.registerContainer}>
           <div className={styles.registerSection}>
             <p className={styles.popovertitle}>Pas de compte ?</p>
@@ -571,10 +577,10 @@ function Header() {
       <div className={styles.logoutSection}>
         <p className={styles.popovertitle}> Bonjour {user.firstName},</p>
         <Link href="/account">
-          <span ClassName={styles.linkPop}>Mon Compte</span>
+          <span className={styles.linkPop}>Mon Compte</span>
         </Link>
         <Link href="/orders">
-          <span ClassName={styles.linkPop}>Mon historique</span>
+          <span className={styles.linkPop}>Mon historique</span>
         </Link>
         <button className={styles.buttonPop} onClick={() => handleLogout()}>
           Se déconnecter
@@ -625,6 +631,7 @@ function Header() {
       </Link>
     </div>
   );
+  
 
   return (
     <header className={styles.header}>
