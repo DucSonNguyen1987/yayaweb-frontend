@@ -2,6 +2,7 @@ import '../styles/globals.css';
 import styles from '../styles/AppLayout.module.css';
 import Head from 'next/head';
 import Header from "../components/Header/Header";
+import Footer from "../components/Footer/Footer";
 import { Provider } from 'react-redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -45,6 +46,7 @@ function App({ Component, pageProps }) {
           <main className={styles.contentContainer}>
             <Component { ...pageProps} toggleModalRegister={toggleModalRegister} />
           </main>
+          <Footer />
         </>
       </PersistGate>
      </Provider>
