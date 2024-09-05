@@ -63,3 +63,27 @@ body > div#__next > main {
 @media screen and (min-width: 1920px) {
   
 }
+
+.ant-carousel .slick-prev,
+.ant-carousel .slick-next,
+.ant-carousel .slick-prev:hover,
+.ant-carousel .slick-next:hover {
+font-size: 5vh;
+
+color: #ff7f50;
+border-width: 20px;
+}
+
+.ant-carousel .slick-prev{
+  margin-left: 20%;
+  transform: scale(2);
+  color : #707070;
+}
+
+.ant-carousel .slick-next{
+  margin-right: 20%;
+  transform: scale(2);
+  color : #707070;
+  font-family: 'concert-one';
+}
+
