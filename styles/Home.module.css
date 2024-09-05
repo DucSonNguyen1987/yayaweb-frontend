@@ -13,10 +13,36 @@
 }
 
 .title a {
-  color: #0070f3;
+  color: var(--yaya-prime);
   text-decoration: none;
 }
 
 .title a:hover, .title a:focus, .title a:active {
   text-decoration: underline;
 }
+
+.heroBanner{
+  background-image: url("../public/HeroBanner.png");
+  width: 100vw;
+  height: 80vh;
+  display: flex;
+  flex-direction:column;
+  align-content: center;
+  justify-content: center;
+}
+
+.logoContainer{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: fit-content;
+  width: fit-content;
+  justify-content: center;
+  align-content: center;
+
+}
+.yaya{
+  width: 300px;
+  height: 110px;
+}
+

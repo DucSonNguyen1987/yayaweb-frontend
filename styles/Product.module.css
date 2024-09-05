@@ -88,12 +88,3 @@ display: flex;
 flex-direction: row;
 }
 
-.arrow_prev{
-  margin-left: 5%;
-  transform: translate(0,20vh);
-}
-
-.arrow_next{
-  margin-right: 5%;
-  transform: translate(0,-20vh);
-}

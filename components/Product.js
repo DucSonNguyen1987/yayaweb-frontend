@@ -124,7 +124,7 @@ function Product(props) {
   return (
     <div className={styles.productContainer}>
       <div className={styles.Carousel}>
-      <FontAwesomeIcon className={styles.arrow_prev} icon={faArrowLeft} />
+      
       <div className={styles.images}>
       
         {(productImages.length > 0) && 
@@ -139,7 +139,7 @@ function Product(props) {
       </div>
       
       </div>
-      <FontAwesomeIcon className={styles.arrow_next} icon={faArrowRight} />
+      
       <div className={styles.productDetails}>
         <h1 className={styles.productName}>{product.name}</h1>
         <div className={styles.productDescription}>{product.description}</div>

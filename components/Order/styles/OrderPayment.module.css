@@ -225,3 +225,19 @@
 .registerSection > p {
     margin-bottom: 0;
 }
+
+.itemMyJuice {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+.itemMyJuice > span {
+    font-family: 'Concert One';
+    color: #707070;
+    text-transform: uppercase;
+}
