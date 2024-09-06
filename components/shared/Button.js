@@ -8,6 +8,7 @@ const Button = (props) => {
   const disabled = props.disabled || null;
   const fontSize = props.fontSize || null;
   const minWidth = props.minWidth || null;
+  const id = props.id || null;
 
   const style = { 
     color,
@@ -24,7 +25,7 @@ const Button = (props) => {
   };
 
   return (
-    <button className={className} style={style} onClick={() => handleClick()} disabled={disabled} type={type}>{props.children}</button>
+    <button className={className} style={style} onClick={() => handleClick()} disabled={disabled} type={type} id={id}>{props.children}</button>
   )
 }
 

@@ -227,21 +227,27 @@ function Header(props) {
       onOk={handleRegister}
       onCancel={handleCancel}
       footer={[
-          <button
+          <Button
             className={styles.footerButton}
             key="Retour"
+            fontSize={'14px'}
+            minWidth={'100px'}
+            backgroundColor={'white'}
+            color={'var(--yaya-prime)'}
             onClick={handleCancel}
-          >
+            >
             {" "}
             Retour
-          </button>,
-          <button
+          </Button>,
+          <Button
             className={styles.footerButton}
             key="submit"
+            fontSize={'14px'}
+            minWidth={'100px'}
             onClick={handleRegister}
           >
             S'inscrire
-          </button>
+          </Button>
       ]}
     >
       <form className={styles.SignUpForm} onSubmit={handleRegister}>
@@ -485,18 +491,19 @@ function Header(props) {
         <div className={styles.registerContainer}>
           <div className={styles.registerSection}>
             <p className={styles.popovertitle}>Pas de compte ?</p>
-            <button
+            <Button
               className={styles.button}
               id="register"
+              fontSize={'14px'}
               onClick={() => {
                 setOpen(true);
               }}
             >
               S'inscrire
-            </button>
+            </Button>
           </div>
           <div className={styles.registerSection}>
-            <p className={styles.popovertitle}>Se Connecter</p>
+            <p className={styles.popovertitle}>Se Connecter!</p>
             <Input
               className={styles.Input}
               type="text"
@@ -513,13 +520,14 @@ function Header(props) {
               onChange={(e) => setSignInPassword(e.target.value)}
               value={signInPassword}
             />
-            <button
+            <Button
               className={styles.button}
-              id="register"
+              id="login"
+              fontSize={'14px'}
               onClick={() => handleConnection()}
             >
               Se Connecter
-            </button>
+            </Button>
           </div>
 
         </div>
@@ -533,15 +541,16 @@ function Header(props) {
       <div className={styles.registerContainer}>
         <div className={styles.registerSection}>
           <p className={styles.popovertitle}>Pas de compte ?</p>
-          <button
+          <Button
             className={styles.button}
             id="register"
+            fontSize={'14px'}
             onClick={() => {
               setOpen(true);
             }}
           >
             S'inscrire
-          </button>
+          </Button>
         </div>
         <div className={styles.registerSection}>
           <p className={styles.popovertitle}>Se Connecter</p>
@@ -561,13 +570,14 @@ function Header(props) {
             onChange={(e) => setSignInPassword(e.target.value)}
             value={signInPassword}
           />
-          <button
+          <Button
             className={styles.button}
             id="register"
+            fontSize={'14px'}
             onClick={() => handleConnection()}
           >
             Se Connecter
-          </button>
+          </Button>
           
         </div>
       </div>
