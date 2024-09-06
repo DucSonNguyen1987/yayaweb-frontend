@@ -54,3 +54,63 @@
     color: var(--yaya-second);
   }
   
+  .main{
+    margin-top: -8vh;
+  }
+
+  .heroSection{
+    width: 100vw;
+    height: fit-content;
+    background: var(--yaya-second);
+    display: flex;
+    flex-direction: row;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+  .rightSection{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width:50%;
+    text-align: justify;
+  }
+
+  .whiteSub{
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    line-height: 6vh;
+  }
+
+  .whiteTitle{
+    font-family: 'concert-one';
+    font-size: 5vh;
+    
+  }
+
+  .whiteText{
+    line-height: 4vh;
+  }
+  .whiteExergue{
+    font-family: 'concert-one';
+    font-size: 5vh;
+  }
+
+  .rightSection{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 50%;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+  .portrait{
+    margin-top: 5vh;
+    width: 100%;
+    border-radius: 20px;
+  }
+
+.engagement{
+  margin-bottom: 10vh;
+}
+
+

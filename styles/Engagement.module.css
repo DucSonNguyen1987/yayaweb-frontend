@@ -1,5 +1,5 @@
 .engagementContainer {
-    background-color: var(--yaya-third);
+    background-color: var(--yaya-second);
     padding: 40px 20px;
     text-align: center;
     border-radius: 8px;
@@ -7,14 +7,15 @@
   }
   
   .engagementTitle {
-    font-size: 28px;
+    font-family: 'concert-one';
+    font-size: 5vh;
     color: white; 
     margin-bottom: 20px;
   }
   
   .engagementDescription {
     font-size: 18px;
-    color: black; 
+    color: white;
     line-height: 1.5;
   }
   
