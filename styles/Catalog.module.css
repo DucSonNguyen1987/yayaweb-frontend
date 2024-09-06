@@ -1,11 +1,18 @@
 .catalog {
     display: flex;
-    justify-content: space-around;
+    flex-direction: row;
+    justify-content: space-evenly;
     padding: 20px;
+    
   }
   
   .range {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin-left: 2%;
+    margin-right: 2%;
+    
   }
   
   .viewProductsButton {
@@ -15,5 +22,21 @@
     color: white;
     border: none;
     cursor: pointer;
+    border-radius: 8px;
+  }
+
+  .cadre{
+    overflow: hidden;
+  }
+  .image{
+    overflow:hidden;
+    width: 250px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+  
+  }
+
+  .image:hover{
+    transform: scale(1.5);
   }
   
