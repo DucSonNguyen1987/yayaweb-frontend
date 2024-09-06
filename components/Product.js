@@ -131,7 +131,7 @@ function Product(props) {
           <Carousel className={styles.caroussel} arrows infinite={false} draggable={true}>
             {productImages.map((image, i) => (
                   <div className={styles.productImage}  key={'productImage-'+i}>
-                    <Image src={image.url} key={i} layout="fill" objectFit='contain' objectPosition='center' />
+                    <Image src={image.url} key={i} layout="fill" objectFit='contain' objectPosition='center' priority={true} />
                   </div>
             ))}
           </Carousel>
