@@ -150,10 +150,12 @@ font-family: 'Concert One';
     color:white;
     border-radius: 5px;
     border: none;
-    height: 3vh;
+    /* height: 3vh; */
     font-family: 'Concert One';
     margin-top: 5%;
-    }
+    width: 100%;
+    margin-top: 12px;
+}
 
 
 .popoverCartContent{

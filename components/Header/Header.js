@@ -593,9 +593,13 @@ function Header(props) {
         <Link href="/orders">
           <span className={styles.linkPop}>Mon historique</span>
         </Link>
-        <button className={styles.buttonPop} onClick={() => handleLogout()}>
+        <Button 
+          className={styles.buttonPop}
+          onClick={() => handleLogout()}
+          fontSize={'14px'}
+        >
           Se déconnecter
-        </button>
+        </Button>
       </div>
     )
   }
