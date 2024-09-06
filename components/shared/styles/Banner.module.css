@@ -5,6 +5,11 @@
     margin-left: calc((100vw - 100%) / -2);
     margin-right: calc((100vw - 100%) / -2);
 }
+
+.banner[style*="color: white;"] h2 {
+    color: white;
+}
+
 .bannerInner {
     display: flex;
     flex-direction: column;
@@ -13,7 +18,7 @@
     padding: var(--yaya-padding);
     padding-bottom: calc(var(--yaya-padding) * 2);
 }
-.bannerInner h2 {
+.bannerInner > h2 {
     color: white;
     text-align: center;
     font-size: 2em;
