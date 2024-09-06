@@ -172,7 +172,7 @@ function Header(props) {
   console.log("errors", errors);
 
   const handleRegister = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     const isValid = validateForm();
 
     const userAddress = { streetName, streetNumber, zipCode, city };
