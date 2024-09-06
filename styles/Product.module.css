@@ -82,6 +82,10 @@ font-size: 5vh;
   text-transform: uppercase;
 }
 
+.productButton {
+  align-self: flex-start;
+}
+
 .caroussel{
 width: 50vw;
 display: flex;

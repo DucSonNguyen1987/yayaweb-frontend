@@ -2,8 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import styles from '../styles/Catalog.module.css';
+import Button from "./shared/Button";
+import { useRouter } from 'next/router';
 
 function Catalog() {
+  const router = useRouter();
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -20,11 +23,16 @@ function Catalog() {
         <div key={index} className={styles.range}>
           <h2>{category}</h2>
           <div className={styles.cadre}>
-          <img className={styles.image} src={`/Bottles/${category}.png`} alt={category} />
+            <img className={styles.image} src={`/Bottles/${category}.png`} alt={category} />
           </div>
-          <Link href={`/products/${category.toLowerCase().replace(/\s+/g, '-')}`}>
+          <Button
+            className={styles.viewProductsButton} 
+            onClick={() => router.push(`/products/${category.toLowerCase().replace(/\s+/g, '-')}`)}
+            fontSize={'14px'}
+          >Voir les produits</Button>
+          {/* <Link href={`/products/${category.toLowerCase().replace(/\s+/g, '-')}`}>
             <button className={styles.viewProductsButton}>Voir les produits</button>
-          </Link>
+          </Link> */}
         </div>
       ))}
     </div>

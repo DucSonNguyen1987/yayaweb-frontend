@@ -3,9 +3,13 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Head from "next/head";
 import Catalog from "../components/Catalog";
-import { Button } from "antd";
+// import { Button } from "antd";
+import Button from "./shared/Button";
+import { useRouter } from "next/router";
 
 function Home() {
+  const router = useRouter();
+  
   return (
     <div className={styles.main}>
       <div className={styles.heroBanner}>
@@ -60,7 +64,14 @@ function Home() {
            <p class={styles.citation}>“QUI CONTRÔLE L’ÉPICE, CONTRÔLE L‘UNIVERS.”</p>
            <p class={styles.quoteSub}>Baron Vladimir Harkonnen,Dune.</p>
 
-           <Button className={styles.buttonLink}>En savoir plus</Button>
+           <Button
+            className={styles.buttonLink}
+            color={'#FFF'}
+            backgroundColor={'var(--yaya-second)'}
+            fontSize={'20px'}
+            minWidth={'200px'}
+            onClick={() => router.push('/concept')}
+          >En savoir plus</Button>
         </div>
       </div>
     <div className={styles.gammes}>

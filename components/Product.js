@@ -163,7 +163,12 @@ function Product(props) {
           <InputNumber min={1} max={10} defaultValue={1} onChange={onChangeQuantity} />
         </div>
         <div className={styles.productPrice}>{(product.price * volume.priceMultiplier) * quantity} €</div>
-        <Button onClick={() => addProductToCart(props.id)}>Ajouter au panier</Button>
+        <Button 
+          className={styles.productButton} 
+          onClick={() => addProductToCart(props.id)}
+          fontSize={'20px'}
+          minWidth={'250px'}
+        >Ajouter au panier</Button>
       </div>
     </div>
   );

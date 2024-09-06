@@ -102,6 +102,8 @@
 
 import React, { useState } from 'react';
 import styles from '../styles/ContactForm.module.css'; 
+import Button from './shared/Button';
+
 
 function Contact({ formTitle, handleSubmit }) {
     const [formData, setFormData] = useState({
@@ -177,7 +179,7 @@ function Contact({ formTitle, handleSubmit }) {
                     required
                 />
 
-                <button type="submit" className={styles.button}>Envoyer</button>
+                <Button type="submit" className={styles.button} fontSize={'16px'}>Envoyer</Button>
             </form>
         </div>
     );
