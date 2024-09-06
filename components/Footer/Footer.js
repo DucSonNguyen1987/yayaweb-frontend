@@ -7,7 +7,7 @@ const Footer = () => {
         <footer className={styles.footer}>
             <div className={styles.footerContainer}>
                 <div className={styles.footerLogo}>
-                    <img src="/logo.png" alt="YAYA Logo" />
+                    <img src="/icons/logo.png" alt="YAYA Logo" />
                 </div>
 
                 <div className={styles.footerLinks}>

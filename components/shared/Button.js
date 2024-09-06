@@ -6,6 +6,7 @@ const Button = (props) => {
   const color = props.color || '#FFF';
   const type = props.type || 'button';
   const disabled = props.disabled || null;
+  const fontSize = props.fontSize || null;
 
   const style = { 
     color,
@@ -13,6 +14,9 @@ const Button = (props) => {
   }
   if(disabled) {
     style.backgroundColor = 'rgba(var(--yaya-neutral-rgbval), 50%)';
+  }
+  if(fontSize) {
+    style.fontSize = fontSize;
   }
 
   const handleClick = () => {

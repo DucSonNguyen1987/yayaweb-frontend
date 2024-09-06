@@ -20,6 +20,7 @@ import {
 
 import { Input, Modal, Popover } from "antd";
 
+import Image from "next/image";
 import Link from "next/link";
 import { removeFromCart } from "../../reducers/cart";
 
@@ -590,15 +591,38 @@ function Header(props) {
   }
 
   
+  const getProductImageUrlByOption = (item) => {
+    const foundImageIndex = item.product.images.findIndex(image => image !== '' && (image.productOptions && image.productOptions.volume && item.product.options.volume.capacity === image.productOptions.volume.capacity));
+    return (foundImageIndex !== -1) ? item.product.images[foundImageIndex].url : item.product.images[0].url;
+  }
 
    const cartItems = cart.items.map((item, i) => {
       return (
         <div className={styles.popoverCartItem} key={i}>
-          <span>{item.product.id}</span>
-          <span>{item.product.name}</span>
-          <span>{(item.product.price * item.product.options.volume.priceMultiplier).toFixed(2)}€</span>
-          <span>{item.product.options.volume.capacity}</span>
-          <span>&times; {item.quantity}</span>
+          <span className={styles.popoverCartItemImage}>
+            {item.product.images && (
+              <Image 
+                src={getProductImageUrlByOption(item)} 
+                width='18px' 
+                height='18px' 
+                alt={item.product.name} 
+              />
+            )}
+            {!item.product.images && item.product.category === 'MYJUICE' && (
+              <div className={styles.itemMyJuice}>
+                <Image 
+                  src={'/icons/logo.png'} 
+                  width='12px' 
+                  height='12px' 
+                  alt={item.product.name} 
+                />
+              </div>
+            )}
+            </span>
+          <span className={styles.popoverCartItemName}>{item.product.name}</span>
+          <span className={styles.popoverCartItemVolume}>{item.product.options.volume.capacity}</span>
+          <span className={styles.popoverCartItemPrice}>{(item.product.price * item.product.options.volume.priceMultiplier).toFixed(2)}€</span>
+          <span className={styles.popoverCartItemQuantity}>&times; {item.quantity}</span>
           <FontAwesomeIcon className={styles.headerIcons} icon={faTrashCan} onClick={() => dispatch(removeFromCart(item.product))}/>
         </div>
       );
@@ -616,7 +640,7 @@ function Header(props) {
       )}
       {cartItems}
       <p>Total : {TotalCart} €</p>
-      {(cartItems.length > 0) && <Button onClick={() => router.push('/commander')}>Commander</Button>}
+      {(cartItems.length > 0) && <Button onClick={() => router.push('/commander')} fontSize='18px'>Commander</Button>}
     </div>
   );
 
