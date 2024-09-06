@@ -20,7 +20,7 @@ function Catalog() {
   return (
     <div className={styles.catalog}>
       {categories.map((category, index) => (
-        <div key={index} className={styles.range}>
+        <div key={index} className={styles.range} onClick={() => router.push(`/products/${category.toLowerCase().replace(/\s+/g, '-')}`)}>
           <h2>{category}</h2>
           <div className={styles.cadre}>
             <img className={styles.image} src={`/Bottles/${category}.png`} alt={category} />
