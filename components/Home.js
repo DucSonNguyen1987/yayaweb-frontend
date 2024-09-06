@@ -40,7 +40,7 @@ function Home() {
       </div>
       <div className={styles.introSection}>
       
-        <h1>Nos jus pressés à foid vont vous donner chaud</h1>
+        <h1>Nos jus pressés à froid vont vous donner chaud</h1>
 
         <div className={styles.presentation}>
           <div className={styles.illustration}>
@@ -51,7 +51,7 @@ function Home() {
             <img className={styles.kooples} src={"icons/Kooples.png"}/>
           </div>
           <div className={styles.presentationText}>
-            <h2 className={styles.secondTitle}>Salut,nous c'est YAYA SPICY JUICE</h2>
+            <h2 className={styles.secondTitle}>Salut, nous c'est YAYA SPICY JUICE</h2>
 
             <p>
               <span class={styles.exergue}>YAYA c’est avant tout une rencontre...<br />Entre Inès et Duc Son, entre deux cultures culinaires basées sur l’amour des épices.</span><br/>
