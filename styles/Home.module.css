@@ -21,7 +21,7 @@
   text-decoration: underline;
 }
 
-.heroBanner{
+/* .heroBanner{
   background-image: url("../public/HeroBanner.png");
   width: 100vw;
   height: 80vh;
@@ -29,7 +29,7 @@
   flex-direction:column;
   align-content: center;
   justify-content: center;
-}
+} */
 
 .logoContainer{
   display: flex;

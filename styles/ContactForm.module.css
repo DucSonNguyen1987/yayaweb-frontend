@@ -1,16 +1,16 @@
-/* styles/ContactForm.module.css */
+
 .contactContainer {
     display: flex;
-    justify-content: space-between; /* Ensures space between columns */
-    align-items: flex-start; /* Aligns items at the top */
+    justify-content: space-between; 
+    align-items: flex-start; 
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
 }
 
 .formContainer {
-    flex: 1;  /* Allows each form to take equal space */
-    margin: 10px; /* Provides some space between the forms */
+    flex: 1;  
+    margin: 10px; 
     background: #fff;
     padding: 20px;
     border-radius: 8px;
