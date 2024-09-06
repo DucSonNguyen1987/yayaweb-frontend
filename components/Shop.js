@@ -19,7 +19,9 @@ function Shop() {
       {categories.map((category, index) => (
         <div key={index} className={styles.range}>
           <h2>{category}</h2>
-          <img className={styles.vignettes} src={`/icons/Bottles/${category}.png" alt={category}`} />
+          <div className={styles.cadre}>
+          <img className={styles.image} src={`/Bottles/${category}.png`} alt={category} />
+          </div>
           <Link href={`/products/${category.toLowerCase().replace(/\s+/g, '-')}`}>
             <button className={styles.viewProductsButton}>Voir les produits</button>
           </Link>

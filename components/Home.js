@@ -4,8 +4,10 @@ import { useSelector } from "react-redux";
 import Head from "next/head";
 import Catalog from "../components/Catalog";
 import { Button } from "antd";
+import { useRouter } from 'next/router';
 
 function Home() {
+  const router = useRouter();
   return (
     <div className={styles.main}>
       <div className={styles.heroBanner}>
@@ -23,7 +25,7 @@ function Home() {
               </div>
               <div className={styles.iconContainer}>
                 <img className={styles.icons} src={"/icons/fresh_icon.png"} />
-                <p className={styles.icontext}>Pressé à froid</p>
+                <p className={styles.icontext}>Pressés à froid</p>
               </div>
               <div className={styles.iconContainer}>
                 <img className={styles.icons} src={"/icons/Non_traité_Icon.png"} />
@@ -60,7 +62,7 @@ function Home() {
            <p class={styles.citation}>“QUI CONTRÔLE L’ÉPICE, CONTRÔLE L‘UNIVERS.”</p>
            <p class={styles.quoteSub}>Baron Vladimir Harkonnen,Dune.</p>
 
-           <Button className={styles.buttonLink}>En savoir plus</Button>
+           <Button className={styles.buttonLink} onClick={() => router.push("/concept")}>En savoir plus</Button>
         </div>
       </div>
     <div className={styles.gammes}>
@@ -69,6 +71,48 @@ function Home() {
     </div>
      <Catalog />
     </div>
+
+    <div className={styles.sectionTitle}>
+    <h1>Quels sont les bénéfices de nos jus ?</h1>
+    </div>
+
+
+    <div className={styles.benefits}>
+    
+      <div className={styles.benefitsExplication}>
+        <img className={styles.benefitsImage} src={"/images/juicingmachine.png"} />
+        <h2 className={styles.explicationTitle}>Préssés à froid</h2>
+        <p className={styles.explication}><span className={styles.exergue}>Les jus pressés à froid préservent mieux les vitamines, minéraux et enzymes grâce à leur méthode d'extraction douce sans chaleur.</span> Ils offrent une concentration élevée en nutriments et antioxydants, essentiels pour renforcer le système immunitaire et favoriser l'hydratation. En réduisant l'oxydation, ils conservent leur fraîcheur plus longtemps. De plus, ils facilitent la digestion, permettant une absorption rapide des nutriments. Ces jus peuvent aussi soutenir la détoxification et améliorer l'énergie.</p>
+      </div>
+
+      <div className={styles.benefitsExplication}>
+        <img className={styles.benefitsImage} src={"/images/agriculturebiologique.png"} />
+        <h2 className={styles.explicationTitle}>Issus de l'agriculture biologique</h2>
+        <p className={styles.explication}><span className={styles.exergue}>L'agriculture biologique favorise la biodiversité en évitant l'utilisation de pesticides et d'engrais chimiques, préservant ainsi les sols et l'environnement.</span> Elle produit des aliments sans résidus de produits chimiques, offrant une meilleure qualité nutritive. Ce mode de culture respecte le bien-être animal et promeut des pratiques durables. En réduisant la pollution des sols et des eaux, elle contribue à la protection des écosystèmes. Enfin, elle encourage des méthodes agricoles locales et respectueuses de la santé humaine et de la planète.</p>
+      </div>
+
+      <div className={styles.benefitsExplication}>
+        <img className={styles.benefitsImage} src={"/images/Spices.png"} />
+        <h2 className={styles.explicationTitle}>épicés, mais pas pour rien...</h2>
+        <p className={styles.explication}><span className={styles.exergue}>Une alimentation épicée présente plusieurs bienfaits pour la santé.</span> Les épices comme le piment contiennent de la capsaïcine, qui stimule le métabolisme et peut favoriser la perte de poids. Elles ont également des propriétés anti-inflammatoires et antioxydantes, renforçant ainsi le système immunitaire. De plus, les aliments épicés peuvent améliorer la circulation sanguine et aider à dégager les voies respiratoires. Enfin, ils sont souvent associés à une meilleure digestion en stimulant la production de sucs gastriques.</p>
+      </div>
+    </div>
+
+    <div className={styles.onBoardSection}>
+      <h1>Envie de découvrir de nouvelles palettes de saveurs?</h1>
+      <Button className={styles.buttonLink2} onClick={() => router.push("/shop")}>Découvrez nos boissons</Button>
+
+    </div>
+
+    < div className={styles.MyjuiceOnboard}>
+      <p className={styles.myjuiceTitle}>
+      Vous ne trouvez pas votre bonheur ? <br />Avec MYJUICE</p>
+      
+      <Button className={styles.buttonLink2} onClick={() => router.push("/myjuice")}>Créez votre jus</Button>
+
+      
+    </div>
+
 
       </div>
       
