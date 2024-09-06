@@ -7,7 +7,7 @@ import Catalog from "../components/Catalog";
 import Button from "./shared/Button";
 import Banner from "./shared/Banner";
 import { useRouter } from "next/router";
-import { useRouter } from 'next/router';
+
 
 function Home() {
   const router = useRouter();
