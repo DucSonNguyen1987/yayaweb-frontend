@@ -34,7 +34,7 @@ const Footer = () => {
                         </li>
                         <li>
                             <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                                <img src="/icons/Linkedin.png" alt="LinkedIn" className={styles.socialIcon} />
+                                <img src="/icons/linkedin.png" alt="LinkedIn" className={styles.socialIcon} />
                             </a>
                         </li>
                     </ul>
