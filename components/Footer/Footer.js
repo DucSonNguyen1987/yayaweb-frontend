@@ -1,13 +1,16 @@
 import React from 'react';
 import Link from "next/link"; 
 import styles from './styles/Footer.module.css'; 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebook, faLinkedin, faInstagram } from '@fortawesome/free-brands-svg-icons';
+
 
 const Footer = () => {
     return (
         <footer className={styles.footer}>
             <div className={styles.footerContainer}>
                 <div className={styles.footerLogo}>
-                    <img src="/logo.png" alt="YAYA Logo" />
+                    <img src="/icons/logo.png" alt="YAYA Logo" />
                 </div>
 
                 <div className={styles.footerLinks}>
@@ -24,17 +27,17 @@ const Footer = () => {
                     <ul>
                         <li>
                             <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                                <img src="/icons/fb.png" alt="Facebook" className={styles.socialIcon} />
+                                <FontAwesomeIcon icon={faFacebook} className={styles.socialIcon} />
                             </a>
                         </li>
                         <li>
                             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                                <img src="/icons/Instagram_icon.png" alt="Instagram" className={styles.socialIcon} />
+                                <FontAwesomeIcon icon={faInstagram} className={styles.socialIcon} />
                             </a>
                         </li>
                         <li>
                             <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                                <img src="/icons/Linkedin.png" alt="LinkedIn" className={styles.socialIcon} />
+                                <FontAwesomeIcon icon={faLinkedin} className={styles.socialIcon} />
                             </a>
                         </li>
                     </ul>

@@ -131,7 +131,7 @@ function Product(props) {
           <Carousel className={styles.caroussel} arrows infinite={false} draggable={true}>
             {productImages.map((image, i) => (
                   <div className={styles.productImage}  key={'productImage-'+i}>
-                    <Image src={image.url} key={i} layout="fill" objectFit='contain' objectPosition='center' />
+                    <Image src={image.url} key={i} layout="fill" objectFit='contain' objectPosition='center' priority={true} />
                   </div>
             ))}
           </Carousel>
@@ -163,7 +163,12 @@ function Product(props) {
           <InputNumber min={1} max={10} defaultValue={1} onChange={onChangeQuantity} />
         </div>
         <div className={styles.productPrice}>{(product.price * volume.priceMultiplier) * quantity} €</div>
-        <Button onClick={() => addProductToCart(props.id)}>Ajouter au panier</Button>
+        <Button 
+          className={styles.productButton} 
+          onClick={() => addProductToCart(props.id)}
+          fontSize={'20px'}
+          minWidth={'250px'}
+        >Ajouter au panier</Button>
       </div>
     </div>
   );

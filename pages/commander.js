@@ -55,6 +55,7 @@ function orderValidation(props) {
             <Button
               className={styles.footerButton}
               onClick={() => openModalRegister()}
+              fontSize={'20px'}
             >
               Créer un compte
             </Button>
@@ -80,6 +81,7 @@ function orderValidation(props) {
             <Button
               className={styles.footerButton}
               onClick={() => signIn()}
+              fontSize={'20px'}
             >
               Se connecter
             </Button>

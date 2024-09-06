@@ -8,6 +8,7 @@
   border-radius: 5%;
   overflow: hidden;
   margin-bottom: 5vh;
+  cursor: pointer;
 }
 
 .vignette:hover {
@@ -22,11 +23,16 @@
   transition: 0.2s ease;
 }
 
-.productImage:hover {
+.vignette:hover .productImage {
   transform : scale(1.5);
 }
-.productImage:hover + .productName{
-color: var(--yaya-prime);
+
+.vignette:hover .productImage + .productName{
+  color: var(--yaya-prime);
+}
+
+.vignette:hover button {
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
 }
 
 .productName {
@@ -40,7 +46,7 @@ color: var(--yaya-prime);
   font-size: 1rem;
   color: #888;
   margin-bottom: 16px;
-  font-family: 'concert-one';
+  font-family: "Concert One";
   text-transform: uppercase;
 }
 

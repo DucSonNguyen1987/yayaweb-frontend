@@ -20,6 +20,7 @@ import {
 
 import { Input, Modal, Popover } from "antd";
 
+import Image from "next/image";
 import Link from "next/link";
 import { removeFromCart } from "../../reducers/cart";
 
@@ -226,21 +227,27 @@ function Header(props) {
       onOk={handleRegister}
       onCancel={handleCancel}
       footer={[
-          <button
+          <Button
             className={styles.footerButton}
             key="Retour"
+            fontSize={'14px'}
+            minWidth={'100px'}
+            backgroundColor={'white'}
+            color={'var(--yaya-prime)'}
             onClick={handleCancel}
-          >
+            >
             {" "}
             Retour
-          </button>,
-          <button
+          </Button>,
+          <Button
             className={styles.footerButton}
             key="submit"
+            fontSize={'14px'}
+            minWidth={'100px'}
             onClick={handleRegister}
           >
             S'inscrire
-          </button>
+          </Button>
       ]}
     >
       <form className={styles.SignUpForm} onSubmit={handleRegister}>
@@ -484,18 +491,19 @@ function Header(props) {
         <div className={styles.registerContainer}>
           <div className={styles.registerSection}>
             <p className={styles.popovertitle}>Pas de compte ?</p>
-            <button
+            <Button
               className={styles.button}
               id="register"
+              fontSize={'14px'}
               onClick={() => {
                 setOpen(true);
               }}
             >
               S'inscrire
-            </button>
+            </Button>
           </div>
           <div className={styles.registerSection}>
-            <p className={styles.popovertitle}>Se Connecter</p>
+            <p className={styles.popovertitle}>Se Connecter!</p>
             <Input
               className={styles.Input}
               type="text"
@@ -512,13 +520,14 @@ function Header(props) {
               onChange={(e) => setSignInPassword(e.target.value)}
               value={signInPassword}
             />
-            <button
+            <Button
               className={styles.button}
-              id="register"
+              id="login"
+              fontSize={'14px'}
               onClick={() => handleConnection()}
             >
               Se Connecter
-            </button>
+            </Button>
           </div>
 
         </div>
@@ -532,15 +541,16 @@ function Header(props) {
       <div className={styles.registerContainer}>
         <div className={styles.registerSection}>
           <p className={styles.popovertitle}>Pas de compte ?</p>
-          <button
+          <Button
             className={styles.button}
             id="register"
+            fontSize={'14px'}
             onClick={() => {
               setOpen(true);
             }}
           >
             S'inscrire
-          </button>
+          </Button>
         </div>
         <div className={styles.registerSection}>
           <p className={styles.popovertitle}>Se Connecter</p>
@@ -560,13 +570,14 @@ function Header(props) {
             onChange={(e) => setSignInPassword(e.target.value)}
             value={signInPassword}
           />
-          <button
+          <Button
             className={styles.button}
             id="register"
+            fontSize={'14px'}
             onClick={() => handleConnection()}
           >
             Se Connecter
-          </button>
+          </Button>
           
         </div>
       </div>
@@ -582,23 +593,50 @@ function Header(props) {
         <Link href="/orders">
           <span className={styles.linkPop}>Mon historique</span>
         </Link>
-        <button className={styles.buttonPop} onClick={() => handleLogout()}>
+        <Button 
+          className={styles.buttonPop}
+          onClick={() => handleLogout()}
+          fontSize={'14px'}
+        >
           Se déconnecter
-        </button>
+        </Button>
       </div>
     )
   }
 
   
+  const getProductImageUrlByOption = (item) => {
+    const foundImageIndex = item.product.images.findIndex(image => image !== '' && (image.productOptions && image.productOptions.volume && item.product.options.volume.capacity === image.productOptions.volume.capacity));
+    return (foundImageIndex !== -1) ? item.product.images[foundImageIndex].url : item.product.images[0].url;
+  }
 
    const cartItems = cart.items.map((item, i) => {
       return (
         <div className={styles.popoverCartItem} key={i}>
-          <span>{item.product.id}</span>
-          <span>{item.product.name}</span>
-          <span>{(item.product.price * item.product.options.volume.priceMultiplier).toFixed(2)}€</span>
-          <span>{item.product.options.volume.capacity}</span>
-          <span>&times; {item.quantity}</span>
+          <span className={styles.popoverCartItemImage}>
+            {item.product.images && (
+              <Image 
+                src={getProductImageUrlByOption(item)} 
+                width='18px' 
+                height='18px' 
+                alt={item.product.name} 
+              />
+            )}
+            {!item.product.images && item.product.category === 'MYJUICE' && (
+              <div className={styles.itemMyJuice}>
+                <Image 
+                  src={'/icons/logo.png'} 
+                  width='12px' 
+                  height='12px' 
+                  alt={item.product.name} 
+                />
+              </div>
+            )}
+            </span>
+          <span className={styles.popoverCartItemName}>{item.product.name}</span>
+          <span className={styles.popoverCartItemVolume}>{item.product.options.volume.capacity}</span>
+          <span className={styles.popoverCartItemPrice}>{(item.product.price * item.product.options.volume.priceMultiplier).toFixed(2)}€</span>
+          <span className={styles.popoverCartItemQuantity}>&times; {item.quantity}</span>
           <FontAwesomeIcon className={styles.headerIcons} icon={faTrashCan} onClick={() => dispatch(removeFromCart(item.product))}/>
         </div>
       );
@@ -616,7 +654,7 @@ function Header(props) {
       )}
       {cartItems}
       <p>Total : {TotalCart} €</p>
-      {(cartItems.length > 0) && <Button onClick={() => router.push('/commander')}>Commander</Button>}
+      {(cartItems.length > 0) && <Button onClick={() => router.push('/commander')} fontSize='18px'>Commander</Button>}
     </div>
   );
 

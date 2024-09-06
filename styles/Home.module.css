@@ -73,7 +73,7 @@
 }
 
 .icontext{
-  font-family: 'concert-one';
+  font-family: "Concert One";
   font-size: 2.5vh;
   color: white;
   margin-bottom: 15vh;
@@ -133,12 +133,12 @@ left: 800px;
 }
 
 .exergue{
-  font-family: 'concert-one';
+  font-family: "Concert One";
   color :var(--yaya-prime);
 }
 
 .citation{
-  font-family: 'Varela-round';
+  font-family: "Varela Round";
   color:var(--yaya-neutral);
   font-size: 1.5rem;
 }
@@ -150,7 +150,7 @@ left: 800px;
 } 
 .buttonLink{
   background-color: var(--yaya-second);
-  font-family: 'concert-one';
+  font-family: "Concert One";
   color:white;
   left :25vw;
   height: 5vh;
@@ -158,6 +158,10 @@ left: 800px;
 }
 .buttonLink:hover{
   background-color: var(--yaya-prime);
+}
+.presentationText button {
+  position: relative;
+  left: 25vw;
 }
 
 .gammes{
@@ -174,7 +178,7 @@ left: 800px;
   color: white;
   text-align: center;
   align-content: center;
-  font-family: 'concert-one';
+  font-family: "Concert One";
   font-size: 2.5vh;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
