@@ -124,7 +124,7 @@
 
 }
 
-.button{
+.Button{
     background-color: #F27C00;
     color:white;
     border-radius: 5px;
@@ -137,7 +137,7 @@
     cursor: pointer;
 }
 
-.round_button{
+.round_Button{
     border-radius: 50%;
     border: none;
     background-color: #D9D9D9 ;
@@ -179,23 +179,6 @@
     margin-left: 5%;
 }
 
-.bottle_bar{
-    
-    width: 22%;
-    height: 50%;
-    border-radius: 10px;
-    background-color: #e6e6e6;
-    margin-bottom: 10px;
-    display: flex;
-    flex-direction: column-reverse;
-}
-
-.bottle_bar_fill{
-    height: 100%;
-    border-radius: 10px;
-    background: transparent;
-    transition: height 0.5s ease-out;
-}
 
 .fill_label{
     margin-top: 5%;
@@ -256,3 +239,162 @@
     margin-top: -17%;
     align-items: center;  
 }
+
+/* Ajoutez ces styles à votre fichier MyJuiceCreator.module.css */
+
+.bottle_bar {
+    width: 22%;
+    height: 60%;
+    border-radius: 6px;
+    background-color: #a8d2f2;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column-reverse;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    /* Simulation de l'effet verre */
+    background: linear-gradient(to right, 
+    rgba(255,255,255,0.1) 0%, 
+    rgba(255,255,255,0.3) 50%, 
+    rgba(255,255,255,0.1) 100%
+    );
+}
+
+/* Ajout du col de bouteille */
+.bottle_neck {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 15px;
+  background-color: #e6e6e6;
+  border-radius: 6px 6px 0 0;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+/* Ajout du bouchon */
+.bottle_cap {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: 10px;
+  background-color: #706e6e;
+  border-radius: 3px 3px 0 0;
+  z-index: 2;
+}
+
+
+
+.bottle_bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.3) 30%,
+      rgba(255, 255, 255, 0.1) 100%
+    );
+    pointer-events: none;
+    z-index: 2;
+}
+
+.bottle_bar_fill {
+  height: 100%;
+  border-radius: 6px; /* Correspond au bord de la bouteille */
+  background: transparent;
+  transition: height 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.1) inset;
+}
+
+.bottle_bar_fill[style*="height : 100%"] {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  margin-top: -1px;
+  height: calc(100% + 1px) !important;
+  box-shadow: none;
+}
+
+/* Simulation des bulles dans le liquide */
+.bubble {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.6); /* Plus opaque pour plus de visibilité */
+    box-shadow: 0 0 2px rgba(255, 255, 255, 0.8); /* Légère lueur */
+    pointer-events: none;
+    z-index: 2;
+    transform-origin: center;
+  }
+  
+  /* Créer différentes tailles de bulles pour plus de variété */
+  .bubble:nth-child(3n+1) {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .bubble:nth-child(3n) {
+    width: 10px;
+    height: 10px;
+  }
+
+/* Animation de splash pour le haut du liquide */
+@keyframes wave {
+    0% { 
+        border-top-left-radius: 40% 20px;
+        border-top-right-radius: 40% 20px;
+    }
+    50% { 
+        border-top-left-radius: 60% 25px; 
+        border-top-right-radius: 60% 25px;
+    }
+    100% { 
+        border-top-left-radius: 40% 20px; 
+        border-top-right-radius: 40% 20px;
+    }
+}
+
+/* Amélioration des boutons + et - */
+.round_Button {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F27C00;
+    color: white;
+    border: none;
+    font-weight: bold;
+    margin: 0 5px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.round_Button:hover {
+    transform: scale(1.1);
+    background-color: #ff8c1a;
+}
+
+.round_Button:active {
+    transform: scale(0.95);
+}
+
+.round_Button:disabled {
+    background-color: #D9D9D9;
+    color: #999;
+    box-shadow: none;
+    transform: none;
+}
+
