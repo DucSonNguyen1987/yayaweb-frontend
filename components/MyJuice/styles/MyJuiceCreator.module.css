@@ -179,23 +179,6 @@
     margin-left: 5%;
 }
 
-.bottle_bar{
-    
-    width: 22%;
-    height: 50%;
-    border-radius: 10px;
-    background-color: #e6e6e6;
-    margin-bottom: 10px;
-    display: flex;
-    flex-direction: column-reverse;
-}
-
-.bottle_bar_fill{
-    height: 100%;
-    border-radius: 10px;
-    background: transparent;
-    transition: height 0.5s ease-out;
-}
 
 .fill_label{
     margin-top: 5%;
@@ -256,3 +239,212 @@
     margin-top: -17%;
     align-items: center;  
 }
+
+
+/* Animations pour le liquide */
+@keyframes wave {
+    0% {
+      clip-path: polygon(
+        0% 100%,
+        0% 100%,
+        10% 98%,
+        20% 99%,
+        30% 98%,
+        40% 97%,
+        50% 98.5%,
+        60% 99%,
+        70% 98%,
+        80% 97%,
+        90% 98%,
+        100% 99%,
+        100% 100%
+      );
+    }
+    25% {
+      clip-path: polygon(
+        0% 100%,
+        0% 100%,
+        10% 97%,
+        20% 98.5%,
+        30% 99%,
+        40% 98%,
+        50% 97%,
+        60% 98%,
+        70% 99%,
+        80% 98.5%,
+        90% 97%,
+        100% 98%,
+        100% 100%
+      );
+    }
+    50% {
+      clip-path: polygon(
+        0% 100%,
+        0% 100%,
+        10% 98%,
+        20% 97%,
+        30% 98.5%,
+        40% 99%,
+        50% 98%,
+        60% 97%,
+        70% 98%,
+        80% 99%,
+        90% 98.5%,
+        100% 97%,
+        100% 100%
+      );
+    }
+    75% {
+      clip-path: polygon(
+        0% 100%,
+        0% 100%,
+        10% 99%,
+        20% 98%,
+        30% 97%,
+        40% 98.5%,
+        50% 99%,
+        60% 98%,
+        70% 97%,
+        80% 98%,
+        90% 99%,
+        100% 98.5%,
+        100% 100%
+      );
+    }
+    100% {
+      clip-path: polygon(
+        0% 100%,
+        0% 100%,
+        10% 98%,
+        20% 99%,
+        30% 98%,
+        40% 97%,
+        50% 98.5%,
+        60% 99%,
+        70% 98%,
+        80% 97%,
+        90% 98%,
+        100% 99%,
+        100% 100%
+      );
+    }
+  }
+  
+  /* Animation pour les bulles */
+  @keyframes bubbles {
+    0% {
+      opacity: 0;
+      transform: translateY(0) scale(0.5);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(-50px) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-100px) scale(0.8);
+    }
+  }
+  
+  /* Animation pour l'éclaboussure */
+  @keyframes splash {
+    0% {
+      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.8) 0%, transparent 0%);
+      opacity: 1;
+    }
+    100% {
+      background: radial-gradient(circle at center, rgba(255, 255, 255, 0) 0%, transparent 80%);
+      opacity: 0;
+    }
+  }
+  
+  /* Animation pour la secousse de bouteille */
+  @keyframes bottleShake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(1deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(-1deg); }
+    100% { transform: rotate(0deg); }
+  }
+  
+  /* Style de la bouteille */
+  .bottle_bar {
+    width: 22%;
+    height: 50%;
+    border-radius: 10px;
+    background-color: #e6e6e6;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column-reverse;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Ajoute un reflet à la bouteille */
+  .bottle_bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.1) 100%);
+    z-index: 2;
+    pointer-events: none;
+  }
+  
+  /* Style du remplissage */
+  .bottle_bar_fill {
+    height: 100%;
+    border-radius: 10px;
+    background: transparent;
+    transition: height 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    animation: wave 3s ease-in-out infinite;
+    transform-origin: bottom;
+  }
+  
+  /* Ajoute un effet de brillance au liquide */
+  .bottle_bar_fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.2) 0%, transparent 100%);
+    border-radius: 10px;
+  }
+  
+  /* Style des bulles */
+  .bubble {
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    animation: bubbles 4s linear infinite;
+    z-index: 3;
+  }
+  
+  /* Style de l'éclaboussure */
+  .splash {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 4;
+  }
+  
+  /* Activation de l'animation d'éclaboussure */
+  .splash.active {
+    animation: splash 0.8s ease-out forwards;
+  }
+  
+  /* Style pour la secousse de la bouteille */
+  .shake {
+    animation: bottleShake 0.5s ease-in-out;
+  }

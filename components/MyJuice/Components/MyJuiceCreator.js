@@ -11,8 +11,8 @@ export const MyJuiceCreator = () => {
   const cart = useSelector((state) => state.cart.value);
   // const myJuice = useSelector((state)=>state.myJuice.value)
   const volumes = [
-    {capacity: "250ml", priceMultiplier: 1},
-    {capacity: "1l", priceMultiplier: 3.5}
+    { capacity: "250ml", priceMultiplier: 1 },
+    { capacity: "1l", priceMultiplier: 3.5 }
   ];
 
   // state dégradé
@@ -32,6 +32,8 @@ export const MyJuiceCreator = () => {
   const [price, setPrice] = useState(0);
   const [bottle, setBottle] = useState("Verre");
   const [description, setDescription] = useState(null);
+  const [shake, setShake] = useState(false);
+  const [splash, setSplash] = useState(false);
 
   // state ouverture/fermeture modal de commande
   const [open, setOpen] = useState(false);
@@ -55,14 +57,11 @@ export const MyJuiceCreator = () => {
         setIngredients(juiceRecipe);
         setJuice(juiceRecipe);
       });
-
   }, []);
 
   useEffect(() => {
     calculatePrice(myJuice, volume);
   }, [myJuice]);
-
-  
 
   // fonction ouverture/fermeture modal
   const showModal = () => {
@@ -70,124 +69,129 @@ export const MyJuiceCreator = () => {
   };
 
   // Update le fill de la bouteille en fonction du montant d'ingrédients
-  const calculateFillFrompercentage = (drink) => {
+  const calculateFillFromPercentage = (drink) => {
     return drink.reduce((acc, val) => (acc += val.percentage), 0);
   };
 
-  // Update le dégradé du fill en fonction des ingrédients et de leur montant
+  // Update le dégradé du fill en fonction des ingrédients et de leur montant (OPTIMISÉ)
   const updateColorGradient = (newJuice) => {
-    const fill = calculateFillFrompercentage(newJuice);
-    let colorStop;
-
-    if (colorStop > 100) {
-      return colorStop;
+    // Filtrez d'abord les ingrédients qui ont un pourcentage
+    const activeIngredients = newJuice.filter(ingredient => ingredient.percentage > 0);
+    const fill = calculateFillFromPercentage(newJuice);
+    
+    // Si pas d'ingrédients actifs, retourner un tableau vide
+    if (activeIngredients.length === 0 || fill === 0) {
+      setColorGradient([]);
+      return;
     }
-    setColorGradient(
-      newJuice
-        .filter((ingredient) => ingredient.percentage !== 0)
-        .map((ingredient, i) => {
-          // console.log(
-          //   ingredient.name,
-          //   "ingredient.percentage",
-          //   ingredient.percentage,
-          //   "fill",
-          //   fill
-          // );
-          
-          let colorStart = "";
-          if (i === 0) {
-            colorStop = Number((ingredient.percentage / fill) * 100);
-            colorStart += `${ingredient.color} 0%`;
-            
-            return `${colorStart}, ${ingredient.color} ${
-              Number(ingredient.percentage / fill) * 100
-            }%`;
-          } else {
-            let colorString = ` ${ingredient.color} `;
-            colorString +=
-              Number((ingredient.percentage / fill) * 100) + Number(colorStop);
-            colorString += "%";
-            colorStop =
-              Number((ingredient.percentage / fill) * 100) + Number(colorStop);
-
-            return colorString;
-          }
-        })
-    );
+    
+    let currentStop = 0;
+    
+    // Créer le dégradé de couleurs
+    const gradient = activeIngredients.map((ingredient, index) => {
+      const percentage = (ingredient.percentage / fill) * 100;
+      const start = currentStop;
+      const end = currentStop + percentage;
+      currentStop = end;
+      
+      // Pour le premier ingrédient, on commence à 0%
+      if (index === 0) {
+        return `${ingredient.color} 0%, ${ingredient.color} ${end}%`;
+      } else {
+        return `${ingredient.color} ${start}%, ${ingredient.color} ${end}%`;
+      }
+    });
+    
+    setColorGradient(gradient);
   };
 
-  // Reset à 0 les montants d'ingrédients
+  // Animation du liquide (OPTIMISÉ)
+  const animateLiquid = () => {
+    setShake(true);
+    setSplash(true);
+    
+    // Ajout d'un délai pour les bulles en fonction du niveau de remplissage
+    const fillLevel = calculateFillFromPercentage(juice);
+    const bubbles = document.querySelectorAll(`.${styles.bubble}`);
+    
+    // Animation des bulles en fonction du niveau
+    bubbles.forEach((bubble, index) => {
+      setTimeout(() => {
+        bubble.style.opacity = "1";
+      }, index * 100);
+    });
+    
+    setTimeout(() => {
+      setShake(false);
+    }, 500);
+    
+    setTimeout(() => {
+      setSplash(false);
+    }, 800);
+  };
+
+  // Reset à 0 les montants d'ingrédients (OPTIMISÉ)
   const handleReset = () => {
-    setJuice(ingredients)
-
-    
-    
+    setJuice(ingredients.map(ingredient => ({...ingredient, percentage: 0})));
+    setColorGradient([]);
   };
-  
-  // Ajoute une dose d'un ingrédient dans la compo du jus
+
+  // Ajoute une dose d'un ingrédient dans la compo du jus (OPTIMISÉ)
   const handleButtonPlus = (dosage, color, name) => {
-    const fill = calculateFillFrompercentage(juice);
-    if (dosage > 100 - fill) {
-      return false;
-    }
-    const ingredientFound = juice.find(
-      (ingredient) => name === ingredient.name
-    );
-    if (!ingredientFound) {
-      const NewJuice = [...juice, { name: name, percentage: dosage }];
-
-      setJuice(NewJuice);
-    }
-
-    if (fill < 100) {
-      const newJuice = juice.map((ingredient) => {
-        if (ingredient.name !== name) {
-          return ingredient;
-        } else {
+    // Utiliser la mise à jour fonctionnelle d'état pour assurer la cohérence
+    setJuice(prevJuice => {
+      const fill = calculateFillFromPercentage(prevJuice);
+      
+      // Vérifier si on peut ajouter l'ingrédient
+      if (fill + dosage > 100) {
+        return prevJuice; // Ne pas modifier l'état si on dépasse 100%
+      }
+      
+      // Créer une nouvelle version du tableau de jus
+      const newJuice = prevJuice.map(ingredient => {
+        if (ingredient.name === name) {
           return {
             ...ingredient,
-            percentage: ingredient.percentage + dosage,
+            percentage: ingredient.percentage + dosage
           };
         }
+        return ingredient;
       });
-      setJuice(newJuice);
-
-      updateColorGradient(newJuice);
-
       
-    }
+      // Mise à jour du dégradé avec le nouveau jus
+      setTimeout(() => updateColorGradient(newJuice), 0);
+      
+      // Déclencher l'animation
+      setTimeout(() => animateLiquid(), 10);
+      
+      return newJuice;
+    });
   };
 
-
-  // Retire une dose d'un ingrédient dans la compo du jus
+  // Retire une dose d'un ingrédient dans la compo du jus (OPTIMISÉ)
   const handleButtonMinus = (dosage, color, name) => {
-    const fill = calculateFillFrompercentage(juice);
-  
-
-    let isEmpty = false;
-
-    if (fill > 0 && fill <= 100) {
-      const minusJuice = juice.map((ingredient) => {
-        if (ingredient.name !== name) {
-          return ingredient;
-        } else {
-          if (ingredient.percentage > 0) {
-            return {
-              ...ingredient,
-              percentage: ingredient.percentage - dosage,
-            };
-          } else {
-            isEmpty = true;
-            return ingredient;
-          }
-        }
-      });
-
-      setJuice(minusJuice);
-      if (!isEmpty) {
-        updateColorGradient(minusJuice);
+    setJuice(prevJuice => {
+      const fill = calculateFillFromPercentage(prevJuice);
+      
+      if (fill <= 0) {
+        return prevJuice; // Ne rien faire si déjà vide
       }
-    }
+      
+      const newJuice = prevJuice.map(ingredient => {
+        if (ingredient.name === name && ingredient.percentage > 0) {
+          return {
+            ...ingredient,
+            percentage: Math.max(0, ingredient.percentage - dosage)
+          };
+        }
+        return ingredient;
+      });
+      
+      // Mise à jour du dégradé avec le nouveau jus
+      setTimeout(() => updateColorGradient(newJuice), 0);
+      
+      return newJuice;
+    });
   };
 
   // Affiche la liste des fruits
@@ -196,7 +200,7 @@ export const MyJuiceCreator = () => {
       return (
         <div className={styles.ingredient} key={i}>
           <div className={styles.ingredientIcon}>
-            <img src={`/icons/${ingredient.name}_Icon.png`} />
+            <img src={`/icons/${ingredient.name}_Icon.png`} alt={ingredient.name} />
           </div>
           <div className={styles.ingredientNameBox}>
             <p className={styles.ingredientName}>{ingredient.name}</p>
@@ -212,7 +216,7 @@ export const MyJuiceCreator = () => {
                 )
               }
               disabled={
-                calculateFillFrompercentage(juice) + ingredient.dosage > 100
+                calculateFillFromPercentage(juice) + ingredient.dosage > 100
                   ? true
                   : false
               }
@@ -239,15 +243,16 @@ export const MyJuiceCreator = () => {
         </div>
       );
     }
+    return null;
   });
 
   // Affiche les légumes
   const IngredientListVeg = ingredients.map((ingredient, i) => {
     if (ingredient.type === "Legume") {
       return (
-        <div className={styles.ingredient}>
+        <div className={styles.ingredient} key={i}>
           <div className={styles.ingredientIcon}>
-            <img src={`/icons/${ingredient.name}_Icon.png`} />
+            <img src={`/icons/${ingredient.name}_Icon.png`} alt={ingredient.name} />
           </div>
 
           <div className={styles.ingredientNameBox}>
@@ -265,7 +270,7 @@ export const MyJuiceCreator = () => {
                 )
               }
               disabled={
-                calculateFillFrompercentage(juice) + ingredient.dosage > 100
+                calculateFillFromPercentage(juice) + ingredient.dosage > 100
                   ? true
                   : false
               }
@@ -292,15 +297,16 @@ export const MyJuiceCreator = () => {
         </div>
       );
     }
+    return null;
   });
 
   //Affiche la liste des épices
   const IngredientListSpices = ingredients.map((ingredient, i) => {
-    if (ingredient.type === "Epice" && ingredient.name !== "Poivre" && ingredient.name !== "Cannelle" ) {
+    if (ingredient.type === "Epice" && ingredient.name !== "Poivre" && ingredient.name !== "Cannelle") {
       return (
-        <div className={styles.Spice}>
+        <div className={styles.Spice} key={i}>
           <div >
-            <img className={styles.ingredientIcon} src={`/icons/${ingredient.name}_Icon.png`} />
+            <img className={styles.ingredientIcon} src={`/icons/${ingredient.name}_Icon.png`} alt={ingredient.name} />
           </div>
 
           <div className={styles.ingredientButton2}>
@@ -314,7 +320,7 @@ export const MyJuiceCreator = () => {
                 )
               }
               disabled={
-                calculateFillFrompercentage(juice) + ingredient.dosage > 100
+                calculateFillFromPercentage(juice) + ingredient.dosage > 100
                   ? true
                   : false
               }
@@ -344,7 +350,42 @@ export const MyJuiceCreator = () => {
         </div>
       );
     }
+    return null;
   });
+
+  // Fonction de rendu des bulles (OPTIMISÉ)
+  const renderBubbles = () => {
+    const fillLevel = calculateFillFromPercentage(juice);
+    const bubblesCount = Math.min(Math.floor(fillLevel / 10), 10);
+    const bubbles = [];
+    
+    for (let i = 0; i < bubblesCount; i++) {
+      const left = Math.floor(Math.random() * 80) + 10;
+      const size = Math.floor(Math.random() * 6) + 4;
+      const delay = Math.random() * 3;
+      const duration = Math.random() * 3 + 3;
+      const startingPoint = Math.max(10, 100 - fillLevel); // Fait apparaître les bulles au niveau du liquide
+      
+      bubbles.push(
+        <div
+          key={i}
+          className={styles.bubble}
+          style={{
+            left: `${left}%`,
+            bottom: `${startingPoint + Math.random() * 10}%`, // Commence près du niveau du liquide
+            width: `${size}px`,
+            height: `${size}px`,
+            animationDelay: `${delay}s`,
+            animationDuration: `${duration}s`,
+            opacity: 0, // Commence invisible
+            transition: 'opacity 0.3s ease-in'
+          }}
+        />
+      );
+    }
+    
+    return bubbles;
+  };
 
   // Ouvrir la modal de commande
   const ConfigureMyJuice = () => {
@@ -352,25 +393,21 @@ export const MyJuiceCreator = () => {
       (ingredient) => ingredient.percentage !== 0
     );
 
-    myJuiceOrder.map((ingredient, i) => {
-      Reflect.deleteProperty(ingredient, "color");
+    const filteredMyJuiceOrder = myJuiceOrder.map((ingredient) => {
+      // Créer une copie sans modifier l'original
+      const { color, ...ingredientWithoutColor } = ingredient;
+      return ingredientWithoutColor;
     });
-   
-    setMyJuice(myJuiceOrder);
 
+    setMyJuice(filteredMyJuiceOrder);
     setOpen(true);
-    
   };
-
-  console.log("myjuice", myJuice)
 
   // Choisir son format
   const onChangeVolume = (e) => {
-  
     calculatePrice(myJuice, volumes[e.target.value]);
     setVolume(volumes[e.target.value]);
   };
-  
 
   // arrondir à 1 décimale
   const roundTo = (num, precision) => {
@@ -380,18 +417,17 @@ export const MyJuiceCreator = () => {
 
   //Calculer le prix d'1 pack de 6 en fonction du format
   const calculatePrice = (drink, vol) => {
-    
     let calculatedPrice = drink.reduce(
       (acc, val) => (acc += (val.percentage * val.price) / val.dosage),
       0
     );
 
+    // Correction: Aucun effet de bord ici, juste un calcul
     if (vol.capacity === "1l") {
-      (calculatedPrice * vol.priceMultiplier).toFixed(2);
+      calculatedPrice = calculatedPrice * vol.priceMultiplier;
     }
 
     setPrice(roundTo(calculatedPrice, 1));
-    
   };
 
   //Nommer sa recette
@@ -400,14 +436,17 @@ export const MyJuiceCreator = () => {
   };
 
   const orderMyJuice = () => {
+    // Vérifier que le nom est défini
+    if (!productName) {
+      return; // Sortir si pas de nom défini
+    }
+    
     // ProductName => ProductId
-    const formatedName = productName.replace(" ", "-");
+    const formatedName = productName.replace(/\s+/g, "-"); // Correction: remplacer tous les espaces
     setProductId(formatedName);
 
-    
-      const descriptionText = `Created by ${user.name}`;
-      setDescription(descriptionText);
-  
+    const descriptionText = `Created by ${user?.name || 'Customer'}`; // Sécurité si user est null
+    setDescription(descriptionText);
 
     const recipe = myJuice.map((ingredient) => {
       return {
@@ -420,96 +459,96 @@ export const MyJuiceCreator = () => {
     const options = { volume };
 
     const myJuiceOrder = {
-      productId: productName,
+      productId: formatedName, // Utiliser le nom formaté
       name: productName,
       category,
       options,
       bottle,
-      description,
+      description: descriptionText, // Utiliser directement la valeur
       price,
       composition: recipe,
     };
 
-    
     dispatch(addToCart({ product: myJuiceOrder, quantity }));
     setOpen(false);
-    console.log("myJuiceorder", myJuiceOrder)
   };
- 
 
   const rememberMyJuice = () => {
+    // Vérifier que le nom est défini
+    if (!productName) {
+      return; // Sortir si pas de nom défini
+    }
+    
     const favoriteJuice = {
       name: productName,
       composition: myJuice,
       price: price,
     };
-    console.log("favoriteJuice", favoriteJuice);
-    dispatch(saveMyJuice({ savedJuice }));
     
+    dispatch(saveMyJuice({ savedJuice: favoriteJuice })); // Corriger l'objet passé
   };
 
   // Formulaire de commande
-  let myIngredients;
-  let modalContent =
-    ((myIngredients = myJuice.map((ingredient, i) => {
-      return (
-        <li className={styles.MyingredientsList}>
-          {ingredient.name} {ingredient.percentage}%
-        </li>
-      );
-    })),
-    (
-      <Modal
-        open={open}
-        title="Commander mon jus"
-        onCancel={showModal}
-        footer={[
-          <div className={styles.footer}>
-            <Button className={styles.Button} onClick={rememberMyJuice}>
-              Enregistrer ce jus
-            </Button>
-            <Button
-              className={styles.footerButton}
-              key="submit"
-              onClick={orderMyJuice}
+  const myIngredients = myJuice.map((ingredient, i) => {
+    return (
+      <li className={styles.MyingredientsList} key={i}>
+        {ingredient.name} {ingredient.percentage}%
+      </li>
+    );
+  });
+  
+  const modalContent = (
+    <Modal
+      open={open}
+      title="Commander mon jus"
+      onCancel={showModal}
+      footer={[
+        <div className={styles.footer} key="footer">
+          <Button className={styles.Button} onClick={rememberMyJuice}>
+            Enregistrer ce jus
+          </Button>
+          <Button
+            className={styles.footerButton}
+            key="submit"
+            onClick={orderMyJuice}
+          >
+            Commander
+          </Button>
+        </div>,
+      ]}
+    >
+      <div className={styles.modalMain}>
+        <div className={styles.recapContainer}>
+          <Input
+            className={styles.Input}
+            type="text"
+            name="ProductName"
+            value={productName || ''}
+            placeholder="Nommez votre recette"
+            onChange={(e) => setProductName(e.target.value)}
+          ></Input>
+          <h4 className={styles.subTitle}>Ingrédients</h4>
+
+          {myIngredients}
+
+          <h4 className={styles.subTitle}>Volume</h4>
+
+          <Flex vertical gap="middle">
+            <Radio.Group
+              onChange={onChangeVolume}
+              defaultValue={0}
+              ButtonStyle="solid"
             >
-              Commander
-            </Button>
-          </div>,
-        ]}
-      >
-        <div className={styles.modalMain}>
-          <div className={styles.recapContainer}>
-            <Input
-              className={styles.Input}
-              type="text"
-              name="ProductName"
-              value={productName}
-              placeholder="Nommez votre recette"
-              onChange={(e) => setProductName(e.target.value)}
-            ></Input>
-            <h4 className={styles.subTitle}>Ingrédients</h4>
-
-            {myIngredients}
-
-            <h4 className={styles.subTitle}>Volume</h4>
-
-            <Flex vertical gap="middle">
-              <Radio.Group
-                onChange={onChangeVolume}
-                defaultValue={0}
-                ButtonStyle="solid"
-              >
-                {volumes.map((vol,i) => <Radio.Button value={i} key={i}>{vol.capacity}</Radio.Button>)}
-              </Radio.Group>
-            </Flex>
-          </div>
-          <div className={styles.pricetag}></div>
-          <h4 className={styles.subTitle}>Prix</h4>
-          <h2 className={styles.price}>{(price * volume.priceMultiplier).toFixed(2)} €</h2>
+              {volumes.map((vol, i) => <Radio.Button value={i} key={i}>{vol.capacity}</Radio.Button>)}
+            </Radio.Group>
+          </Flex>
         </div>
-      </Modal>
-    ));
+        <div className={styles.pricetag}></div>
+        <h4 className={styles.subTitle}>Prix</h4>
+        <h2 className={styles.price}>{(price * volume.priceMultiplier).toFixed(2)} €</h2>
+      </div>
+    </Modal>
+  );
 
   return (
     <div className={styles.main}>
@@ -526,41 +565,45 @@ export const MyJuiceCreator = () => {
           <div className={styles.ingredientList1}>{IngredientListFruits}</div>
         </div>
 
-        {/* loadingBar classique */}
+        {/*Bouteille optimisée avec des transitions fluides */}
         <div className={styles.bottleContainer}>
-          <div className={styles.bottle_bar}>
+          <div className={`${styles.bottle_bar} ${shake ? styles.shake : ''}`}>
             <div
               className={`${styles.bottle_bar_fill}`}
               style={{
-                height: `${calculateFillFrompercentage(juice)}%`,
+                height: `${calculateFillFromPercentage(juice)}%`,
                 backgroundImage: `linear-gradient(to top, ${colorGradient.join(
-                  ","
-                )} )`,
+                  ",")})`,
+                transition: 'height 0.4s ease-out, background-image 0.5s ease',
               }}
             >
-              {" "}
+              {renderBubbles()}
+              <div className={`${styles.splash} ${splash ? styles.active : ''}`}></div>
             </div>
           </div>
+
           <div className={styles.CompletionStatus}>
-  <div className={styles.fill_label}>
-    {calculateFillFrompercentage(juice)}%
-  </div>
-  <div className={styles.ButtonContainer}>
-    <Button
-      className={styles.Button}
-      onClick={() => {
-        ConfigureMyJuice();
-      }}
-      disabled={calculateFillFrompercentage(juice) !== 100 ? true : false}
-    >
-      Commander ce jus
-    </Button>
-    <Button className={styles.Button} onClick={handleReset}>
-      Reset
-    </Button>
-  </div>
-</div>
+            <div className={styles.fill_label}>
+              {calculateFillFromPercentage(juice)}%
+            </div>
+            <div className={styles.ButtonContainer}>
+              <Button
+                className={styles.Button}
+                onClick={() => { ConfigureMyJuice(); }}
+                disabled={calculateFillFromPercentage(juice) !== 100}
+              >
+                Commander ce jus
+              </Button>
+              <Button 
+                className={styles.Button} 
+                onClick={handleReset}
+              >
+                Reset
+              </Button>
+            </div>
+          </div>
         </div>
+        
         <div className={styles.VegList}>
           <div className={styles.CategoryTitle}>
             <h2>Légumes</h2>
@@ -570,18 +613,15 @@ export const MyJuiceCreator = () => {
       </div>
 
       <div>
-      <div className={styles.SpiceList}>
+        <div className={styles.SpiceList}>
           <div className={styles.CategoryTitle}>
-            <h2 className={styles.category}>épices</h2>
+            <h2 className={styles.category}>Épices</h2>
           </div>
           <div className={styles.SpicesListContainer}>
-        <div className={styles.ingredientList3}>{IngredientListSpices}</div>
+            <div className={styles.ingredientList3}>{IngredientListSpices}</div>
+          </div>
+        </div>
       </div>
-      </div>
-      
-      </div>
-
-      
 
       {modalContent}
     </div>
